@@ -1,0 +1,34 @@
+{
+  "project": "Chess Speedrun Learning System",
+  "branchName": "ralph/feature-name",
+  "description": "Description of the feature being built",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Example: Add a new chess puzzle category",
+      "description": "As a chess learner, I want discovered attack puzzles so I can practice this tactical motif.",
+      "acceptanceCriteria": [
+        "puzzles/discovered-attacks.json exists with 10+ positions",
+        "Each puzzle has: fen, solution_moves, solution_san, motif, difficulty, explanation",
+        "All FEN positions are valid",
+        "Python syntax check passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Example: Add puzzle category to SRS integration",
+      "description": "As a chess learner, I want discovered attack mistakes to create SRS cards automatically.",
+      "acceptanceCriteria": [
+        "engine.py _detect_motif() recognizes discovered attacks",
+        "SRS cards created with motif='discovered_attack' when pattern detected",
+        "Python syntax check passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Depends on US-001"
+    }
+  ]
+}

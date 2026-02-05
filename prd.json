@@ -1,0 +1,200 @@
+{
+  "project": "Chess Speedrun Learning System",
+  "branchName": "ralph/chess-speedrun-v1",
+  "description": "An adaptive chess tutor system using Claude Code + Stockfish + MCP server + TUI",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create install script and project structure",
+      "description": "As a developer, I need the install script and directory structure so the project can be set up.",
+      "acceptanceCriteria": [
+        "scripts/install.sh exists and is executable",
+        "Installs Stockfish via brew (macOS) or apt (Linux)",
+        "Installs Python deps: python-chess, rich, textual, watchdog, mcp",
+        "Creates data directories: data/sessions, data/games, data/lesson_plans",
+        "Initializes data/progress.json with default values if not exists",
+        "Initializes data/srs_cards.json as empty array if not exists",
+        "Creates pyproject.toml with project metadata and dependencies",
+        "Python syntax check passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Implement Stockfish engine wrapper",
+      "description": "As a developer, I need a Python wrapper around Stockfish for game play and analysis.",
+      "acceptanceCriteria": [
+        "scripts/engine.py exists with ChessEngine class",
+        "Auto-detects Stockfish binary path",
+        "new_game() starts a game with configurable target Elo",
+        "set_difficulty() configures engine strength",
+        "get_engine_move() returns moves at configured difficulty",
+        "Sub-1320 Elo uses depth limiting + random move blending",
+        "analyze_position() runs full-strength analysis with multipv support",
+        "evaluate_move() compares player move to best move, returns cp_loss and classification",
+        "MoveEvaluation dataclass with: move_san, best_move_san, cp_loss, eval_before, eval_after, classification, is_best, best_line, tactical_motif",
+        "CLI interface: python scripts/engine.py analyze <fen> and python scripts/engine.py play <elo>",
+        "Python syntax check passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Core dependency - MCP server and TUI depend on this"
+    },
+    {
+      "id": "US-003",
+      "title": "Implement SRS spaced repetition manager",
+      "description": "As a developer, I need an SRS card manager using the SM-2 algorithm for tracking chess mistakes.",
+      "acceptanceCriteria": [
+        "scripts/srs.py exists with SM-2 algorithm implementation",
+        "CLI commands: due, review, add, update, stats",
+        "Cards stored in data/srs_cards.json",
+        "SM-2 intervals: 4hr -> 1d -> 3d -> 1wk -> 2wk -> 1mo",
+        "Failed cards (quality < 3) reset to 4hr interval",
+        "Ease factor adjusts per SM-2 formula, minimum 1.3",
+        "get_due_cards() returns cards where next_review <= now",
+        "sm2_update() correctly updates interval, ease_factor, repetitions",
+        "JSON output for all commands (machine-readable)",
+        "Python syntax check passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Implement MCP server with core chess tools",
+      "description": "As a developer, I need an MCP server that wraps Stockfish as tools Claude Code can call.",
+      "acceptanceCriteria": [
+        "mcp-server/server.py exists using FastMCP from mcp.server.fastmcp",
+        "mcp-server/requirements.txt lists dependencies",
+        "Tool: new_game(target_elo, player_color, starting_fen) - starts game, returns board state",
+        "Tool: get_board(game_id) - returns current board state with legal moves",
+        "Tool: make_move(game_id, move) - makes player move in SAN notation",
+        "Tool: engine_move(game_id) - engine makes its move at configured difficulty",
+        "Tool: analyze_position(fen, depth, multipv) - full-strength analysis",
+        "Tool: evaluate_move(game_id, move) - evaluates move quality with cp_loss",
+        "Tool: get_game_pgn(game_id) - exports game as PGN",
+        "Tool: set_difficulty(game_id, target_elo) - changes engine difficulty",
+        "Tool: get_legal_moves(game_id, square) - lists legal moves",
+        "Tool: undo_move(game_id) - takes back last move",
+        "Tool: set_position(fen) - sets up custom position for puzzles",
+        "Syncs game state to data/current_game.json for TUI",
+        "Python syntax check passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "Depends on engine.py patterns from US-002"
+    },
+    {
+      "id": "US-005",
+      "title": "Implement Terminal UI with Rich",
+      "description": "As a user, I need a terminal chess board display that auto-updates during games.",
+      "acceptanceCriteria": [
+        "scripts/tui.py exists using Rich library",
+        "Renders chess board with Unicode piece symbols",
+        "Board has alternating dark/light square colors",
+        "Highlights last move source/destination squares",
+        "Sidebar shows: move list, eval bar, accuracy stats",
+        "Header shows: session number, streak, lesson name",
+        "Watches data/current_game.json at 4Hz for state updates",
+        "Supports --interactive flag for direct move input",
+        "Layout: board on left (ratio 2), sidebar on right (ratio 1)",
+        "Python syntax check passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Syncs with MCP server via shared JSON file"
+    },
+    {
+      "id": "US-006",
+      "title": "Create SKILL.md chess tutor skill file",
+      "description": "As a Claude Code user, I need the SKILL.md file that transforms Claude Code into a chess tutor.",
+      "acceptanceCriteria": [
+        "SKILL.md exists with proper frontmatter (name, description, triggers)",
+        "Defines 3 expert roles: GM Teacher, Learning Psychologist, Behavioral Specialist",
+        "Documents Quick Start flow: read progress, check MCP, load references, proceed",
+        "Documents core loop: Play -> Analyze -> Teach -> Replay -> Plan",
+        "Move evaluation thresholds: <=30 acknowledge, 31-80 mention, 81-200 teach, >200 intervene",
+        "Language adaptation by Elo range (<600, 600-1000, 1000-1500)",
+        "Post-game flow: save PGN, show summary, identify teaching positions, offer replay",
+        "Session ending flow: save log, update progress, generate 3-perspective plan",
+        "Difficulty control table: accuracy vs offset mapping",
+        "SRS system documentation with SM-2 intervals",
+        "Curriculum phases summary (Foundation, Tactical Basics, Intermediate)",
+        "3-Perspective lesson plan framework (GM, Psychologist, Behaviorist)",
+        "File references section pointing to references/ directory"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Create curriculum and pedagogy reference files",
+      "description": "As a chess tutor, I need reference materials for curriculum structure and teaching methodology.",
+      "acceptanceCriteria": [
+        "references/curriculum.md exists with full curriculum: phases, lessons, prerequisites",
+        "references/chess-pedagogy.md exists with GM coaching methodology",
+        "references/learning-science.md exists with deliberate practice and ZPD theory",
+        "references/elo-milestones.md exists with skills per Elo range",
+        "Each file is well-structured with headers and content",
+        "Curriculum covers: Foundation (0-600), Tactical Basics (600-1000), Intermediate (1000-1500)"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Create tactical patterns and mistakes reference files",
+      "description": "As a chess tutor, I need reference materials for tactical patterns and common beginner mistakes.",
+      "acceptanceCriteria": [
+        "references/tactical-patterns.md exists with motif catalog: forks, pins, skewers, discovered attacks, etc.",
+        "references/common-mistakes.md exists with beginner mistake patterns and teaching responses",
+        "references/opening-guide.md exists with beginner-friendly opening recommendations",
+        "Each pattern includes: name, description, recognition cues, teaching approach",
+        "Common mistakes include: hanging pieces, ignoring threats, premature queen development, etc."
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Create curated puzzle sets",
+      "description": "As a chess tutor, I need puzzle positions organized by tactical motif for training.",
+      "acceptanceCriteria": [
+        "puzzles/forks.json exists with 10+ fork puzzle positions",
+        "puzzles/pins.json exists with 10+ pin puzzle positions",
+        "puzzles/skewers.json exists with 10+ skewer puzzle positions",
+        "puzzles/back-rank.json exists with 10+ back-rank mate puzzles",
+        "puzzles/checkmate-patterns.json exists with 10+ checkmate puzzles",
+        "puzzles/beginner-endgames.json exists with 10+ endgame positions",
+        "Each puzzle has: fen, solution_moves, solution_san, motif, difficulty, explanation",
+        "All FEN positions are valid chess positions",
+        "Python syntax check passes on any validation scripts"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Create export script and .claude/settings.json",
+      "description": "As a developer, I need the export script and Claude Code project settings.",
+      "acceptanceCriteria": [
+        "scripts/export.py exists with progress report export functionality",
+        "CLI commands: progress (export progress report), games (export game summaries)",
+        "Reads from data/progress.json and data/sessions/",
+        ".claude/settings.json exists with MCP server configuration",
+        "MCP config points to mcp-server/server.py",
+        "Python syntax check passes"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

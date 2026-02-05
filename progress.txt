@@ -1,0 +1,14 @@
+## Codebase Patterns
+- Python 3.10+ required
+- python-chess library for chess logic (Board, Move, etc.)
+- Stockfish minimum UCI_Elo is 1320 - use depth limiting + random moves below that
+- MCP server uses FastMCP from mcp.server.fastmcp
+- TUI syncs via data/current_game.json file polling at 4Hz
+- SRS uses SM-2 algorithm
+- All user data stored in data/ directory
+- Progress state in data/progress.json
+---
+
+# Ralph Progress Log
+Started: 2026-02-06
+---

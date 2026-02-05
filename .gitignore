@@ -1,0 +1,40 @@
+# Ralph working files
+.last-branch
+
+# Archive (optional to commit)
+# archive/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+
+# Data files (user-specific, generated at runtime)
+data/
+!data/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/
+
+# OMC state
+.omc/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
