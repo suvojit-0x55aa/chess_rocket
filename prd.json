@@ -53,7 +53,7 @@
         "python -m pytest tests/test_engine.py passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Core dependency - MCP server depends on this. Tests should mock Stockfish for unit tests. Catches EngineTerminatedError and attempts one restart."
     },
     {
