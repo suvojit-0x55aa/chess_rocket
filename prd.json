@@ -146,7 +146,7 @@
         "python -m py_compile mcp-server/server.py passes"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "Appends tools to existing mcp-server/server.py. srs_add_card is a bonus tool for tutor to save mistakes during games."
     },
     {
@@ -172,7 +172,7 @@
         "python -c \"from scripts.tui import render_board\" passes"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "Standalone testing via --sample flag. No MCP dependency for testing. Imports GameState from scripts.models for type reference."
     },
     {
