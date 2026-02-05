@@ -79,7 +79,7 @@
         "python -m pytest tests/test_srs.py passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Quality scale 0-5. ValueError for quality out of range or card not found."
     },
     {
@@ -105,7 +105,7 @@
         "python -c \"import mcp.server.fastmcp\" passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Imports ChessEngine from scripts.engine and GameState from scripts.models. sys.path manipulation may be needed for imports."
     },
     {
@@ -125,7 +125,7 @@
         "python -m py_compile mcp-server/server.py passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Appends tools to existing mcp-server/server.py from US-004. Does not create new files."
     },
     {
