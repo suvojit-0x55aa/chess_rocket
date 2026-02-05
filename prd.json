@@ -155,7 +155,7 @@
       "description": "As a user, I need a terminal chess board display that auto-updates during games by watching current_game.json.",
       "acceptanceCriteria": [
         "scripts/tui.py exists using Rich library",
-        "Renders chess board with Unicode piece symbols (K=♔, Q=♕, R=♖, B=♗, N=♘, P=♙, etc.)",
+        "Renders chess board with Unicode piece symbols (K=\u2654, Q=\u2655, R=\u2656, B=\u2657, N=\u2658, P=\u2659, etc.)",
         "Board has alternating dark/light square colors",
         "Highlights last move source/destination squares",
         "Board flips orientation if player is black",
@@ -189,7 +189,7 @@
         "Files cross-reference each other where relevant"
       ],
       "priority": 8,
-      "passes": false,
+      "passes": true,
       "notes": "Static content files. No code validation needed, just file existence and section structure."
     },
     {

@@ -12,3 +12,43 @@
 # Ralph Progress Log
 Started: 2026-02-06
 ---
+
+## 2026-02-06 - US-008: Create Curriculum and Pedagogy Reference Files
+- Created references/curriculum.md: 3-phase curriculum (Foundation 0-600, Tactical Basics 600-1000, Intermediate 1000-1500)
+  - Each phase includes 6-7 detailed lessons with learning objectives and prerequisites
+  - Lessons cover foundational concepts through advanced strategic planning
+  - Cross-references with pedagogy and learning science documentation
+  
+- Created references/chess-pedagogy.md: GM coaching methodology
+  - 7 major sections: Socratic Method, Pattern Recognition, Deliberate Practice, Error Analysis, Progressive Complexity, Teaching by Elo, Growth Mindset
+  - Practical examples for each teaching technique
+  - Language adaptation guidelines for different Elo ranges
+  - Integration with Speedrun system architecture
+  
+- Created references/learning-science.md: Cognitive science foundations
+  - 9 major sections grounded in research (Ericsson, Vygotsky, Ebbinghaus, Sweller, Dweck, etc.)
+  - Explains why each pedagogy technique is effective
+  - Practical application to chess learning
+  - Integration section showing how principles work together
+  
+- Created references/elo-milestones.md: Skills and expectations by Elo range
+  - 3 detailed Elo ranges with concrete skills, common mistakes, readiness indicators
+  - Cross-level pattern tables showing progression
+  - Teaching guidance for assessing level and setting goals
+  - Links to pedagogy and curriculum for appropriate interventions
+
+**Files changed:**
+- Created: /references/curriculum.md (396 lines)
+- Created: /references/chess-pedagogy.md (456 lines)
+- Created: /references/learning-science.md (470 lines)
+- Created: /references/elo-milestones.md (462 lines)
+
+**Learnings for future iterations:**
+- Curriculum structure uses 3 phases aligned to Elo ranges (0-600, 600-1000, 1000-1500)
+- Each phase needs 6-7 lessons for comprehensive coverage without overwhelming learners
+- Pedagogy references specific teaching techniques: Socratic method, pattern recognition, deliberate practice
+- Learning science grounding is critical for tutor justifying recommendations
+- Cross-references between files create interconnected knowledge base (used by SKILL.md in US-011)
+- Elo milestones provide clear expectations for what players at each level should achieve
+- Teaching language must adapt based on Elo: concrete (0-600), principle-based (600-1000), strategic (1000-1500)
+---
