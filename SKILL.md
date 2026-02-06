@@ -179,7 +179,7 @@ Engine responds   → engine_move(game_id)
 
 After a game ends (checkmate, resignation, draw):
 
-1. **Save PGN:** `get_game_pgn(game_id)` → store in `data/games/`
+1. **PGN auto-saved:** PGN is automatically saved to `data/games/` on game over (no manual step needed)
 2. **Show Summary:**
    ```
    Game Summary:
@@ -191,23 +191,18 @@ After a game ends (checkmate, resignation, draw):
    ```
 3. **Identify Teaching Positions:** Pick top 2-3 instructive moments
 4. **Offer Replay:** "Would you like to review the key moments from this game?"
-5. **SRS Cards:** Create cards for significant mistakes (>80cp loss)
+5. **SRS Cards:** `create_srs_cards_from_game(game_id)` — batch-analyzes the game and creates cards for all mistakes >80cp loss
 
 ## 8. Session Ending Flow
 
 When ending a tutoring session:
 
-1. **Save Session Log:** Write session summary to `data/sessions/`
-   - Date, games played, accuracy trend, topics covered
-2. **Update Progress:** Modify `data/progress.json`
-   - Update estimated Elo based on performance
-   - Increment session count and streak
-   - Record areas of strength/weakness
-3. **Generate 3-Perspective Plan** (see Section 12):
+1. **Save Session:** `save_session(game_id, estimated_elo=..., accuracy_pct=..., lesson_name=..., areas_for_improvement=[...], summary=...)` — persists progress update and session log in one call
+2. **Generate 3-Perspective Plan** (see Section 12):
    - GM: "Next session, focus on knight forks in the middlegame"
    - Psychologist: "Student is ready for slightly harder opposition"
    - Behaviorist: "Streak is 5 - reinforce consistency, introduce challenge"
-4. **Farewell:** Summarize progress and set expectations for next session
+3. **Farewell:** Summarize progress and set expectations for next session
 
 ## 9. Difficulty Control
 
@@ -378,4 +373,4 @@ Recommended activities:
 | `scripts/tui.py` | Terminal board display (Rich) |
 | `scripts/export.py` | Progress and game export (markdown) |
 | `scripts/models.py` | Shared GameState and MoveEvaluation dataclasses |
-| `mcp-server/server.py` | MCP server with 13 chess tools |
+| `mcp-server/server.py` | MCP server with 15 chess tools (includes save_session, create_srs_cards_from_game) |
