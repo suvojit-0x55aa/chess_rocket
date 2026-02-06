@@ -752,6 +752,111 @@ def save_session(
 
 
 # ---------------------------------------------------------------------------
+# US-016: create_srs_cards_from_game tool
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool()
+def create_srs_cards_from_game(game_id: str, cp_threshold: int = 80) -> dict:
+    """Batch-analyze a completed game and create SRS cards for significant mistakes.
+
+    Replays the game, evaluates each player move at full strength (depth 20),
+    and creates SRS cards for moves with cp_loss >= cp_threshold.
+
+    Args:
+        game_id: UUID of the completed game.
+        cp_threshold: Minimum centipawn loss to create a card (default 80).
+
+    Returns:
+        Dict with game_id, total_player_moves, mistakes_found, cards_created,
+        mistakes list, and card_ids.
+    """
+    game = _get_game(game_id)
+    if game is None:
+        return {"error": f"Game not found: {game_id}"}
+
+    board: chess.Board = game["board"]
+
+    if not board.is_game_over():
+        return {"error": "Game is not over yet. Finish the game before creating SRS cards."}
+
+    # No moves means nothing to analyze
+    if not board.move_stack:
+        return {
+            "game_id": game_id,
+            "total_player_moves": 0,
+            "mistakes_found": 0,
+            "cards_created": 0,
+            "mistakes": [],
+            "card_ids": [],
+        }
+
+    # Create fresh engine at full strength for analysis
+    analysis_engine = ChessEngine()
+    analysis_engine.set_difficulty(3000)
+
+    player_color = game["player_color"]
+    player_is_white = player_color == "white"
+
+    replay_board = chess.Board(game["starting_fen"])
+    srs = SRSManager()
+
+    mistakes = []
+    card_ids = []
+    total_player_moves = 0
+    move_number = 0
+
+    try:
+        for move in board.move_stack:
+            move_number += 1
+            is_white_turn = replay_board.turn == chess.WHITE
+
+            # Only evaluate player moves
+            if is_white_turn == player_is_white:
+                total_player_moves += 1
+                evaluation = analysis_engine.evaluate_move(replay_board, move)
+
+                if evaluation.cp_loss >= cp_threshold:
+                    fen = replay_board.fen()
+                    explanation = (
+                        f"Move {move_number}: played {evaluation.move_san} "
+                        f"(best: {evaluation.best_move_san}, cp_loss: {evaluation.cp_loss})"
+                    )
+
+                    card = srs.add_card(
+                        fen=fen,
+                        player_move=evaluation.move_san,
+                        best_move=evaluation.best_move_san,
+                        cp_loss=evaluation.cp_loss,
+                        classification=evaluation.classification,
+                        motif=evaluation.tactical_motif,
+                        explanation=explanation,
+                    )
+                    mistakes.append({
+                        "fen": fen,
+                        "move_number": move_number,
+                        "player_move": evaluation.move_san,
+                        "best_move": evaluation.best_move_san,
+                        "cp_loss": evaluation.cp_loss,
+                        "classification": evaluation.classification,
+                    })
+                    card_ids.append(card["id"])
+
+            replay_board.push(move)
+    finally:
+        analysis_engine.close()
+
+    return {
+        "game_id": game_id,
+        "total_player_moves": total_player_moves,
+        "mistakes_found": len(mistakes),
+        "cards_created": len(card_ids),
+        "mistakes": mistakes,
+        "card_ids": card_ids,
+    }
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
