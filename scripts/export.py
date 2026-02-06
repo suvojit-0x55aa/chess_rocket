@@ -36,7 +36,7 @@ def export_progress() -> str:
 
     # Current Level
     lines.append("## Current Level")
-    lines.append(f"- Estimated Elo: {progress.get('estimated_elo', 'Unknown')}")
+    lines.append(f"- Estimated Elo: {progress.get('estimated_elo', progress.get('current_elo', 'Unknown'))}")
     lines.append(f"- Sessions completed: {progress.get('sessions_completed', 0)}")
     lines.append(f"- Current streak: {progress.get('streak', 0)}")
     lines.append(f"- Total games: {progress.get('total_games', 0)}")
