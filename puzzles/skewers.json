@@ -1,0 +1,134 @@
+[
+  {
+    "fen": "4q3/8/8/4k3/8/8/8/R6K w - - 0 1",
+    "solution_moves": [
+      "a1e1"
+    ],
+    "solution_san": [
+      "Re1+"
+    ],
+    "motif": "skewer",
+    "difficulty": "beginner",
+    "explanation": "Rook to e1 checks king on e5, skewering queen on e8."
+  },
+  {
+    "fen": "3q4/8/8/3k4/8/8/8/3R3K w - - 0 1",
+    "solution_moves": [
+      "d1d3"
+    ],
+    "solution_san": [
+      "Rd3+"
+    ],
+    "motif": "skewer",
+    "difficulty": "beginner",
+    "explanation": "Rook to d3 checks king on d5, skewering queen on d8."
+  },
+  {
+    "fen": "8/8/8/6r1/5k2/8/8/2B4K w - - 0 1",
+    "solution_moves": [
+      "c1e3"
+    ],
+    "solution_san": [
+      "Be3+"
+    ],
+    "motif": "skewer",
+    "difficulty": "beginner",
+    "explanation": "Bishop to e3 checks king on f4, skewering rook on g5."
+  },
+  {
+    "fen": "r7/8/8/8/4k3/8/8/Q6K w - - 0 1",
+    "solution_moves": [
+      "a1e5"
+    ],
+    "solution_san": [
+      "Qe5+"
+    ],
+    "motif": "skewer",
+    "difficulty": "intermediate",
+    "explanation": "Queen to e5 checks king on e4, skewering rook on a8."
+  },
+  {
+    "fen": "4r3/4k3/8/8/8/8/8/4R2K w - - 0 1",
+    "solution_moves": [
+      "e1e7"
+    ],
+    "solution_san": [
+      "Rxe7"
+    ],
+    "motif": "skewer",
+    "difficulty": "beginner",
+    "explanation": "Rook to e7 checks king, skewering rook on e8."
+  },
+  {
+    "fen": "2q5/3k4/8/8/8/7B/8/7K w - - 0 1",
+    "solution_moves": [
+      "h3f5"
+    ],
+    "solution_san": [
+      "Bf5+"
+    ],
+    "motif": "skewer",
+    "difficulty": "intermediate",
+    "explanation": "Bishop to f5 checks king on d7, skewering queen on c8."
+  },
+  {
+    "fen": "7r/6k1/8/8/8/8/8/K6R w - - 0 1",
+    "solution_moves": [
+      "h1h7"
+    ],
+    "solution_san": [
+      "Rh7+"
+    ],
+    "motif": "skewer",
+    "difficulty": "beginner",
+    "explanation": "Rook to h7 checks king on g7, skewering rook on h8."
+  },
+  {
+    "fen": "8/3q4/4k3/8/8/8/8/5B1K w - - 0 1",
+    "solution_moves": [
+      "f1c4"
+    ],
+    "solution_san": [
+      "Bc4+"
+    ],
+    "motif": "skewer",
+    "difficulty": "intermediate",
+    "explanation": "Bishop to c4 checks king on e6, skewering queen on d7."
+  },
+  {
+    "fen": "8/8/8/8/2k4r/8/8/Q5K1 w - - 0 1",
+    "solution_moves": [
+      "a1a4"
+    ],
+    "solution_san": [
+      "Qa4+"
+    ],
+    "motif": "skewer",
+    "difficulty": "intermediate",
+    "explanation": "Queen to a4 checks king on c4, skewering rook on h4."
+  },
+  {
+    "fen": "2q5/8/8/2k5/8/8/8/2R4K w - - 0 1",
+    "solution_moves": [
+      "c1c5"
+    ],
+    "solution_san": [
+      "Rxc5"
+    ],
+    "motif": "skewer",
+    "difficulty": "beginner",
+    "explanation": "Rook to c5 checks king, skewering queen on c8."
+  },
+  {
+    "fen": "3r4/8/8/3k4/8/8/8/3Q3K w - - 0 1",
+    "solution_moves": [
+      "d1d2"
+    ],
+    "solution_san": [
+      "Qd2+"
+    ],
+    "motif": "skewer",
+    "difficulty": "intermediate",
+    "explanation": "Queen to d2 checks king on d5, skewering rook on d8."
+  }
+]

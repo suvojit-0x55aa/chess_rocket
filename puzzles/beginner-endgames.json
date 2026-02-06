@@ -1,0 +1,134 @@
+[
+  {
+    "fen": "6k1/4P3/4K3/8/8/8/8/8 w - - 0 1",
+    "solution_moves": [
+      "e7e8q"
+    ],
+    "solution_san": [
+      "e8=Q+"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "explanation": "Promote the pawn to a queen. The pawn reaches the 8th rank and becomes a queen."
+  },
+  {
+    "fen": "8/8/4k3/8/3PK3/8/8/8 w - - 0 1",
+    "solution_moves": [
+      "d4d5"
+    ],
+    "solution_san": [
+      "d5+"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "explanation": "Advance the passed pawn. With the king on e4 protecting it, the pawn marches toward promotion."
+  },
+  {
+    "fen": "8/8/4k3/8/4K3/8/8/3Q4 w - - 0 1",
+    "solution_moves": [
+      "d1d6"
+    ],
+    "solution_san": [
+      "Qd6+"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "explanation": "Queen moves to d6, giving check and driving the king toward the edge of the board."
+  },
+  {
+    "fen": "8/8/8/8/4k3/8/6K1/2R5 w - - 0 1",
+    "solution_moves": [
+      "c1e1"
+    ],
+    "solution_san": [
+      "Re1+"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "explanation": "Rook moves to e1, cutting off the king from the e-file. This restricts the king's movement."
+  },
+  {
+    "fen": "7k/8/8/P7/7p/8/8/6K1 w - - 0 1",
+    "solution_moves": [
+      "a5a6"
+    ],
+    "solution_san": [
+      "a6"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "explanation": "Push the a-pawn! In a pawn race, advancing your passed pawn is critical."
+  },
+  {
+    "fen": "4k3/8/8/3p4/3P4/8/8/4K3 w - - 0 1",
+    "solution_moves": [
+      "e1e2"
+    ],
+    "solution_san": [
+      "Ke2"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "explanation": "Activate your king! In the endgame, the king becomes a powerful piece. Move toward the center."
+  },
+  {
+    "fen": "1r6/3P4/2K5/8/8/8/8/4k3 w - - 0 1",
+    "solution_moves": [
+      "d7d8q"
+    ],
+    "solution_san": [
+      "d8=Q"
+    ],
+    "motif": "endgame",
+    "difficulty": "intermediate",
+    "explanation": "Promote the pawn to a queen! Despite the rook on b8, the pawn safely queens on d8."
+  },
+  {
+    "fen": "7k/8/6K1/5Q2/8/8/8/8 w - - 0 1",
+    "solution_moves": [
+      "f5f8"
+    ],
+    "solution_san": [
+      "Qf8#"
+    ],
+    "motif": "endgame",
+    "difficulty": "intermediate",
+    "explanation": "Queen to f8 is checkmate! Be careful not to play Qf7 which would be stalemate."
+  },
+  {
+    "fen": "8/8/4k3/3p4/2PP4/4K3/8/8 w - - 0 1",
+    "solution_moves": [
+      "c4d5"
+    ],
+    "solution_san": [
+      "cxd5+"
+    ],
+    "motif": "endgame",
+    "difficulty": "intermediate",
+    "explanation": "Capture on d5 to create a passed pawn. After cxd5+, the remaining pawn can advance to promote."
+  },
+  {
+    "fen": "r7/6k1/8/P7/8/8/6K1/R7 w - - 0 1",
+    "solution_moves": [
+      "a5a6"
+    ],
+    "solution_san": [
+      "a6"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "explanation": "Advance the passed pawn! The rook on a1 supports it from behind - the ideal rook endgame setup."
+  },
+  {
+    "fen": "8/8/3k4/8/2P1P3/3K4/8/8 w - - 0 1",
+    "solution_moves": [
+      "e4e5"
+    ],
+    "solution_san": [
+      "e5+"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "explanation": "Advance the e-pawn with check! The two connected passed pawns supported by the king will promote."
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "fen": "r3k3/8/8/3N4/8/8/8/4K3 w q - 0 1",
+    "solution_moves": [
+      "d5c7"
+    ],
+    "solution_san": [
+      "Nc7+"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "explanation": "Knight moves to c7, giving check and forking the king and rook on a8."
+  },
+  {
+    "fen": "4k3/8/8/8/8/5n2/8/R3K3 b - - 0 1",
+    "solution_moves": [
+      "f3d2"
+    ],
+    "solution_san": [
+      "Nd2"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "explanation": "Black's knight forks the white king on e1 and rook on a1."
+  },
+  {
+    "fen": "4k3/8/3q1r2/8/8/2N5/8/4K3 w - - 0 1",
+    "solution_moves": [
+      "c3e4"
+    ],
+    "solution_san": [
+      "Ne4"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "explanation": "Knight jumps to e4, forking the queen on d6 and rook on f6."
+  },
+  {
+    "fen": "r3k3/8/8/8/4N3/8/8/4K3 w q - 0 1",
+    "solution_moves": [
+      "e4d6"
+    ],
+    "solution_san": [
+      "Nd6+"
+    ],
+    "motif": "fork",
+    "difficulty": "intermediate",
+    "explanation": "Knight moves to d6 with check, forking the king on e8 and rook on a8."
+  },
+  {
+    "fen": "4k3/8/8/2q1n3/8/8/3P4/4K3 w - - 0 1",
+    "solution_moves": [
+      "d2d4"
+    ],
+    "solution_san": [
+      "d4"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "explanation": "Pawn advances to d4, forking the queen on c5 and knight on e5."
+  },
+  {
+    "fen": "4k3/8/3n1n2/8/4P3/8/8/4K3 w - - 0 1",
+    "solution_moves": [
+      "e4e5"
+    ],
+    "solution_san": [
+      "e5"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "explanation": "Pawn advances to e5, forking the knights on d6 and f6."
+  },
+  {
+    "fen": "4k1q1/8/8/8/4N3/8/8/4K3 w - - 0 1",
+    "solution_moves": [
+      "e4f6"
+    ],
+    "solution_san": [
+      "Nf6+"
+    ],
+    "motif": "fork",
+    "difficulty": "intermediate",
+    "explanation": "Knight moves to f6 with check, forking the king on e8 and queen on g8."
+  },
+  {
+    "fen": "4k3/8/8/8/8/n7/8/R3K3 b - - 0 1",
+    "solution_moves": [
+      "a3c2"
+    ],
+    "solution_san": [
+      "Nc2+"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "explanation": "Black knight moves to c2, forking the white king on e1 and rook on a1."
+  },
+  {
+    "fen": "4k3/8/8/8/8/8/8/R3Kq2 b - - 0 1",
+    "solution_moves": [
+      "f1d3"
+    ],
+    "solution_san": [
+      "Qd3"
+    ],
+    "motif": "fork",
+    "difficulty": "intermediate",
+    "explanation": "Black queen moves to d3 with check, forking the king on e1 and rook on a1."
+  },
+  {
+    "fen": "4k3/8/8/1n1b4/8/8/2P5/4K3 w - - 0 1",
+    "solution_moves": [
+      "c2c4"
+    ],
+    "solution_san": [
+      "c4"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "explanation": "Pawn advances to c4, forking the knight on b5 and bishop on d5."
+  },
+  {
+    "fen": "3q3r/8/8/4N3/8/8/8/4K3 w - - 0 1",
+    "solution_moves": [
+      "e5f7"
+    ],
+    "solution_san": [
+      "Nf7"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "explanation": "Knight moves to f7, forking the queen on d8 and rook on h8."
+  },
+  {
+    "fen": "4k3/8/8/4n1b1/8/8/5P2/4K3 w - - 0 1",
+    "solution_moves": [
+      "f2f4"
+    ],
+    "solution_san": [
+      "f4"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "explanation": "Pawn advances to f4, forking the knight on e5 and bishop on g5."
+  }
+]
