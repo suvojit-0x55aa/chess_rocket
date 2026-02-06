@@ -205,7 +205,7 @@
         "Each file has well-structured sections with headers"
       ],
       "priority": 9,
-      "passes": false,
+      "passes": true,
       "notes": "Static content files. Must be created before SKILL.md (US-011) so it can reference them."
     },
     {
@@ -226,7 +226,7 @@
         "python -m py_compile scripts/validate_puzzles.py passes"
       ],
       "priority": 10,
-      "passes": false,
+      "passes": true,
       "notes": "LLM-generated FENs are often invalid - programmatic validation is critical. Must be created before SKILL.md (US-011)."
     },
     {
@@ -249,7 +249,7 @@
         "File references section pointing to actual files in references/, puzzles/, data/ directories"
       ],
       "priority": 11,
-      "passes": false,
+      "passes": true,
       "notes": "All referenced files (references/*, puzzles/*) now exist from US-008, US-009, US-010. Use relative paths."
     },
     {
@@ -270,7 +270,7 @@
         "python -c \"from scripts.export import export_progress, export_games\" passes"
       ],
       "priority": 12,
-      "passes": false,
+      "passes": true,
       "notes": "Markdown format chosen for human readability and Claude Code consumption."
     },
     {
@@ -288,7 +288,7 @@
         "All required files exist: scripts/install.sh, scripts/engine.py, scripts/srs.py, scripts/tui.py, scripts/export.py, scripts/models.py, scripts/validate_puzzles.py, mcp-server/server.py, SKILL.md"
       ],
       "priority": 13,
-      "passes": false,
+      "passes": true,
       "notes": "Final story - verification that all pieces are in place. Should be the last story implemented."
     }
   ]

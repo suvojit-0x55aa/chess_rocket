@@ -7,6 +7,7 @@
 - SRS uses SM-2 algorithm
 - All user data stored in data/ directory
 - Progress state in data/progress.json
+- Use `uv run python` to execute scripts (system python3 lacks project deps)
 ---
 
 # Ralph Progress Log
@@ -51,4 +52,63 @@ Started: 2026-02-06
 - Cross-references between files create interconnected knowledge base (used by SKILL.md in US-011)
 - Elo milestones provide clear expectations for what players at each level should achieve
 - Teaching language must adapt based on Elo: concrete (0-600), principle-based (600-1000), strategic (1000-1500)
+---
+
+## 2026-02-06 - US-009: Create Tactical Patterns and Mistakes Reference Files
+- Files already existed (created alongside US-008) but were untracked - committed them
+- references/tactical-patterns.md: 7 tactical patterns (forks x3, pins x2, skewers, discovered attacks, discovered check, double check, back-rank threats)
+- references/common-mistakes.md: 9 common mistakes with severity classification (hanging pieces, ignoring threats, premature queen, not castling, same piece twice, no center control, trading when behind, neglecting development, not looking for checks)
+- references/opening-guide.md: 4 beginner-friendly openings (Italian Game, London System, Sicilian Defense, Scandinavian Defense)
+
+**Files changed:**
+- Committed: references/tactical-patterns.md
+- Committed: references/common-mistakes.md
+- Committed: references/opening-guide.md
+
+**Learnings for future iterations:**
+- US-008 iteration created US-009 files too - always check git status for untracked files from previous iterations
+- Reference files cross-reference each other (tactical-patterns.md referenced from opening-guide.md)
+- All reference files are now in place for SKILL.md (US-011) to reference
+---
+
+## 2026-02-06 - US-010: Create Curated Puzzle Sets with FEN Validation
+- All 6 puzzle JSON files already existed from a previous iteration (untracked)
+- Validated all 69 puzzles across 6 files using scripts/validate_puzzles.py
+- All FENs load in python-chess, all solution_moves are legal in sequence
+- Committed all puzzle files and validator script
+
+**Files changed:**
+- Committed: puzzles/forks.json (12 puzzles)
+- Committed: puzzles/pins.json (12 puzzles)
+- Committed: puzzles/skewers.json (11 puzzles)
+- Committed: puzzles/back-rank.json (12 puzzles)
+- Committed: puzzles/checkmate-patterns.json (11 puzzles)
+- Committed: puzzles/beginner-endgames.json (11 puzzles)
+- Committed: scripts/validate_puzzles.py
+
+**Learnings for future iterations:**
+- Puzzle files and validator were created in earlier iterations but left untracked - always check git status
+- Use `uv run python` to execute scripts (system python3 lacks chess module)
+- validate_puzzles.py checks: FEN validity, UCI move parsing, sequential move legality
+- Each puzzle requires: fen, solution_moves (UCI), solution_san, motif, difficulty, explanation
+---
+
+## 2026-02-06 - US-013: Create Claude Settings and Run Integration Verification
+- Verified .claude/settings.json exists with correct MCP server config (command: python, args: [mcp-server/server.py])
+- Ran py_compile on all 8 Python files (7 in scripts/, 1 in mcp-server/) - all pass
+- Ran validate_puzzles.py - all 69 puzzles across 6 files valid
+- Verified all 8 required directories exist: data/sessions, data/games, data/lesson_plans, references/, puzzles/, mcp-server/, scripts/, .claude/
+- Verified all 10 required files exist: install.sh, engine.py, srs.py, tui.py, export.py, models.py, validate_puzzles.py, server.py, SKILL.md, settings.json
+- Committed remaining untracked project files: scripts/__init__.py, scripts/models.py, scripts/install.sh, documentation/, uv.lock
+
+**Files changed:**
+- Verified: .claude/settings.json (already had correct MCP config)
+- Updated: prd.json (US-013 passes: true)
+- Committed untracked: scripts/__init__.py, scripts/models.py, scripts/install.sh, documentation/, uv.lock
+
+**Learnings for future iterations:**
+- .claude/settings.json was created by earlier iterations - always check if it exists before creating
+- Integration verification is about running ALL checks, not writing new code
+- Some files created in US-001 (models.py, __init__.py, install.sh) may remain untracked through many iterations - final story catches these
+- chess-openings/ directory is external data, not part of the project structure
 ---

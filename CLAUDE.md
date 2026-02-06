@@ -7,15 +7,19 @@ You are an autonomous coding agent building a Chess Speedrun Learning System.
 This project transforms Claude Code into an adaptive chess tutor. Stockfish handles analysis via an MCP server. A Rich-based TUI handles board display. Claude Code handles all teaching intelligence.
 
 Key components:
-- `scripts/engine.py` - Stockfish UCI wrapper with difficulty control
-- `scripts/tui.py` - Terminal chess board UI (Rich/Textual)
-- `scripts/srs.py` - Spaced repetition card manager
-- `scripts/install.sh` - Setup script for Stockfish + Python deps
-- `mcp-server/server.py` - MCP server exposing Stockfish as tools
+- `scripts/install.sh` - Setup script (Stockfish + uv env + Python deps)
+- `scripts/models.py` - Shared dataclasses (GameState, MoveEvaluation) used by MCP + TUI
+- `scripts/engine.py` - Stockfish UCI wrapper with adaptive difficulty (sub-1320 uses linear blend)
+- `scripts/srs.py` - SM-2 spaced repetition card manager
+- `scripts/tui.py` - Terminal chess board UI (Rich, watches current_game.json at 4Hz)
+- `scripts/export.py` - Progress/game export as markdown
+- `scripts/validate_puzzles.py` - Programmatic FEN validation for puzzle files
+- `mcp-server/server.py` - MCP server exposing 13 Stockfish tools (built in 3 stories: core/analysis/utility)
 - `SKILL.md` - Main skill file for the chess tutor
-- `references/` - Curriculum, pedagogy, patterns documentation
-- `puzzles/` - Curated puzzle positions by motif
+- `references/` - Curriculum, pedagogy, patterns, mistakes, openings documentation
+- `puzzles/` - Curated puzzle positions by motif (6 JSON files, 10+ each)
 - `data/` - User progress, sessions, games, SRS cards
+- `documentation/` - Canonical PRD documentation with all decisions
 
 ## Your Task
 
@@ -67,19 +71,46 @@ Only add patterns that are **general and reusable**, not story-specific details.
 
 - ALL commits must pass quality checks
 - Run `python -m py_compile <file>` to verify Python syntax
-- Run tests if available: `python -m pytest` (if tests exist)
+- Run `python -c "from scripts.<module> import <Class>"` to verify imports resolve
+- Run `python -m pytest tests/` if test files exist (US-002 and US-003 have pytest tests)
+- Run `python scripts/validate_puzzles.py` after US-010 to verify FENs
 - Do NOT commit broken code
 - Keep changes focused and minimal
 - Follow existing code patterns
 
+## Canonical Documentation
+
+Full design decisions and specifications are in `documentation/general_chess_speedrun_prd_documentation.md`.
+Read this file when you need detailed specifications for a story (data schemas, error handling, edge cases).
+
+## Story Dependency Order (13 stories)
+
+```
+US-001: Install + project structure + models.py
+US-002: Engine wrapper + pytest tests
+US-003: SRS manager + pytest tests
+US-004: MCP server - core game tools (new_game, get_board, make_move, engine_move)
+US-005: MCP server - analysis tools (analyze_position, evaluate_move, set_difficulty)
+US-006: MCP server - utility tools (pgn, legal_moves, undo, set_position, srs_add_card)
+US-007: TUI with Rich (standalone with sample JSON)
+US-008: Reference docs - curriculum & pedagogy
+US-009: Reference docs - tactics & mistakes
+US-010: Puzzle sets + FEN validation script
+US-011: SKILL.md (references actual files from US-008/009/010)
+US-012: Export script (markdown output)
+US-013: Claude settings + integration verification
+```
+
 ## Tech Stack
 
 - Python 3.10+
+- uv (environment management - NOT pip/venv)
 - python-chess (chess library)
 - Stockfish (chess engine, installed via brew/apt)
 - Rich / Textual (terminal UI)
-- MCP SDK (mcp package) for MCP server
-- JSON files for data persistence
+- watchdog (file system watcher for TUI)
+- MCP SDK (mcp[cli] package) for MCP server using FastMCP
+- JSON files for data persistence (ISO 8601 timestamps)
 
 ## Stop Condition
 
