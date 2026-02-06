@@ -25,6 +25,7 @@ from mcp.server.fastmcp import FastMCP
 
 from scripts.engine import ChessEngine
 from scripts.models import GameState, MoveEvaluation
+from scripts.openings import OpeningsDB
 from scripts.srs import SRSManager
 
 mcp = FastMCP("chess-speedrun")
@@ -33,6 +34,9 @@ mcp = FastMCP("chess-speedrun")
 _games: dict[str, dict] = {}
 
 _DATA_DIR = _PROJECT_ROOT / "data"
+
+# Opening recognition (graceful degradation if DB not built)
+_openings_db = OpeningsDB()
 
 # Register opening tools from separate module
 _MCP_SERVER_DIR = Path(__file__).resolve().parent
@@ -74,6 +78,19 @@ def _build_game_state(game_id: str, game: dict) -> dict:
     if board.is_game_over():
         result = board.result()
 
+    # Identify current opening from move sequence (trie lookup, O(d))
+    current_opening = None
+    uci_moves = [m.uci() for m in board.move_stack]
+    if uci_moves:
+        match = _openings_db.identify_opening(uci_moves)
+        if match is not None:
+            current_opening = {
+                "eco": match["eco"],
+                "name": match["name"],
+                "family": match["family"],
+                "moves_matched": match["moves_matched"],
+            }
+
     state = GameState(
         game_id=game_id,
         fen=board.fen(),
@@ -91,6 +108,7 @@ def _build_game_state(game_id: str, game: dict) -> dict:
         session_number=game.get("session_number", 1),
         streak=game.get("streak", 0),
         lesson_name=game.get("lesson_name", ""),
+        current_opening=current_opening,
     )
     return asdict(state)
 

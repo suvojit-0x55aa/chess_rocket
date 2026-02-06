@@ -521,7 +521,7 @@
         "uv run python scripts/tui.py --sample still works"
       ],
       "priority": 23,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 4. Depends on US-021 and US-022. Key behavior: CLEAR current_opening to None when out of book (don't keep showing last known opening)."
     },
     {

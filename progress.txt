@@ -264,3 +264,27 @@ Started: 2026-02-06
 - Opening quiz creates real games in _games dict so make_move/engine_move work on them
 - suggest_opening uses color heuristic: "defense"/"gambit" keywords for black, rest for white
 ---
+
+## 2026-02-07 - US-023: Live game opening integration
+- Added `current_opening: dict | None = None` field to GameState dataclass in scripts/models.py
+- Initialized OpeningsDB in mcp-server/server.py (graceful degradation if DB not built)
+- Updated `_build_game_state()` to call `_openings_db.identify_opening()` with UCI moves from board.move_stack
+- `current_opening` is set to None when moves don't match any trie path (out of book behavior)
+- Updated scripts/tui.py sidebar to display "Opening: {name} ({eco})" when in book, "Out of book" when not
+- Updated data/sample_game.json with current_opening field (Italian Game: Two Knights Defense, C55)
+- All py_compile checks pass, TUI --sample renders correctly, 40/42 tests pass (2 pre-existing failures)
+
+**Files changed:**
+- Modified: scripts/models.py (added current_opening field)
+- Modified: mcp-server/server.py (import OpeningsDB, init _openings_db, update _build_game_state)
+- Modified: scripts/tui.py (display opening in sidebar)
+- Modified: data/sample_game.json (added current_opening)
+- Modified: prd.json (US-023 passes: true)
+
+**Learnings for future iterations:**
+- OpeningsDB graceful degradation means _openings_db can be initialized at module level safely - returns None if DB files don't exist
+- identify_opening() returns None for out-of-book positions (when moves diverge from trie), not an empty dict
+- Trie lookup is O(d) where d = number of moves played, adding zero perceptible latency to _build_game_state
+- current_opening dict has 4 keys: eco, name, family, moves_matched (subset of full identify_opening result, no pgn)
+- TUI uses isinstance(current_opening, dict) check to handle both None and missing key gracefully
+---
