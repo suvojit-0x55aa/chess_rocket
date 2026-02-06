@@ -472,7 +472,7 @@
         "python -c \"from scripts.openings import OpeningsDB\" passes"
       ],
       "priority": 21,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 2. Depends on US-020 (needs data/openings.db and data/openings_trie.json). Memory ~4MB for trie."
     },
     {
@@ -496,7 +496,7 @@
         "python -m py_compile mcp-server/server.py passes"
       ],
       "priority": 22,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 3. Depends on US-021. server.py is 864 lines - new tools MUST go in openings_tools.py, not server.py. Only ~15 lines added to server.py for import and registration."
     },
     {

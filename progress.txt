@@ -215,3 +215,52 @@ Started: 2026-02-06
 - Lichess count is 3,641 (close to the ~3,627 mentioned in PRD)
 - 2 pre-existing test failures in test_post_game.py (session numbering brittleness, not caused by US-020)
 ---
+
+## 2026-02-07 - US-021: Opening recognition library
+- Created scripts/openings.py with OpeningsDB class
+- Trie-based identify_opening() returns deepest matching named node with eco, name, family, moves_matched, pgn
+- get_continuations() walks trie to find named openings branching from current position
+- SQLite methods: search_openings (LIKE query), get_opening_by_eco, get_opening_lines (by family)
+- get_openings_for_level: Phase 1 (<600) short common openings, Phase 2 (600-1000) medium, Phase 3 (1000+) full
+- get_random_opening with optional eco_volume and max_moves filters
+- Graceful degradation: all methods return None or empty lists when DB/trie files don't exist
+- All methods return plain dicts (not dataclasses), matching MCP server pattern
+- SQLite connections opened per-query for thread safety
+
+**Files changed:**
+- Created: scripts/openings.py (346 lines)
+- Modified: prd.json (US-021 passes: true)
+
+**Learnings for future iterations:**
+- Trie identify_opening returns deepest match: e.g. ["e2e4","c7c5","a2a3"] matches "Sicilian Defense: Mengarini Variation" (3 moves), not just "Sicilian Defense" (2 moves)
+- 1. a3 IS in the Lichess openings as "Anderssen's Opening" - almost every first move has a named opening
+- _BEGINNER_FAMILIES set controls Phase 1 filtering - update it if curriculum changes
+- sqlite3.Row + dict() conversion gives clean dicts without needing dataclasses
+- New MCP tools go in separate files (e.g. openings_tools.py), registered via register_*_tools() in server.py
+- server.py needs sys.path.insert(0, mcp-server dir) to import sibling modules when loaded from other directories
+---
+
+## 2026-02-07 - US-022: Opening MCP tools
+- Created mcp-server/openings_tools.py with register_openings_tools() function
+- 5 tools registered: identify_opening, search_openings, get_opening_details, suggest_opening, opening_quiz
+- identify_opening(game_id): extracts UCI moves from game, returns opening info via OpeningsDB trie
+- search_openings(query, eco, eco_volume, limit): LIKE search on openings DB
+- get_opening_details(eco): returns all variations for an ECO code
+- suggest_opening(elo, color): reads elo from progress.json if not provided, filters by color and level
+- opening_quiz(eco, difficulty): picks opening, plays N-1 moves, creates real game via set_position pattern, returns correct_move_san
+- opening_quiz tracks openings_studied in progress.json, resets when all covered
+- All 5 tools return error dict when openings DB not built
+- server.py modified: added sys.path insert for mcp-server/ dir + import/call register_openings_tools()
+- All 33 existing tests pass, py_compile passes on both files
+
+**Files changed:**
+- Created: mcp-server/openings_tools.py (264 lines)
+- Modified: mcp-server/server.py (~5 lines added for import and registration)
+- Modified: prd.json (US-022 passes: true)
+
+**Learnings for future iterations:**
+- New tool modules in mcp-server/ need sys.path manipulation in server.py for reliable import
+- server.py can be imported from project root (by tests) or from mcp-server/ dir (by MCP runtime) - imports must work in both cases
+- Opening quiz creates real games in _games dict so make_move/engine_move work on them
+- suggest_opening uses color heuristic: "defense"/"gambit" keywords for black, rest for white
+---

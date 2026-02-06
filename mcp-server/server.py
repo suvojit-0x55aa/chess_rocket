@@ -34,6 +34,13 @@ _games: dict[str, dict] = {}
 
 _DATA_DIR = _PROJECT_ROOT / "data"
 
+# Register opening tools from separate module
+_MCP_SERVER_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(_MCP_SERVER_DIR))
+from openings_tools import register_openings_tools  # noqa: E402
+
+register_openings_tools(mcp, _games, _DATA_DIR, _PROJECT_ROOT)
+
 
 def _build_game_state(game_id: str, game: dict) -> dict:
     """Build a GameState dict from the in-memory game record.
