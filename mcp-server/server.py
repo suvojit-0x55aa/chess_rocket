@@ -631,6 +631,127 @@ def srs_add_card(
 
 
 # ---------------------------------------------------------------------------
+# US-015: save_session tool
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool()
+def save_session(
+    game_id: str,
+    estimated_elo: int | None = None,
+    accuracy_pct: float | None = None,
+    lesson_name: str = "",
+    areas_for_improvement: list[str] | None = None,
+    summary: str = "",
+) -> dict:
+    """Persist all session data (progress update + session log) in one call.
+
+    Args:
+        game_id: UUID of the game.
+        estimated_elo: Updated Elo estimate for the player (or None to keep existing).
+        accuracy_pct: Player accuracy percentage for this game.
+        lesson_name: Name of the lesson/topic covered.
+        areas_for_improvement: List of areas the player should work on.
+        summary: Free-text summary of the session.
+
+    Returns:
+        Dict with message, session_id, session_file, and updated progress.
+    """
+    game = _get_game(game_id)
+    if game is None:
+        return {"error": f"Game not found: {game_id}"}
+
+    board: chess.Board = game["board"]
+
+    # Load existing progress or defaults
+    progress_path = _DATA_DIR / "progress.json"
+    defaults = {
+        "current_elo": 400,
+        "estimated_elo": 400,
+        "sessions_completed": 0,
+        "streak": 0,
+        "total_games": 0,
+        "accuracy_history": [],
+        "areas_for_improvement": [],
+        "last_session": None,
+    }
+    try:
+        if progress_path.exists():
+            progress = json.loads(progress_path.read_text(encoding="utf-8"))
+            for k, v in defaults.items():
+                progress.setdefault(k, v)
+        else:
+            progress = dict(defaults)
+    except (json.JSONDecodeError, OSError):
+        progress = dict(defaults)
+
+    # Update progress
+    if estimated_elo is not None:
+        progress["current_elo"] = estimated_elo
+        progress["estimated_elo"] = estimated_elo
+    progress["sessions_completed"] += 1
+    progress["total_games"] += 1
+    progress["streak"] += 1
+    if accuracy_pct is not None:
+        progress["accuracy_history"].append(accuracy_pct)
+    now_iso = datetime.now(timezone.utc).isoformat()
+    progress["last_session"] = now_iso
+    if areas_for_improvement is not None:
+        progress["areas_for_improvement"] = areas_for_improvement
+
+    # Write progress atomically
+    _DATA_DIR.mkdir(parents=True, exist_ok=True)
+    tmp_progress = _DATA_DIR / "progress.json.tmp"
+    tmp_progress.write_text(
+        json.dumps(progress, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    os.replace(tmp_progress, progress_path)
+
+    # Build session log
+    session_num = progress["sessions_completed"]
+    session_id = f"session_{session_num:03d}"
+
+    result = None
+    if board.is_game_over():
+        result = board.result()
+    total_moves = len(board.move_stack)
+
+    session_log = {
+        "session_id": session_id,
+        "game_id": game_id,
+        "date": now_iso,
+        "result": result,
+        "player_color": game["player_color"],
+        "target_elo": game["target_elo"],
+        "estimated_elo": progress["estimated_elo"],
+        "total_moves": total_moves,
+        "accuracy_pct": accuracy_pct,
+        "lesson_name": lesson_name,
+        "areas_for_improvement": areas_for_improvement or [],
+        "summary": summary,
+    }
+
+    # Write session log
+    sessions_dir = _DATA_DIR / "sessions"
+    sessions_dir.mkdir(parents=True, exist_ok=True)
+    session_file = f"{session_id}.json"
+    tmp_session = sessions_dir / f"{session_file}.tmp"
+    tmp_session.write_text(
+        json.dumps(session_log, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    os.replace(tmp_session, sessions_dir / session_file)
+
+    return {
+        "message": f"Session {session_id} saved successfully",
+        "session_id": session_id,
+        "session_file": f"data/sessions/{session_file}",
+        "progress": progress,
+    }
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
