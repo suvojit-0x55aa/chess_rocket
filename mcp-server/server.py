@@ -12,6 +12,7 @@ import os
 import sys
 import uuid
 from dataclasses import asdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Add project root to path so we can import scripts.*
@@ -102,6 +103,69 @@ def _sync_game_json(game_state: dict) -> None:
         json.dumps(game_state, indent=2, default=str, ensure_ascii=False),
         encoding="utf-8",
     )
+    os.replace(tmp, target)
+
+
+def _auto_save_pgn(game_id: str, game: dict) -> None:
+    """Auto-save PGN file when a game ends.
+
+    Builds PGN from the board's move stack and writes it atomically
+    to data/games/. Includes player and engine Elo in headers.
+
+    Args:
+        game_id: UUID of the game.
+        game: Internal game record.
+    """
+    board: chess.Board = game["board"]
+    pgn_game = chess.pgn.Game()
+
+    # Set up the game from starting FEN if not standard
+    starting_fen = game["starting_fen"]
+    if starting_fen != chess.STARTING_FEN:
+        pgn_game.setup(chess.Board(starting_fen))
+
+    # Read player Elo from progress.json
+    player_elo = "unknown"
+    progress_path = _DATA_DIR / "progress.json"
+    try:
+        if progress_path.exists():
+            progress = json.loads(progress_path.read_text(encoding="utf-8"))
+            player_elo = str(progress.get("current_elo", progress.get("estimated_elo", "unknown")))
+    except (json.JSONDecodeError, OSError):
+        pass
+
+    target_elo = game["target_elo"]
+    player_color = game["player_color"]
+
+    # PGN headers
+    now = datetime.now(timezone.utc)
+    pgn_game.headers["Event"] = "Chess Speedrun"
+    pgn_game.headers["Site"] = "Chess Rocket"
+    pgn_game.headers["Date"] = now.strftime("%Y.%m.%d")
+    pgn_game.headers["White"] = (
+        f"Player (Elo {player_elo})" if player_color == "white"
+        else f"Stockfish (Elo {target_elo})"
+    )
+    pgn_game.headers["Black"] = (
+        f"Player (Elo {player_elo})" if player_color == "black"
+        else f"Stockfish (Elo {target_elo})"
+    )
+    if board.is_game_over():
+        pgn_game.headers["Result"] = board.result()
+
+    # Replay moves into PGN
+    node = pgn_game
+    for m in board.move_stack:
+        node = node.add_variation(m)
+
+    # Write atomically to data/games/
+    games_dir = _DATA_DIR / "games"
+    games_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = now.strftime("%Y%m%d_%H%M%S")
+    filename = f"game_{timestamp}_{game_id[:8]}.pgn"
+    target = games_dir / filename
+    tmp = games_dir / f"{filename}.tmp"
+    tmp.write_text(str(pgn_game) + "\n", encoding="utf-8")
     os.replace(tmp, target)
 
 
@@ -220,6 +284,9 @@ def make_move(game_id: str, move: str) -> dict:
 
     board.push(chess_move)
 
+    if board.is_game_over():
+        _auto_save_pgn(game_id, game)
+
     state = _build_game_state(game_id, game)
     _sync_game_json(state)
     return state
@@ -247,6 +314,9 @@ def engine_move(game_id: str) -> dict:
     engine: ChessEngine = game["engine"]
     chess_move = engine.get_engine_move(board)
     board.push(chess_move)
+
+    if board.is_game_over():
+        _auto_save_pgn(game_id, game)
 
     state = _build_game_state(game_id, game)
     _sync_game_json(state)
