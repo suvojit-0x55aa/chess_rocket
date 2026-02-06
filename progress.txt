@@ -10,6 +10,9 @@
 - Use `uv run python` to execute scripts (system python3 lacks project deps)
 - mcp-server/ has hyphen in name - use importlib.util for imports in tests, not regular `from mcp_server import`
 - Atomic file writes: always use temp file + os.replace() pattern for data persistence
+- Lichess TSVs have only 3 columns (eco, name, pgn) - derive UCI and EPD from PGN using python-chess
+- Openings trie: nested dict keyed on UCI moves, `_eco`/`_name` at named nodes
+- build_openings_db.py uses python-chess (not stdlib only) to convert PGN→UCI+EPD
 - PGN auto-saves on game over in make_move/engine_move (fire-and-forget)
 - progress.json uses both `current_elo` and `estimated_elo` keys for forward compat
 - Tests with real Stockfish: use `_clean_data` fixture to backup/restore data files
@@ -184,4 +187,31 @@ Started: 2026-02-06
   - mcp-server/ directory has hyphen: cannot use normal Python import, use importlib.util
   - set_position with a near-mate FEN is the fastest way to test game completion
   - Scholar's mate position (Qxf7#) is ideal for tests: one move to checkmate
+---
+
+## 2026-02-07 - US-020: Build openings data pipeline
+- Created scripts/build_openings_db.py: downloads 5 Lichess TSVs, builds SQLite DB + JSON trie
+- Downloads cached in data/openings_raw/ to avoid re-downloading
+- Derives UCI moves and EPD from PGN using python-chess (TSVs only have eco, name, pgn columns)
+- SQLite: 3,641 openings with indexes on eco, eco_volume, family, name
+- Trie: 330KB nested dict keyed on UCI moves, `_eco`/`_name` at named nodes
+- Deleted chess-openings/ directory (LFS Parquet replaced by TSV download)
+- Updated .gitignore with data/openings_raw/, data/openings.db, data/openings_trie.json
+- Updated scripts/install.sh with `uv run python scripts/build_openings_db.py` step
+
+**Files changed:**
+- Created: scripts/build_openings_db.py
+- Modified: .gitignore
+- Modified: scripts/install.sh
+- Modified: prd.json (US-020 passes: true)
+- Deleted: chess-openings/ directory
+
+**Learnings for future iterations:**
+- Lichess TSV files only have 3 columns (eco, name, pgn) - no uci or epd columns
+- Must derive UCI moves from PGN using chess.pgn.read_game() and board iteration
+- EPD derived from final board position after replaying all PGN moves
+- python-chess is required dependency (not stdlib-only as originally planned)
+- Trie is 330KB (well under 1MB limit) for 3,641 openings
+- Lichess count is 3,641 (close to the ~3,627 mentioned in PRD)
+- 2 pre-existing test failures in test_post_game.py (session numbering brittleness, not caused by US-020)
 ---

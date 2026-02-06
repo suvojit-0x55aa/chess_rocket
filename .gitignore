@@ -19,6 +19,11 @@ venv/
 data/
 !data/.gitkeep
 
+# Openings data (built by scripts/build_openings_db.py)
+data/openings_raw/
+data/openings.db
+data/openings_trie.json
+
 # OS files
 .DS_Store
 Thumbs.db

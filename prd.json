@@ -445,7 +445,7 @@
         "uv run python scripts/build_openings_db.py completes without error"
       ],
       "priority": 20,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 1. Source: Lichess GitHub TSVs (~200KB total). The chess-openings/ directory with LFS Parquet pointer should be deleted."
     },
     {
