@@ -548,7 +548,7 @@
         "python -m py_compile scripts/generate_opening_puzzles.py passes"
       ],
       "priority": 24,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 5. Depends on US-020 (reads from data/openings.db). Trap generation uses Stockfish - run once, commit the JSON output. Curated traps are hardcoded in the script."
     },
     {

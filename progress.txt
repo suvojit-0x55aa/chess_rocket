@@ -288,3 +288,28 @@ Started: 2026-02-06
 - current_opening dict has 4 keys: eco, name, family, moves_matched (subset of full identify_opening result, no pgn)
 - TUI uses isinstance(current_opening, dict) check to handle both None and missing key gracefully
 ---
+
+## 2026-02-07 - US-024: Opening puzzle generation
+- Created scripts/generate_opening_puzzles.py with two puzzle generators:
+  - Opening-moves: ~35 "next book move" knowledge tests from openings DB, covering all 5 ECO volumes (A-E)
+  - Opening-traps: ~22 opening trap refutation puzzles (10 curated famous traps + 12 auto-generated via Stockfish)
+- Curated traps include: Scholar's Mate, Fried Liver Attack, Fishing Pole, King's Gambit traps, Fool's Mate, Legal's Mate prep, Englund Gambit, French Advance, Budapest Gambit
+- Auto-generated traps use Stockfish depth 15 to find positions where a natural move loses >= 150cp
+- Updated scripts/validate_puzzles.py EXPECTED_FILES to include opening-moves.json and opening-traps.json
+- All 126 puzzles across 8 files pass validation (FEN validity, legal move sequences)
+
+**Files changed:**
+- Created: scripts/generate_opening_puzzles.py (285 lines)
+- Created: puzzles/opening-moves.json (35 puzzles)
+- Created: puzzles/opening-traps.json (22 puzzles)
+- Modified: scripts/validate_puzzles.py (added 2 new files to EXPECTED_FILES)
+- Modified: prd.json (US-024 passes: true)
+
+**Learnings for future iterations:**
+- Curated trap FENs must be validated before committing - one had Qh4# (checkmate, no legal moves) instead of Qh4+ (check)
+- Auto-generated traps: use depth 15 for speed (full-strength depth 20 is too slow for scanning 200 openings)
+- cp_loss calculation after a move: best_cp - (-after_cp) where after_cp is from the opponent's perspective
+- random.seed(42) ensures reproducible puzzle generation across runs
+- Puzzle schema must match existing format: fen, solution_moves (UCI), solution_san, motif, difficulty, explanation
+- 2 pre-existing test_post_game.py failures (session numbering brittleness) are NOT caused by this story
+---
