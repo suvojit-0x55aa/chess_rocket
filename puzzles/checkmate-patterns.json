@@ -1,0 +1,134 @@
+[
+  {
+    "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 3 3",
+    "solution_moves": [
+      "f3f7"
+    ],
+    "solution_san": [
+      "Qxf7#"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Scholar's Mate! Queen captures f7 with bishop support from c4. Checkmate!"
+  },
+  {
+    "fen": "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq g3 0 2",
+    "solution_moves": [
+      "d8h4"
+    ],
+    "solution_san": [
+      "Qh4#"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Fool's Mate! Queen to h4 is checkmate. The f3 and g4 pawns opened the king's defenses."
+  },
+  {
+    "fen": "4k3/8/3K4/4Q3/8/8/8/8 w - - 0 1",
+    "solution_moves": [
+      "e5f6"
+    ],
+    "solution_san": [
+      "Qf6"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Queen moves to f6, delivering checkmate. The king and queen work together to control all escape squares."
+  },
+  {
+    "fen": "4k3/R7/1R6/8/8/8/8/6K1 w - - 0 1",
+    "solution_moves": [
+      "b6b8"
+    ],
+    "solution_san": [
+      "Rb8#"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Ladder mate! Rook moves to b8, checkmate. The other rook on a7 controls the 7th rank escape."
+  },
+  {
+    "fen": "k7/8/1K6/8/8/8/8/Q7 w - - 0 1",
+    "solution_moves": [
+      "a1a7"
+    ],
+    "solution_san": [
+      "Qa7#"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Queen delivers checkmate on a7. King on b6 supports the queen and blocks escape."
+  },
+  {
+    "fen": "3rkr2/8/8/8/8/8/4Q3/6K1 w - - 0 1",
+    "solution_moves": [
+      "e2e6"
+    ],
+    "solution_san": [
+      "Qe6#"
+    ],
+    "motif": "checkmate",
+    "difficulty": "intermediate",
+    "explanation": "Epaulette Mate! Queen checks on e6, and Black's own rooks on d8 and f8 block the king's escape."
+  },
+  {
+    "fen": "4k3/8/4K3/8/8/8/8/7R w - - 0 1",
+    "solution_moves": [
+      "h1h8"
+    ],
+    "solution_san": [
+      "Rh8#"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Rook delivers checkmate on h8. The white king on e6 controls all escape squares."
+  },
+  {
+    "fen": "5k2/8/8/7Q/8/8/8/6K1 w - - 0 1",
+    "solution_moves": [
+      "h5f7"
+    ],
+    "solution_san": [
+      "Qf7+"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Queen moves to f7, delivering checkmate. All escape squares are covered by the queen."
+  },
+  {
+    "fen": "7k/6Q1/6K1/8/8/8/8/8 w - - 0 1",
+    "solution_moves": [
+      "g7g8"
+    ],
+    "solution_san": [
+      "Qg8+"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Queen delivers checkmate on g8. King on g6 covers h7, completing the mating net."
+  },
+  {
+    "fen": "4k3/8/5K2/8/4Q3/8/8/7R w - - 0 1",
+    "solution_moves": [
+      "h1h8"
+    ],
+    "solution_san": [
+      "Rh8+"
+    ],
+    "motif": "checkmate",
+    "difficulty": "intermediate",
+    "explanation": "Rook checkmates on h8. King on f6 and queen on e4 control all escape squares."
+  },
+  {
+    "fen": "3k4/R7/8/8/8/8/8/4R1K1 w - - 0 1",
+    "solution_moves": [
+      "e1e8"
+    ],
+    "solution_san": [
+      "Re8+"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "explanation": "Rook delivers checkmate on e8. Ra7 controls the 7th rank, trapping the king on the 8th rank."
+  }
+]

@@ -1,0 +1,24 @@
+[project]
+name = "chess-speedrun"
+version = "0.1.0"
+description = "An adaptive chess tutor system using Claude Code + Stockfish + MCP server + TUI"
+requires-python = ">=3.10"
+dependencies = [
+    "python-chess",
+    "rich",
+    "textual",
+    "watchdog",
+    "mcp[cli]",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["scripts"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

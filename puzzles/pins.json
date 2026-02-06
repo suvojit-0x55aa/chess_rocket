@@ -1,0 +1,146 @@
+[
+  {
+    "fen": "r1bqkbnr/pppppppp/2n5/1B6/4P3/8/PPPP1PPP/RNBQK1NR w KQkq - 2 2",
+    "solution_moves": [
+      "b5c6"
+    ],
+    "solution_san": [
+      "Bxc6"
+    ],
+    "motif": "pin",
+    "difficulty": "beginner",
+    "explanation": "The bishop on b5 pins the knight to the king. Capture it with Bxc6."
+  },
+  {
+    "fen": "r1bqkb1r/pppppppp/5n2/6B1/4P3/8/PPPP1PPP/RN1QKBNR w KQkq - 3 3",
+    "solution_moves": [
+      "g5f6"
+    ],
+    "solution_san": [
+      "Bxf6"
+    ],
+    "motif": "pin",
+    "difficulty": "beginner",
+    "explanation": "The bishop pins the knight to the queen on d8. Capture the knight."
+  },
+  {
+    "fen": "8/6k1/8/4q3/8/8/1B6/4K3 w - - 0 1",
+    "solution_moves": [
+      "b2e5"
+    ],
+    "solution_san": [
+      "Bxe5+"
+    ],
+    "motif": "pin",
+    "difficulty": "intermediate",
+    "explanation": "The queen is pinned to the king along the long diagonal. Capture it."
+  },
+  {
+    "fen": "4k3/8/8/8/r3B2K/8/8/8 b - - 0 1",
+    "solution_moves": [
+      "a4e4"
+    ],
+    "solution_san": [
+      "Rxe4+"
+    ],
+    "motif": "pin",
+    "difficulty": "beginner",
+    "explanation": "The white bishop is pinned to the king on the 4th rank. Capture it."
+  },
+  {
+    "fen": "3k4/3q4/8/8/8/8/8/3RK3 w - - 0 1",
+    "solution_moves": [
+      "d1d7"
+    ],
+    "solution_san": [
+      "Rxd7+"
+    ],
+    "motif": "pin",
+    "difficulty": "intermediate",
+    "explanation": "The queen is pinned to the king on the d-file. Capture it with the rook."
+  },
+  {
+    "fen": "3k4/8/8/8/3b4/8/8/3QK3 w - - 0 1",
+    "solution_moves": [
+      "d1d4"
+    ],
+    "solution_san": [
+      "Qxd4+"
+    ],
+    "motif": "pin",
+    "difficulty": "beginner",
+    "explanation": "The bishop is pinned to the king on the d-file. Take it with the queen."
+  },
+  {
+    "fen": "r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2",
+    "solution_moves": [
+      "f1b5"
+    ],
+    "solution_san": [
+      "Bb5"
+    ],
+    "motif": "pin",
+    "difficulty": "intermediate",
+    "explanation": "Develop the bishop to b5, pinning the knight to the king."
+  },
+  {
+    "fen": "4r1k1/8/8/8/8/8/8/4R1K1 w - - 0 1",
+    "solution_moves": [
+      "e1e8"
+    ],
+    "solution_san": [
+      "Rxe8+"
+    ],
+    "motif": "pin",
+    "difficulty": "beginner",
+    "explanation": "The black rook is pinned to its king. Capture it with check."
+  },
+  {
+    "fen": "5k2/8/8/5b2/8/8/8/5RK1 w - - 0 1",
+    "solution_moves": [
+      "f1f5"
+    ],
+    "solution_san": [
+      "Rxf5+"
+    ],
+    "motif": "pin",
+    "difficulty": "beginner",
+    "explanation": "The bishop is pinned to the king on the f-file. Capture it."
+  },
+  {
+    "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+    "solution_moves": [
+      "c4f7"
+    ],
+    "solution_san": [
+      "Bxf7+"
+    ],
+    "motif": "pin",
+    "difficulty": "intermediate",
+    "explanation": "Capture the pawn on f7 with check. The knight on f6 cannot recapture because it's pinned."
+  },
+  {
+    "fen": "2k5/8/8/8/8/2b5/8/2R3K1 w - - 0 1",
+    "solution_moves": [
+      "c1c3"
+    ],
+    "solution_san": [
+      "Rxc3+"
+    ],
+    "motif": "pin",
+    "difficulty": "intermediate",
+    "explanation": "Rook captures the bishop which is pinned to the king on the c-file."
+  },
+  {
+    "fen": "r1bqkb1r/pppp1ppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 4 4",
+    "solution_moves": [
+      "f1b5"
+    ],
+    "solution_san": [
+      "Bb5"
+    ],
+    "motif": "pin",
+    "difficulty": "intermediate",
+    "explanation": "Develop the bishop to b5, pinning the knight on c6 to the king."
+  }
+]

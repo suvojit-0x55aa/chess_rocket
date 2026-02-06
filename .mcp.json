@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "chess-speedrun": {
+      "command": "uv",
+      "args": ["run", "python", "mcp-server/server.py"],
+      "cwd": "/Users/shin/Documents/Project/chess_rocket"
+    }
+  }
+}
