@@ -290,6 +290,135 @@
       "priority": 13,
       "passes": true,
       "notes": "Final story - verification that all pieces are in place. Should be the last story implemented."
+    },
+    {
+      "id": "US-014",
+      "title": "Auto-save PGN on game over",
+      "description": "As a user, I need completed games to be automatically saved as PGN files so no game data is lost when the post-game flow is interrupted.",
+      "acceptanceCriteria": [
+        "Add `from datetime import datetime, timezone` import to mcp-server/server.py",
+        "New helper function `_auto_save_pgn(game_id, game)` in mcp-server/server.py near `_sync_game_json`",
+        "Builds PGN from board.move_stack using chess.pgn.Game",
+        "PGN headers include: Event='Chess Speedrun', Site='Chess Rocket', Date (UTC), Result",
+        "PGN White/Black headers include Elo labels: 'Player (Elo N)' vs 'Stockfish (Elo N)'",
+        "Player Elo read from data/progress.json (fallback to 'unknown' if file missing or unreadable)",
+        "Writes atomically to data/games/game_{timestamp}_{game_id[:8]}.pgn (temp file + os.replace)",
+        "Creates data/games/ directory if it doesn't exist",
+        "Called automatically in make_move() after board.push() when board.is_game_over() is True",
+        "Called automatically in engine_move() after board.push() when board.is_game_over() is True",
+        "Does NOT affect the return value of make_move or engine_move (fire-and-forget save)",
+        "python -m py_compile mcp-server/server.py passes",
+        "python -c \"import mcp.server.fastmcp\" passes"
+      ],
+      "priority": 14,
+      "passes": true,
+      "notes": "See plan.md section 'US-014' for implementation details. Modifies existing make_move and engine_move functions in mcp-server/server.py."
+    },
+    {
+      "id": "US-015",
+      "title": "Add save_session MCP tool",
+      "description": "As a tutor, I need a single MCP tool call that persists all session data (progress, session log) so nothing is lost between games.",
+      "acceptanceCriteria": [
+        "New @mcp.tool() save_session(game_id, estimated_elo=None, accuracy_pct=None, lesson_name='', areas_for_improvement=None, summary='') in mcp-server/server.py",
+        "Loads data/progress.json with fallback to defaults if missing: {current_elo: 400, estimated_elo: 400, sessions_completed: 0, streak: 0, total_games: 0, accuracy_history: [], areas_for_improvement: [], last_session: null}",
+        "Updates progress: current_elo and estimated_elo set to estimated_elo param (or keep existing if None)",
+        "Increments sessions_completed by 1",
+        "Increments total_games by 1",
+        "Increments streak by 1 (always, regardless of game result)",
+        "Appends accuracy_pct to accuracy_history (if not None)",
+        "Sets last_session to current ISO 8601 UTC timestamp",
+        "Sets areas_for_improvement if provided (replaces existing list)",
+        "Writes data/progress.json atomically (temp file + os.replace)",
+        "Writes session log to data/sessions/session_NNN.json (NNN = zero-padded sessions_completed)",
+        "Session log contains: session_id, game_id, date (ISO 8601), result, player_color, target_elo, estimated_elo, total_moves, accuracy_pct, lesson_name, areas_for_improvement, summary",
+        "Creates data/sessions/ directory if it doesn't exist",
+        "Returns dict with 'message', 'session_id', 'session_file', 'progress' keys",
+        "Invalid game_id returns error dict: {\"error\": \"Game not found: <id>\"}",
+        "python -m py_compile mcp-server/server.py passes"
+      ],
+      "priority": 15,
+      "passes": true,
+      "notes": "See plan.md section 'US-015' for implementation details. Appends new tool to existing mcp-server/server.py."
+    },
+    {
+      "id": "US-016",
+      "title": "Add create_srs_cards_from_game MCP tool",
+      "description": "As a tutor, I need a tool that batch-analyzes a completed game and creates SRS cards for all significant mistakes in one call.",
+      "acceptanceCriteria": [
+        "New @mcp.tool() create_srs_cards_from_game(game_id, cp_threshold=80) in mcp-server/server.py",
+        "Returns error dict if game is not over (board.is_game_over() is False)",
+        "Returns error dict if game_id not found",
+        "Creates fresh ChessEngine at full strength (set_difficulty(3000)) for analysis",
+        "Replays game from game['starting_fen'], evaluates each player move at depth 20",
+        "Determines player moves based on game['player_color'] and board turn",
+        "For moves with cp_loss >= cp_threshold: creates SRS card via SRSManager.add_card()",
+        "SRS card explanation includes move number, player move, best move, and cp_loss",
+        "Closes analysis engine after completion (analysis_engine.close())",
+        "Returns dict with: game_id, total_player_moves, mistakes_found, cards_created, mistakes list (each with fen, move_number, player_move, best_move, cp_loss, classification), card_ids",
+        "Game with no moves returns: {game_id, total_player_moves: 0, mistakes_found: 0, cards_created: 0, mistakes: [], card_ids: []}",
+        "python -m py_compile mcp-server/server.py passes"
+      ],
+      "priority": 16,
+      "passes": true,
+      "notes": "See plan.md section 'US-016' for implementation details. Uses fixed depth 20 analysis (15-30s for full game is acceptable). Appends new tool to existing mcp-server/server.py."
+    },
+    {
+      "id": "US-017",
+      "title": "Fix export.py estimated_elo key mismatch",
+      "description": "As a developer, I need export.py to correctly read the player's Elo from progress.json regardless of which key name is used.",
+      "acceptanceCriteria": [
+        "scripts/export.py line 39 updated: progress.get('estimated_elo', progress.get('current_elo', 'Unknown'))",
+        "export_progress() works with progress.json containing only 'current_elo' key",
+        "export_progress() works with progress.json containing only 'estimated_elo' key",
+        "export_progress() works with progress.json containing both keys (estimated_elo takes priority)",
+        "python -m py_compile scripts/export.py passes",
+        "python -c \"from scripts.export import export_progress, export_games\" passes"
+      ],
+      "priority": 17,
+      "passes": true,
+      "notes": "See plan.md section 'US-017'. One-line fix. The save_session tool (US-015) writes both keys for forward compatibility."
+    },
+    {
+      "id": "US-018",
+      "title": "Update CLAUDE.md and SKILL.md for post-game automation",
+      "description": "As a tutor, I need CLAUDE.md and SKILL.md to reference the new automated tools instead of manual file write instructions.",
+      "acceptanceCriteria": [
+        "CLAUDE.md Post-Game Flow section updated: notes PGN is auto-saved on game over",
+        "CLAUDE.md Post-Game Flow section updated: references create_srs_cards_from_game(game_id) for batch SRS",
+        "CLAUDE.md Session End Flow section updated: references save_session(game_id, ...) instead of manual file writes",
+        "CLAUDE.md MCP Tools Reference table updated to include save_session and create_srs_cards_from_game",
+        "SKILL.md section 7 (Post-Game Flow) updated to reference auto-saved PGN and create_srs_cards_from_game",
+        "SKILL.md section 8 (Session Ending Flow) updated to reference save_session tool",
+        "SKILL.md section 13 (File References) system files table updated to mention new tools",
+        "Both files are valid markdown with no broken formatting"
+      ],
+      "priority": 18,
+      "passes": true,
+      "notes": "See plan.md section 'US-018'. Documentation-only changes. No code validation needed."
+    },
+    {
+      "id": "US-019",
+      "title": "End-to-end post-game flow integration test",
+      "description": "As a developer, I need a pytest integration test that exercises the full post-game chain (auto PGN, save_session, batch SRS, export) using real Stockfish.",
+      "acceptanceCriteria": [
+        "tests/test_post_game.py exists",
+        "Test imports server functions directly from mcp-server/server.py (not via MCP protocol)",
+        "Test calls new_game() to start a game",
+        "Test plays a short game to completion (e.g., use set_position with a near-mate FEN, then make the mating move)",
+        "Test verifies PGN was auto-saved: at least one .pgn file exists in data/games/ after game over",
+        "Test calls save_session() and verifies data/progress.json was updated (sessions_completed > 0, streak > 0)",
+        "Test verifies a session log file was created in data/sessions/",
+        "Test calls create_srs_cards_from_game() and verifies it returns without error (cards_created >= 0)",
+        "Test calls export_progress() from scripts.export and verifies it returns non-empty markdown string",
+        "Test cleans up test data files after run (restore original progress.json and srs_cards.json, remove test PGN and session files)",
+        "Uses real Stockfish (requires Stockfish installed)",
+        "python -m py_compile tests/test_post_game.py passes",
+        "uv run python -m pytest tests/test_post_game.py -v passes",
+        "uv run python -m pytest tests/ passes (all existing tests still pass)"
+      ],
+      "priority": 19,
+      "passes": true,
+      "notes": "See plan.md section 'US-019'. Final verification story. Uses real Stockfish for true integration testing. Test should use pytest fixtures for setup/teardown of data files."
     }
   ]
 }
