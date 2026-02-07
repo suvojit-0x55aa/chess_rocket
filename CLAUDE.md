@@ -39,6 +39,7 @@ ELSE:
 ### Play
 - Start game: `new_game(target_elo, player_color)`
 - TUI auto-displays board (run `uv run python scripts/tui.py` in a separate terminal)
+- After each move, the current opening is automatically identified and shown in the TUI sidebar
 - After each player move, evaluate with `evaluate_move()` before responding
 
 ### Analyze
@@ -170,6 +171,31 @@ Quality scale: 0-2 = failed (reset to 4hr), 3-5 = passed (advance interval).
    - Behaviorist: "Streak is 5 — reinforce consistency, introduce challenge"
 3. **Export progress** if requested: `uv run python scripts/export.py progress`
 
+## Opening Study Mode
+
+Use the opening tools to teach openings interactively:
+
+### Identify During Play
+- `identify_opening(game_id)` — automatically called during games; shows the current opening name and ECO code in the TUI
+- When the player leaves book (moves diverge from known openings), `current_opening` clears to None
+
+### Search and Explore
+- `search_openings(query)` — search the full 3,627-opening database by name or ECO code
+- `get_opening_details(eco)` — get all variations for an ECO code (e.g., "B20" for Sicilian lines)
+
+### Suggest and Quiz
+- `suggest_opening(elo, color)` — recommend level-appropriate openings; reads Elo from progress.json if not provided
+- `opening_quiz(eco, difficulty)` — quiz the student on the next book move; creates a real game position for practice
+
+### Teaching Flow
+```
+→ suggest_opening() to pick an appropriate opening
+→ Explain the opening's ideas using references/opening-guide.md
+→ opening_quiz() to test the student's knowledge
+→ If incorrect: explain the move, connect to opening principles
+→ If correct: praise and advance to a harder variation
+```
+
 ## Using Puzzles
 
 Load puzzles by motif for targeted practice:
@@ -193,6 +219,8 @@ Available puzzle sets:
 | `puzzles/back-rank.json` | Back-rank mate threats | 12 |
 | `puzzles/checkmate-patterns.json` | Checkmate patterns | 11 |
 | `puzzles/beginner-endgames.json` | Basic endgame positions | 11 |
+| `puzzles/opening-moves.json` | Next book move knowledge tests | 35 |
+| `puzzles/opening-traps.json` | Opening trap refutation puzzles | 22 |
 
 ## MCP Tools Reference
 
@@ -211,6 +239,15 @@ Available puzzle sets:
 | `analyze_position(fen, depth, multipv)` | Deep analysis of any position |
 | `evaluate_move(game_id, move)` | Evaluate a move without playing it |
 | `set_difficulty(game_id, target_elo)` | Adjust engine strength |
+
+### Openings
+| Tool | Usage |
+|------|-------|
+| `identify_opening(game_id)` | Identify the current opening being played |
+| `search_openings(query, eco, eco_volume, limit)` | Search 3,627 openings by name or ECO code |
+| `get_opening_details(eco)` | Get all variations for an ECO code |
+| `suggest_opening(elo, color)` | Suggest level-appropriate openings for study |
+| `opening_quiz(eco, difficulty)` | Quiz on the next book move in an opening |
 
 ### Utility
 | Tool | Usage |
@@ -244,3 +281,5 @@ Available puzzle sets:
 | `data/sessions/` | Session logs |
 | `data/games/` | Saved PGN files |
 | `data/lesson_plans/` | Generated lesson plans |
+| `data/openings.db` | SQLite database of 3,627 chess openings |
+| `data/openings_trie.json` | JSON trie for fast opening identification |

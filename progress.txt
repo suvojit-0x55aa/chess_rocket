@@ -10,7 +10,11 @@
 - Use `uv run python` to execute scripts (system python3 lacks project deps)
 - mcp-server/ has hyphen in name - use importlib.util for imports in tests, not regular `from mcp_server import`
 - Atomic file writes: always use temp file + os.replace() pattern for data persistence
+- Lichess TSVs have only 3 columns (eco, name, pgn) - derive UCI and EPD from PGN using python-chess
+- Openings trie: nested dict keyed on UCI moves, `_eco`/`_name` at named nodes
+- build_openings_db.py uses python-chess (not stdlib only) to convert PGN→UCI+EPD
 - PGN auto-saves on game over in make_move/engine_move (fire-and-forget)
+- FastMCP tool functions: access via mcp._tool_manager._tools["tool_name"].fn for direct testing without MCP protocol
 - progress.json uses both `current_elo` and `estimated_elo` keys for forward compat
 - Tests with real Stockfish: use `_clean_data` fixture to backup/restore data files
 ---
@@ -184,4 +188,176 @@ Started: 2026-02-06
   - mcp-server/ directory has hyphen: cannot use normal Python import, use importlib.util
   - set_position with a near-mate FEN is the fastest way to test game completion
   - Scholar's mate position (Qxf7#) is ideal for tests: one move to checkmate
+---
+
+## 2026-02-07 - US-020: Build openings data pipeline
+- Created scripts/build_openings_db.py: downloads 5 Lichess TSVs, builds SQLite DB + JSON trie
+- Downloads cached in data/openings_raw/ to avoid re-downloading
+- Derives UCI moves and EPD from PGN using python-chess (TSVs only have eco, name, pgn columns)
+- SQLite: 3,641 openings with indexes on eco, eco_volume, family, name
+- Trie: 330KB nested dict keyed on UCI moves, `_eco`/`_name` at named nodes
+- Deleted chess-openings/ directory (LFS Parquet replaced by TSV download)
+- Updated .gitignore with data/openings_raw/, data/openings.db, data/openings_trie.json
+- Updated scripts/install.sh with `uv run python scripts/build_openings_db.py` step
+
+**Files changed:**
+- Created: scripts/build_openings_db.py
+- Modified: .gitignore
+- Modified: scripts/install.sh
+- Modified: prd.json (US-020 passes: true)
+- Deleted: chess-openings/ directory
+
+**Learnings for future iterations:**
+- Lichess TSV files only have 3 columns (eco, name, pgn) - no uci or epd columns
+- Must derive UCI moves from PGN using chess.pgn.read_game() and board iteration
+- EPD derived from final board position after replaying all PGN moves
+- python-chess is required dependency (not stdlib-only as originally planned)
+- Trie is 330KB (well under 1MB limit) for 3,641 openings
+- Lichess count is 3,641 (close to the ~3,627 mentioned in PRD)
+- 2 pre-existing test failures in test_post_game.py (session numbering brittleness, not caused by US-020)
+---
+
+## 2026-02-07 - US-021: Opening recognition library
+- Created scripts/openings.py with OpeningsDB class
+- Trie-based identify_opening() returns deepest matching named node with eco, name, family, moves_matched, pgn
+- get_continuations() walks trie to find named openings branching from current position
+- SQLite methods: search_openings (LIKE query), get_opening_by_eco, get_opening_lines (by family)
+- get_openings_for_level: Phase 1 (<600) short common openings, Phase 2 (600-1000) medium, Phase 3 (1000+) full
+- get_random_opening with optional eco_volume and max_moves filters
+- Graceful degradation: all methods return None or empty lists when DB/trie files don't exist
+- All methods return plain dicts (not dataclasses), matching MCP server pattern
+- SQLite connections opened per-query for thread safety
+
+**Files changed:**
+- Created: scripts/openings.py (346 lines)
+- Modified: prd.json (US-021 passes: true)
+
+**Learnings for future iterations:**
+- Trie identify_opening returns deepest match: e.g. ["e2e4","c7c5","a2a3"] matches "Sicilian Defense: Mengarini Variation" (3 moves), not just "Sicilian Defense" (2 moves)
+- 1. a3 IS in the Lichess openings as "Anderssen's Opening" - almost every first move has a named opening
+- _BEGINNER_FAMILIES set controls Phase 1 filtering - update it if curriculum changes
+- sqlite3.Row + dict() conversion gives clean dicts without needing dataclasses
+- New MCP tools go in separate files (e.g. openings_tools.py), registered via register_*_tools() in server.py
+- server.py needs sys.path.insert(0, mcp-server dir) to import sibling modules when loaded from other directories
+---
+
+## 2026-02-07 - US-022: Opening MCP tools
+- Created mcp-server/openings_tools.py with register_openings_tools() function
+- 5 tools registered: identify_opening, search_openings, get_opening_details, suggest_opening, opening_quiz
+- identify_opening(game_id): extracts UCI moves from game, returns opening info via OpeningsDB trie
+- search_openings(query, eco, eco_volume, limit): LIKE search on openings DB
+- get_opening_details(eco): returns all variations for an ECO code
+- suggest_opening(elo, color): reads elo from progress.json if not provided, filters by color and level
+- opening_quiz(eco, difficulty): picks opening, plays N-1 moves, creates real game via set_position pattern, returns correct_move_san
+- opening_quiz tracks openings_studied in progress.json, resets when all covered
+- All 5 tools return error dict when openings DB not built
+- server.py modified: added sys.path insert for mcp-server/ dir + import/call register_openings_tools()
+- All 33 existing tests pass, py_compile passes on both files
+
+**Files changed:**
+- Created: mcp-server/openings_tools.py (264 lines)
+- Modified: mcp-server/server.py (~5 lines added for import and registration)
+- Modified: prd.json (US-022 passes: true)
+
+**Learnings for future iterations:**
+- New tool modules in mcp-server/ need sys.path manipulation in server.py for reliable import
+- server.py can be imported from project root (by tests) or from mcp-server/ dir (by MCP runtime) - imports must work in both cases
+- Opening quiz creates real games in _games dict so make_move/engine_move work on them
+- suggest_opening uses color heuristic: "defense"/"gambit" keywords for black, rest for white
+---
+
+## 2026-02-07 - US-023: Live game opening integration
+- Added `current_opening: dict | None = None` field to GameState dataclass in scripts/models.py
+- Initialized OpeningsDB in mcp-server/server.py (graceful degradation if DB not built)
+- Updated `_build_game_state()` to call `_openings_db.identify_opening()` with UCI moves from board.move_stack
+- `current_opening` is set to None when moves don't match any trie path (out of book behavior)
+- Updated scripts/tui.py sidebar to display "Opening: {name} ({eco})" when in book, "Out of book" when not
+- Updated data/sample_game.json with current_opening field (Italian Game: Two Knights Defense, C55)
+- All py_compile checks pass, TUI --sample renders correctly, 40/42 tests pass (2 pre-existing failures)
+
+**Files changed:**
+- Modified: scripts/models.py (added current_opening field)
+- Modified: mcp-server/server.py (import OpeningsDB, init _openings_db, update _build_game_state)
+- Modified: scripts/tui.py (display opening in sidebar)
+- Modified: data/sample_game.json (added current_opening)
+- Modified: prd.json (US-023 passes: true)
+
+**Learnings for future iterations:**
+- OpeningsDB graceful degradation means _openings_db can be initialized at module level safely - returns None if DB files don't exist
+- identify_opening() returns None for out-of-book positions (when moves diverge from trie), not an empty dict
+- Trie lookup is O(d) where d = number of moves played, adding zero perceptible latency to _build_game_state
+- current_opening dict has 4 keys: eco, name, family, moves_matched (subset of full identify_opening result, no pgn)
+- TUI uses isinstance(current_opening, dict) check to handle both None and missing key gracefully
+---
+
+## 2026-02-07 - US-024: Opening puzzle generation
+- Created scripts/generate_opening_puzzles.py with two puzzle generators:
+  - Opening-moves: ~35 "next book move" knowledge tests from openings DB, covering all 5 ECO volumes (A-E)
+  - Opening-traps: ~22 opening trap refutation puzzles (10 curated famous traps + 12 auto-generated via Stockfish)
+- Curated traps include: Scholar's Mate, Fried Liver Attack, Fishing Pole, King's Gambit traps, Fool's Mate, Legal's Mate prep, Englund Gambit, French Advance, Budapest Gambit
+- Auto-generated traps use Stockfish depth 15 to find positions where a natural move loses >= 150cp
+- Updated scripts/validate_puzzles.py EXPECTED_FILES to include opening-moves.json and opening-traps.json
+- All 126 puzzles across 8 files pass validation (FEN validity, legal move sequences)
+
+**Files changed:**
+- Created: scripts/generate_opening_puzzles.py (285 lines)
+- Created: puzzles/opening-moves.json (35 puzzles)
+- Created: puzzles/opening-traps.json (22 puzzles)
+- Modified: scripts/validate_puzzles.py (added 2 new files to EXPECTED_FILES)
+- Modified: prd.json (US-024 passes: true)
+
+**Learnings for future iterations:**
+- Curated trap FENs must be validated before committing - one had Qh4# (checkmate, no legal moves) instead of Qh4+ (check)
+- Auto-generated traps: use depth 15 for speed (full-strength depth 20 is too slow for scanning 200 openings)
+- cp_loss calculation after a move: best_cp - (-after_cp) where after_cp is from the opponent's perspective
+- random.seed(42) ensures reproducible puzzle generation across runs
+- Puzzle schema must match existing format: fen, solution_moves (UCI), solution_san, motif, difficulty, explanation
+- 2 pre-existing test_post_game.py failures (session numbering brittleness) are NOT caused by this story
+---
+
+## 2026-02-07 - US-025: Opening integration documentation updates
+- Updated CLAUDE.md: added Opening Study Mode section, 5 opening tools to MCP Tools Reference (Openings subsection), opening-moves.json and opening-traps.json to puzzle table, openings.db and openings_trie.json to Data Files table, opening identification mention in Play phase
+- Updated SKILL.md: mirrored all CLAUDE.md changes (Opening Study Mode, puzzle table, data files, system files with openings_tools.py and openings.py, tool count updated to 20)
+- Updated references/opening-guide.md: added Full Opening Database section with MCP tool references, level-based study approach table, and opening puzzle descriptions
+- Updated references/curriculum.md: added Opening Study Goal to Phase 1 (learn 2-3 openings), Phase 2 (expand to 5-6 across ECO families), Phase 3 (full repertoire with traps)
+- Verified scripts/install.sh already had `uv run python scripts/build_openings_db.py` step (added in US-020)
+- All 126 puzzles across 8 files pass validation, install.sh is executable
+
+**Files changed:**
+- Modified: CLAUDE.md (Opening Study Mode, tools, puzzles, data files)
+- Modified: SKILL.md (mirror of CLAUDE.md changes, updated system files)
+- Modified: references/opening-guide.md (Full Opening Database section)
+- Modified: references/curriculum.md (Opening Study Goals per phase)
+- Modified: prd.json (US-025 passes: true)
+
+**Learnings for future iterations:**
+- Documentation-only stories require no py_compile checks but should verify puzzle validation and file permissions
+- SKILL.md System Files section should track tool count (now 20) and list all script/server files
+- Opening study goals in curriculum.md connect specific MCP tools to each learning phase
+- install.sh was already updated in US-020 - always check before adding duplicate steps
+---
+
+## 2026-02-07 - US-026: Opening integration tests
+- Created tests/test_openings.py with 35 comprehensive pytest tests covering:
+  - Trie tests (6): Sicilian Defense B20 identification, empty moves, non-book moves, deepest match, single move, PGN enrichment
+  - SQLite tests (9): search by name/ECO, get_opening_by_eco, get_opening_lines, level filtering (400 vs 1200), random opening, filters, limit
+  - Graceful degradation tests (2): nonexistent paths no crash, missing trie with valid DB
+  - MCP tool tests (9): identify_opening valid/invalid game, search_openings results/ECO filter, get_opening_details B20/nonexistent, suggest_opening list/progress read
+  - MCP quiz tests (3): quiz creates game, quiz with ECO filter, quiz updates openings_studied in progress.json
+  - DB-not-built error tests (5): all 5 tools return error dict when DB files renamed away
+  - Live game integration tests (2): current_opening populated after book moves, field present in GameState
+- All 35 tests pass in 1.69s; full suite 75/77 pass (2 pre-existing test_post_game.py session numbering failures)
+- Uses importlib.util to import from hyphenated mcp-server/ directory (same pattern as test_post_game.py)
+- Accesses MCP tool functions via _server.mcp._tool_manager._tools[name].fn
+
+**Files changed:**
+- Created: tests/test_openings.py (35 tests)
+- Modified: prd.json (US-026 passes: true)
+
+**Learnings for future iterations:**
+- FastMCP tool functions accessed via mcp._tool_manager._tools["name"].fn for direct testing
+- Use unique module name in importlib.util.spec_from_file_location to avoid conflicts with other test files loading the same server
+- _clean_data fixture pattern: backup progress.json and srs_cards.json, restore after test, clear _games dict
+- DB-not-built tests: rename .db and .trie files to .bak during test, restore in fixture teardown
+- 2 pre-existing test_post_game.py failures are session numbering brittleness (session_001 vs session_003) — not caused by any opening stories
 ---

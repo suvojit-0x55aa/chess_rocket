@@ -69,6 +69,7 @@ ELSE:
 ### Play Phase
 - Start game via `new_game(target_elo, player_color)`
 - Display board via TUI (`data/current_game.json` auto-updates)
+- After each move, the current opening is automatically identified and shown in the TUI sidebar
 - Guide each move with appropriate commentary based on move quality
 - Use `evaluate_move()` to assess player moves before responding
 
@@ -111,6 +112,31 @@ Player makes move → make_move(game_id, "e4")
                    → Provide feedback based on thresholds
 Engine responds   → engine_move(game_id)
                    → Comment on engine's choice at appropriate level
+```
+
+### Opening Study Mode
+
+Use the opening tools to teach openings interactively:
+
+**Identify During Play:**
+- `identify_opening(game_id)` — automatically called during games; shows the current opening name and ECO code in the TUI
+- When the player leaves book (moves diverge from known openings), `current_opening` clears to None
+
+**Search and Explore:**
+- `search_openings(query)` — search the full 3,627-opening database by name or ECO code
+- `get_opening_details(eco)` — get all variations for an ECO code (e.g., "B20" for Sicilian lines)
+
+**Suggest and Quiz:**
+- `suggest_opening(elo, color)` — recommend level-appropriate openings; reads Elo from progress.json if not provided
+- `opening_quiz(eco, difficulty)` — quiz the student on the next book move; creates a real game position for practice
+
+**Teaching Flow:**
+```
+→ suggest_opening() to pick an appropriate opening
+→ Explain the opening's ideas using references/opening-guide.md
+→ opening_quiz() to test the student's knowledge
+→ If incorrect: explain the move, connect to opening principles
+→ If correct: praise and advance to a harder variation
 ```
 
 ### Using Puzzles
@@ -354,6 +380,8 @@ Recommended activities:
 | `puzzles/back-rank.json` | Back-rank mate threats | 12 |
 | `puzzles/checkmate-patterns.json` | Checkmate patterns | 11 |
 | `puzzles/beginner-endgames.json` | Basic endgame positions | 11 |
+| `puzzles/opening-moves.json` | Next book move knowledge tests | 35 |
+| `puzzles/opening-traps.json` | Opening trap refutation puzzles | 22 |
 
 ### Data Files
 | File | Purpose |
@@ -364,6 +392,8 @@ Recommended activities:
 | `data/sessions/` | Session logs and summaries |
 | `data/games/` | Saved PGN files from completed games |
 | `data/lesson_plans/` | Generated lesson plans |
+| `data/openings.db` | SQLite database of 3,627 chess openings |
+| `data/openings_trie.json` | JSON trie for fast opening identification |
 
 ### System Files
 | File | Purpose |
@@ -373,4 +403,8 @@ Recommended activities:
 | `scripts/tui.py` | Terminal board display (Rich) |
 | `scripts/export.py` | Progress and game export (markdown) |
 | `scripts/models.py` | Shared GameState and MoveEvaluation dataclasses |
-| `mcp-server/server.py` | MCP server with 15 chess tools (includes save_session, create_srs_cards_from_game) |
+| `scripts/openings.py` | Opening recognition library (trie + SQLite) |
+| `scripts/build_openings_db.py` | Build script for openings database |
+| `scripts/generate_opening_puzzles.py` | Opening puzzle generator |
+| `mcp-server/server.py` | MCP server with 20 chess tools |
+| `mcp-server/openings_tools.py` | Opening MCP tools (identify, search, details, suggest, quiz) |
