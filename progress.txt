@@ -313,3 +313,25 @@ Started: 2026-02-06
 - Puzzle schema must match existing format: fen, solution_moves (UCI), solution_san, motif, difficulty, explanation
 - 2 pre-existing test_post_game.py failures (session numbering brittleness) are NOT caused by this story
 ---
+
+## 2026-02-07 - US-025: Opening integration documentation updates
+- Updated CLAUDE.md: added Opening Study Mode section, 5 opening tools to MCP Tools Reference (Openings subsection), opening-moves.json and opening-traps.json to puzzle table, openings.db and openings_trie.json to Data Files table, opening identification mention in Play phase
+- Updated SKILL.md: mirrored all CLAUDE.md changes (Opening Study Mode, puzzle table, data files, system files with openings_tools.py and openings.py, tool count updated to 20)
+- Updated references/opening-guide.md: added Full Opening Database section with MCP tool references, level-based study approach table, and opening puzzle descriptions
+- Updated references/curriculum.md: added Opening Study Goal to Phase 1 (learn 2-3 openings), Phase 2 (expand to 5-6 across ECO families), Phase 3 (full repertoire with traps)
+- Verified scripts/install.sh already had `uv run python scripts/build_openings_db.py` step (added in US-020)
+- All 126 puzzles across 8 files pass validation, install.sh is executable
+
+**Files changed:**
+- Modified: CLAUDE.md (Opening Study Mode, tools, puzzles, data files)
+- Modified: SKILL.md (mirror of CLAUDE.md changes, updated system files)
+- Modified: references/opening-guide.md (Full Opening Database section)
+- Modified: references/curriculum.md (Opening Study Goals per phase)
+- Modified: prd.json (US-025 passes: true)
+
+**Learnings for future iterations:**
+- Documentation-only stories require no py_compile checks but should verify puzzle validation and file permissions
+- SKILL.md System Files section should track tool count (now 20) and list all script/server files
+- Opening study goals in curriculum.md connect specific MCP tools to each learning phase
+- install.sh was already updated in US-020 - always check before adding duplicate steps
+---

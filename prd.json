@@ -569,7 +569,7 @@
         "All modified .sh files are executable"
       ],
       "priority": 25,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 6. Depends on US-022, US-023, US-024 (documents tools and features from those stories). Documentation-only plus install.sh update."
     },
     {

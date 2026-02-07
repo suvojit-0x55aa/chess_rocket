@@ -114,6 +114,8 @@ Learn the fundamental rules for sound opening play that apply across all chess p
 - Connect rooks: develop both sides so rooks support each other
 - Avoid weakening the kingside: keep escape squares for the king
 
+**Opening Study Goal:** Learn 2-3 basic openings (Italian Game, London System, one Black defense). Use `suggest_opening(elo, color)` for personalized recommendations and `opening_quiz(difficulty='beginner')` to practice the first few moves.
+
 **Key insight:** These principles apply to every opening. Masters violate them sometimes, but you must master them first.
 
 ### Phase 1 Success Criteria
@@ -232,6 +234,8 @@ Rather than memorizing specific moves, learn to play logical opening systems tha
 - Ruy Lopez: most popular opening, positional maneuvering around the d5 square
 - Caro-Kann Defense: solid closed opening, less sharp than Sicilian
 
+**Opening Study Goal:** Expand to 5-6 openings across different ECO families (A-E). Use `search_openings(query)` and `get_opening_details(eco)` to explore variations. Practice with `opening_quiz(difficulty='intermediate')` and `puzzles/opening-moves.json`.
+
 See `references/opening-guide.md` for detailed explanations.
 
 #### Lesson 2.7: Fundamental Endgames
@@ -337,6 +341,8 @@ Instead of just knowing opening systems, build a personal repertoire with unders
 - Studying master games: seeing how strong players handle your chosen openings
 - Adapting to opponent's style: having flexibility in your opening choices
 - Studying recent games: understanding modern trends and improvements
+
+**Opening Study Goal:** Build a full repertoire with responses to all major first moves. Use the complete 3,627-opening database via `search_openings` to find deep variations. Study opening traps with `puzzles/opening-traps.json` and test mastery with `opening_quiz(difficulty='advanced')`.
 
 #### Lesson 3.6: Endgame Conversion with Multiple Pieces
 **Duration:** 3-4 hours
