@@ -97,7 +97,15 @@ def _clean_data():
     elif srs_path.exists():
         srs_path.unlink()
 
-    # Clear in-memory game store
+    # Close all engine processes before clearing game store
+    for game in _games.values():
+        engine = game.get("engine")
+        if engine is not None:
+            try:
+                engine.close()
+            except Exception:
+                pass
+
     _games.clear()
 
 

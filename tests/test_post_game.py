@@ -57,6 +57,22 @@ def _clean_data():
     pre_pgn_files = set(games_dir.glob("*.pgn")) if games_dir.exists() else set()
     pre_session_files = set(sessions_dir.glob("*.json")) if sessions_dir.exists() else set()
 
+    # Reset progress to known default state for test isolation
+    _DATA_DIR.mkdir(parents=True, exist_ok=True)
+    progress_path.write_text(
+        json.dumps({
+            "current_elo": 400,
+            "estimated_elo": 400,
+            "sessions_completed": 0,
+            "streak": 0,
+            "total_games": 0,
+            "accuracy_history": [],
+            "areas_for_improvement": [],
+            "last_session": None,
+        }),
+        encoding="utf-8",
+    )
+
     yield
 
     # Clean up test-created files
@@ -81,7 +97,15 @@ def _clean_data():
     elif srs_path.exists():
         srs_path.unlink()
 
-    # Clear in-memory game store
+    # Close all engine processes before clearing game store
+    for game in _games.values():
+        engine = game.get("engine")
+        if engine is not None:
+            try:
+                engine.close()
+            except Exception:
+                pass
+
     _games.clear()
 
 
