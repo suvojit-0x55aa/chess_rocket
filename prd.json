@@ -445,7 +445,7 @@
         "uv run python scripts/build_openings_db.py completes without error"
       ],
       "priority": 20,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 1. Source: Lichess GitHub TSVs (~200KB total). The chess-openings/ directory with LFS Parquet pointer should be deleted."
     },
     {
@@ -472,7 +472,7 @@
         "python -c \"from scripts.openings import OpeningsDB\" passes"
       ],
       "priority": 21,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 2. Depends on US-020 (needs data/openings.db and data/openings_trie.json). Memory ~4MB for trie."
     },
     {
@@ -496,7 +496,7 @@
         "python -m py_compile mcp-server/server.py passes"
       ],
       "priority": 22,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 3. Depends on US-021. server.py is 864 lines - new tools MUST go in openings_tools.py, not server.py. Only ~15 lines added to server.py for import and registration."
     },
     {
@@ -521,7 +521,7 @@
         "uv run python scripts/tui.py --sample still works"
       ],
       "priority": 23,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 4. Depends on US-021 and US-022. Key behavior: CLEAR current_opening to None when out of book (don't keep showing last known opening)."
     },
     {
@@ -548,7 +548,7 @@
         "python -m py_compile scripts/generate_opening_puzzles.py passes"
       ],
       "priority": 24,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 5. Depends on US-020 (reads from data/openings.db). Trap generation uses Stockfish - run once, commit the JSON output. Curated traps are hardcoded in the script."
     },
     {
@@ -569,7 +569,7 @@
         "All modified .sh files are executable"
       ],
       "priority": 25,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 6. Depends on US-022, US-023, US-024 (documents tools and features from those stories). Documentation-only plus install.sh update."
     },
     {
@@ -598,7 +598,7 @@
         "uv run python -m pytest tests/ -v passes (no regressions on existing tests)"
       ],
       "priority": 26,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 7. Depends on US-021, US-022, US-023. Tests require data/openings.db and data/openings_trie.json to exist (run build_openings_db.py first). Use pytest fixtures for test data setup/teardown."
     }
   ]

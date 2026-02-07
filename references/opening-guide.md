@@ -975,6 +975,35 @@ See: common-mistakes.md
 
 ---
 
+## Full Opening Database
+
+This guide covers four beginner-friendly openings in detail, but the Chess Speedrun system includes a **complete database of 3,627 named chess openings** from the Lichess project, covering all ECO codes (A00-E99).
+
+### Accessing the Full Database
+
+Use the MCP opening tools to explore beyond the four openings above:
+
+- **`search_openings(query)`** — Search by name (e.g., "Sicilian", "Queen's Gambit") or ECO code (e.g., "B20")
+- **`get_opening_details(eco)`** — Get all variations for an ECO code with full move sequences
+- **`suggest_opening(elo, color)`** — Get level-appropriate opening recommendations based on your current Elo
+- **`opening_quiz(eco, difficulty)`** — Test your knowledge of opening moves with interactive quizzes
+
+### Opening Study by Level
+
+| Level | Approach | Tools |
+|-------|----------|-------|
+| Beginner (0-600) | Learn 2-3 openings from this guide | `suggest_opening`, `opening_quiz(difficulty='beginner')` |
+| Intermediate Beginner (600-1000) | Expand to 5-6 openings across ECO families | `search_openings`, `get_opening_details` |
+| Intermediate (1000-1500) | Build a full repertoire with traps | `search_openings`, `opening_quiz(difficulty='advanced')` |
+
+### Opening Puzzles
+
+Practice opening knowledge with dedicated puzzle sets:
+- `puzzles/opening-moves.json` — 35 "next book move" knowledge tests covering all 5 ECO volumes
+- `puzzles/opening-traps.json` — 22 opening trap refutation puzzles (famous traps + Stockfish-generated)
+
+---
+
 ## Summary: Choosing Your Opening
 
 | Opening | Difficulty | Style | Goal | Best For |

@@ -29,6 +29,7 @@ class GameState:
     session_number: int = 1
     streak: int = 0
     lesson_name: str = ""
+    current_opening: dict | None = None
 
 
 @dataclass

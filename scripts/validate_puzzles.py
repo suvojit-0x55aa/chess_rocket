@@ -16,6 +16,8 @@ EXPECTED_FILES = [
     "back-rank.json",
     "checkmate-patterns.json",
     "beginner-endgames.json",
+    "opening-moves.json",
+    "opening-traps.json",
 ]
 
 REQUIRED_FIELDS = ["fen", "solution_moves", "solution_san", "motif", "difficulty", "explanation"]

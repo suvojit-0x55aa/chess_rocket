@@ -81,6 +81,11 @@ else
     echo "data/srs_cards.json already exists, skipping."
 fi
 
+# --- Build openings database ---
+echo "Building openings database..."
+uv run python scripts/build_openings_db.py
+echo "Openings database ready."
+
 echo ""
 echo "=== Setup complete! ==="
 echo "Run 'python scripts/engine.py play 800' to test the engine."

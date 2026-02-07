@@ -180,6 +180,18 @@ def _render_sidebar(state: dict) -> Panel:
         parts.append(f"[italic]{lesson}[/italic]")
     parts.append("")
 
+    # Opening identification
+    current_opening = state.get("current_opening")
+    if current_opening and isinstance(current_opening, dict):
+        name = current_opening.get("name", "")
+        eco = current_opening.get("eco", "")
+        if name:
+            parts.append(f"[bold]Opening:[/bold] {name} ({eco})")
+            parts.append("")
+    else:
+        parts.append("[dim]Out of book[/dim]")
+        parts.append("")
+
     # Move list
     move_list = state.get("move_list", [])
     if move_list:
