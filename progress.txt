@@ -14,6 +14,7 @@
 - Openings trie: nested dict keyed on UCI moves, `_eco`/`_name` at named nodes
 - build_openings_db.py uses python-chess (not stdlib only) to convert PGN→UCI+EPD
 - PGN auto-saves on game over in make_move/engine_move (fire-and-forget)
+- FastMCP tool functions: access via mcp._tool_manager._tools["tool_name"].fn for direct testing without MCP protocol
 - progress.json uses both `current_elo` and `estimated_elo` keys for forward compat
 - Tests with real Stockfish: use `_clean_data` fixture to backup/restore data files
 ---
@@ -334,4 +335,29 @@ Started: 2026-02-06
 - SKILL.md System Files section should track tool count (now 20) and list all script/server files
 - Opening study goals in curriculum.md connect specific MCP tools to each learning phase
 - install.sh was already updated in US-020 - always check before adding duplicate steps
+---
+
+## 2026-02-07 - US-026: Opening integration tests
+- Created tests/test_openings.py with 35 comprehensive pytest tests covering:
+  - Trie tests (6): Sicilian Defense B20 identification, empty moves, non-book moves, deepest match, single move, PGN enrichment
+  - SQLite tests (9): search by name/ECO, get_opening_by_eco, get_opening_lines, level filtering (400 vs 1200), random opening, filters, limit
+  - Graceful degradation tests (2): nonexistent paths no crash, missing trie with valid DB
+  - MCP tool tests (9): identify_opening valid/invalid game, search_openings results/ECO filter, get_opening_details B20/nonexistent, suggest_opening list/progress read
+  - MCP quiz tests (3): quiz creates game, quiz with ECO filter, quiz updates openings_studied in progress.json
+  - DB-not-built error tests (5): all 5 tools return error dict when DB files renamed away
+  - Live game integration tests (2): current_opening populated after book moves, field present in GameState
+- All 35 tests pass in 1.69s; full suite 75/77 pass (2 pre-existing test_post_game.py session numbering failures)
+- Uses importlib.util to import from hyphenated mcp-server/ directory (same pattern as test_post_game.py)
+- Accesses MCP tool functions via _server.mcp._tool_manager._tools[name].fn
+
+**Files changed:**
+- Created: tests/test_openings.py (35 tests)
+- Modified: prd.json (US-026 passes: true)
+
+**Learnings for future iterations:**
+- FastMCP tool functions accessed via mcp._tool_manager._tools["name"].fn for direct testing
+- Use unique module name in importlib.util.spec_from_file_location to avoid conflicts with other test files loading the same server
+- _clean_data fixture pattern: backup progress.json and srs_cards.json, restore after test, clear _games dict
+- DB-not-built tests: rename .db and .trie files to .bak during test, restore in fixture teardown
+- 2 pre-existing test_post_game.py failures are session numbering brittleness (session_001 vs session_003) — not caused by any opening stories
 ---

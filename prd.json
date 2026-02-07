@@ -598,7 +598,7 @@
         "uv run python -m pytest tests/ -v passes (no regressions on existing tests)"
       ],
       "priority": 26,
-      "passes": false,
+      "passes": true,
       "notes": "See ~/.claude/plans/crispy-weaving-candy.md Phase 7. Depends on US-021, US-022, US-023. Tests require data/openings.db and data/openings_trie.json to exist (run build_openings_db.py first). Use pytest fixtures for test data setup/teardown."
     }
   ]
