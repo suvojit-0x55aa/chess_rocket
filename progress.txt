@@ -8,6 +8,7 @@ Started: Mon Feb  9 04:25:30 IST 2026
 - Validation gated by CHESS_SPEEDRUN_VALIDATE=1 env var (off by default, on in tests)
 - _sync_game_json() writes FULL state for TUI; MCP return values get minified separately
 - PGN move string format: "1.e4 e5 2.Nf3 Nc6" (no spaces between number and move)
+- server.py sys.path: BOTH _PROJECT_ROOT and _MCP_SERVER_DIR must be inserted BEFORE any local imports (response_schemas, openings_tools)
 
 ## 2026-02-09T05:00:00Z - US-034
 - Already implemented in previous iteration (evaluate_move stores evals, undo_move filters, save_session auto-computes accuracy)
@@ -54,4 +55,18 @@ Started: Mon Feb  9 04:25:30 IST 2026
 - **Learnings for future iterations:**
   - epd field was on line 215 of openings_tools.py, single line removal
   - All other opening tools remain unchanged
+---
+
+## 2026-02-09T05:45:00Z - US-030
+- Created tests/conftest.py (~180 lines) with shared test fixtures
+- Registered --e2e CLI flag and @pytest.mark.e2e marker
+- mock_chess_engine fixture: patches ChessEngine with mock returning valid legal moves, skipped when --e2e
+- clean_data_dir fixture: backs up/restores progress.json, srs_cards.json, cleans test files
+- enable_validation fixture (autouse): sets CHESS_SPEEDRUN_VALIDATE=1 for all tests
+- Fixed server.py import order: moved _MCP_SERVER_DIR sys.path.insert before response_schemas import
+- Files changed: tests/conftest.py (new), mcp-server/server.py (import reorder), prd.json, progress.txt
+- **Learnings for future iterations:**
+  - server.py needs both _PROJECT_ROOT and _MCP_SERVER_DIR in sys.path BEFORE any local imports
+  - response_schemas.py and openings_tools.py both live in mcp-server/ dir, need sys.path for importlib-based test loading
+  - test_openings.py has 1 expected failure from US-028 minification (family field removed) — fix in US-033
 ---

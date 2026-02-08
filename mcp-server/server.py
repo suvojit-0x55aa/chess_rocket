@@ -15,9 +15,11 @@ from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Add project root to path so we can import scripts.*
+# Add project root and mcp-server dir to path for imports
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_MCP_SERVER_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(_PROJECT_ROOT))
+sys.path.insert(0, str(_MCP_SERVER_DIR))
 
 import chess
 import chess.pgn
@@ -28,7 +30,8 @@ from scripts.models import GameState, MoveEvaluation
 from scripts.openings import OpeningsDB
 from scripts.srs import SRSManager
 
-from response_schemas import (
+from openings_tools import register_openings_tools  # noqa: E402
+from response_schemas import (  # noqa: E402
     minify_analysis,
     minify_game_state,
     minify_move_evaluation,
@@ -44,11 +47,6 @@ _DATA_DIR = _PROJECT_ROOT / "data"
 
 # Opening recognition (graceful degradation if DB not built)
 _openings_db = OpeningsDB()
-
-# Register opening tools from separate module
-_MCP_SERVER_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(_MCP_SERVER_DIR))
-from openings_tools import register_openings_tools  # noqa: E402
 
 register_openings_tools(mcp, _games, _DATA_DIR, _PROJECT_ROOT)
 

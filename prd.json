@@ -696,7 +696,7 @@
         "python -m py_compile tests/conftest.py passes"
       ],
       "priority": 30,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-027 (for enable_validation fixture using CHESS_SPEEDRUN_VALIDATE). The mock_chess_engine must return legal moves — use python-chess board.legal_moves to pick a valid move. Existing test files (test_post_game.py, test_openings.py) use real Stockfish and have their own fixtures — conftest should not break them. See ~/.claude/plans/witty-moseying-seal.md Phase 4."
     },
     {
