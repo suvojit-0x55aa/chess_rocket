@@ -631,7 +631,7 @@
         "python -c \"from response_schemas import minify_game_state, minify_move_evaluation, minify_analysis, minify_save_session, validate_response\" passes (from mcp-server/ directory)"
       ],
       "priority": 27,
-      "passes": false,
+      "passes": true,
       "notes": "Key constraint: only MCP tool return values get minified. data/current_game.json (TUI file sync) must keep ALL fields unchanged. PGN string format for move_list uses standard chess notation (1.e4 e5 2.Nf3 ...) which is natural for the LLM agent to read. See ~/.claude/plans/witty-moseying-seal.md Phase 1."
     },
     {
@@ -799,7 +799,7 @@
         "uv run python -m pytest tests/ passes (no regressions)"
       ],
       "priority": 26,
-      "passes": false,
+      "passes": true,
       "notes": "Must run BEFORE US-027 (minification). Modifies evaluate_move(), save_session(), undo_move() in server.py — adds code BEFORE return statements, compatible with US-028 which wraps return values. See ~/.claude/plans/groovy-purring-flask.md for implementation details and root cause analysis."
     }
   ]
