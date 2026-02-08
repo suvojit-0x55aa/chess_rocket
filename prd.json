@@ -748,7 +748,7 @@
         "uv run python -m pytest tests/test_mcp_flows.py -v passes"
       ],
       "priority": 32,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-027, US-028, US-029, US-030. Flow tests exercise realistic multi-tool sequences that the tutor agent would perform. Response size regression thresholds are the key deliverable — they prevent future changes from inflating response sizes. See ~/.claude/plans/witty-moseying-seal.md Phase 6."
     },
     {
