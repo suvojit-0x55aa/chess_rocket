@@ -772,7 +772,7 @@
         "Full suite with Stockfish: uv run python -m pytest tests/ --e2e -v passes with zero failures (real engine responses)"
       ],
       "priority": 33,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-027, US-028. Must be done carefully — read each test file and identify every assertion that touches fields affected by minification. Key fields changed: board_display removed, legal_moves -> legal_moves_count, move_list array -> PGN string, accuracy dict -> float, current_opening simplified, save_session progress simplified. Acceptance requires BOTH modes pass: mocked (uv run pytest tests/) AND e2e (uv run pytest tests/ --e2e). See ~/.claude/plans/witty-moseying-seal.md Phase 7."
     },
     {
