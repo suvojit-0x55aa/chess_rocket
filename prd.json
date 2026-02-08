@@ -727,7 +727,7 @@
         "uv run python -m pytest tests/test_mcp_tools.py -v passes"
       ],
       "priority": 31,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-027, US-028, US-030. 14 test classes (one per server.py tool) plus TestResponseSchemas. Uses mocked engine so runs fast without Stockfish. Key insight: data/current_game.json must have FULL unminified state while MCP return values are minified. See ~/.claude/plans/witty-moseying-seal.md Phase 5."
     },
     {

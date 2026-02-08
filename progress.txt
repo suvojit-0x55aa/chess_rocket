@@ -9,6 +9,7 @@ Started: Mon Feb  9 04:25:30 IST 2026
 - _sync_game_json() writes FULL state for TUI; MCP return values get minified separately
 - PGN move string format: "1.e4 e5 2.Nf3 Nc6" (no spaces between number and move)
 - server.py sys.path: BOTH _PROJECT_ROOT and _MCP_SERVER_DIR must be inserted BEFORE any local imports (response_schemas, openings_tools)
+- Stockfish UCI_Elo max is 3190 — tests using set_difficulty should stay <= 3190 to avoid EngineError
 
 ## 2026-02-09T05:00:00Z - US-034
 - Already implemented in previous iteration (evaluate_move stores evals, undo_move filters, save_session auto-computes accuracy)
@@ -69,4 +70,18 @@ Started: Mon Feb  9 04:25:30 IST 2026
   - server.py needs both _PROJECT_ROOT and _MCP_SERVER_DIR in sys.path BEFORE any local imports
   - response_schemas.py and openings_tools.py both live in mcp-server/ dir, need sys.path for importlib-based test loading
   - test_openings.py has 1 expected failure from US-028 minification (family field removed) — fix in US-033
+---
+
+## 2026-02-09T06:00:00Z - US-031
+- Created tests/test_mcp_tools.py (~410 lines) with 14 test classes + TestResponseSchemas
+- 52 tests covering all MCP server tools for minified response shapes
+- Key assertions: no board_display, legal_moves_count is int, move_list is PGN string, accuracy is float
+- TUI JSON integrity verified: data/current_game.json has full unminified state
+- Schema validation via validate_response() on all tool responses
+- Files changed: tests/test_mcp_tools.py (new), prd.json, progress.txt
+- **Learnings for future iterations:**
+  - Stockfish UCI_Elo max is 3190 on this install — don't test with values > 3190
+  - Server clamps to 100-3500 but engine.py passes directly to UCI_Elo without capping at 3190
+  - get_board does NOT write to current_game.json (verified via mtime check)
+  - Tests run with real Stockfish (~28s) — mock support available but not used here
 ---
