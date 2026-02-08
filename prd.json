@@ -655,7 +655,7 @@
         "python -m py_compile mcp-server/server.py passes"
       ],
       "priority": 28,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-027. The _sync_game_json() calls happen BEFORE the return statements, so they still get the full unminified state dict. Only the return values to the MCP client (Claude) are minified. See ~/.claude/plans/witty-moseying-seal.md Phase 2."
     },
     {

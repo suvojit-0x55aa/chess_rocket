@@ -1,363 +1,48 @@
-## Codebase Patterns
-- Python 3.10+ required
-- python-chess library for chess logic (Board, Move, etc.)
-- Stockfish minimum UCI_Elo is 1320 - use depth limiting + random moves below that
-- MCP server uses FastMCP from mcp.server.fastmcp
-- TUI syncs via data/current_game.json file polling at 4Hz
-- SRS uses SM-2 algorithm
-- All user data stored in data/ directory
-- Progress state in data/progress.json
-- Use `uv run python` to execute scripts (system python3 lacks project deps)
-- mcp-server/ has hyphen in name - use importlib.util for imports in tests, not regular `from mcp_server import`
-- Atomic file writes: always use temp file + os.replace() pattern for data persistence
-- Lichess TSVs have only 3 columns (eco, name, pgn) - derive UCI and EPD from PGN using python-chess
-- Openings trie: nested dict keyed on UCI moves, `_eco`/`_name` at named nodes
-- build_openings_db.py uses python-chess (not stdlib only) to convert PGN→UCI+EPD
-- PGN auto-saves on game over in make_move/engine_move (fire-and-forget)
-- FastMCP tool functions: access via mcp._tool_manager._tools["tool_name"].fn for direct testing without MCP protocol
-- progress.json uses both `current_elo` and `estimated_elo` keys for forward compat
-- Tests with real Stockfish: use `_clean_data` fixture to backup/restore data files
----
-
 # Ralph Progress Log
-Started: 2026-02-06
+Started: Mon Feb  9 04:25:30 IST 2026
 ---
 
-## 2026-02-06 - US-008: Create Curriculum and Pedagogy Reference Files
-- Created references/curriculum.md: 3-phase curriculum (Foundation 0-600, Tactical Basics 600-1000, Intermediate 1000-1500)
-  - Each phase includes 6-7 detailed lessons with learning objectives and prerequisites
-  - Lessons cover foundational concepts through advanced strategic planning
-  - Cross-references with pedagogy and learning science documentation
-  
-- Created references/chess-pedagogy.md: GM coaching methodology
-  - 7 major sections: Socratic Method, Pattern Recognition, Deliberate Practice, Error Analysis, Progressive Complexity, Teaching by Elo, Growth Mindset
-  - Practical examples for each teaching technique
-  - Language adaptation guidelines for different Elo ranges
-  - Integration with Speedrun system architecture
-  
-- Created references/learning-science.md: Cognitive science foundations
-  - 9 major sections grounded in research (Ericsson, Vygotsky, Ebbinghaus, Sweller, Dweck, etc.)
-  - Explains why each pedagogy technique is effective
-  - Practical application to chess learning
-  - Integration section showing how principles work together
-  
-- Created references/elo-milestones.md: Skills and expectations by Elo range
-  - 3 detailed Elo ranges with concrete skills, common mistakes, readiness indicators
-  - Cross-level pattern tables showing progression
-  - Teaching guidance for assessing level and setting goals
-  - Links to pedagogy and curriculum for appropriate interventions
+## Codebase Patterns
+- MCP server imports use importlib for hyphenated directory (mcp-server/): `importlib.util.spec_from_file_location("mcp_server_mod", path)`
+- response_schemas.py is in mcp-server/ dir - import with PYTHONPATH or sys.path
+- Validation gated by CHESS_SPEEDRUN_VALIDATE=1 env var (off by default, on in tests)
+- _sync_game_json() writes FULL state for TUI; MCP return values get minified separately
+- PGN move string format: "1.e4 e5 2.Nf3 Nc6" (no spaces between number and move)
 
-**Files changed:**
-- Created: /references/curriculum.md (396 lines)
-- Created: /references/chess-pedagogy.md (456 lines)
-- Created: /references/learning-science.md (470 lines)
-- Created: /references/elo-milestones.md (462 lines)
-
-**Learnings for future iterations:**
-- Curriculum structure uses 3 phases aligned to Elo ranges (0-600, 600-1000, 1000-1500)
-- Each phase needs 6-7 lessons for comprehensive coverage without overwhelming learners
-- Pedagogy references specific teaching techniques: Socratic method, pattern recognition, deliberate practice
-- Learning science grounding is critical for tutor justifying recommendations
-- Cross-references between files create interconnected knowledge base (used by SKILL.md in US-011)
-- Elo milestones provide clear expectations for what players at each level should achieve
-- Teaching language must adapt based on Elo: concrete (0-600), principle-based (600-1000), strategic (1000-1500)
----
-
-## 2026-02-06 - US-009: Create Tactical Patterns and Mistakes Reference Files
-- Files already existed (created alongside US-008) but were untracked - committed them
-- references/tactical-patterns.md: 7 tactical patterns (forks x3, pins x2, skewers, discovered attacks, discovered check, double check, back-rank threats)
-- references/common-mistakes.md: 9 common mistakes with severity classification (hanging pieces, ignoring threats, premature queen, not castling, same piece twice, no center control, trading when behind, neglecting development, not looking for checks)
-- references/opening-guide.md: 4 beginner-friendly openings (Italian Game, London System, Sicilian Defense, Scandinavian Defense)
-
-**Files changed:**
-- Committed: references/tactical-patterns.md
-- Committed: references/common-mistakes.md
-- Committed: references/opening-guide.md
-
-**Learnings for future iterations:**
-- US-008 iteration created US-009 files too - always check git status for untracked files from previous iterations
-- Reference files cross-reference each other (tactical-patterns.md referenced from opening-guide.md)
-- All reference files are now in place for SKILL.md (US-011) to reference
----
-
-## 2026-02-06 - US-010: Create Curated Puzzle Sets with FEN Validation
-- All 6 puzzle JSON files already existed from a previous iteration (untracked)
-- Validated all 69 puzzles across 6 files using scripts/validate_puzzles.py
-- All FENs load in python-chess, all solution_moves are legal in sequence
-- Committed all puzzle files and validator script
-
-**Files changed:**
-- Committed: puzzles/forks.json (12 puzzles)
-- Committed: puzzles/pins.json (12 puzzles)
-- Committed: puzzles/skewers.json (11 puzzles)
-- Committed: puzzles/back-rank.json (12 puzzles)
-- Committed: puzzles/checkmate-patterns.json (11 puzzles)
-- Committed: puzzles/beginner-endgames.json (11 puzzles)
-- Committed: scripts/validate_puzzles.py
-
-**Learnings for future iterations:**
-- Puzzle files and validator were created in earlier iterations but left untracked - always check git status
-- Use `uv run python` to execute scripts (system python3 lacks chess module)
-- validate_puzzles.py checks: FEN validity, UCI move parsing, sequential move legality
-- Each puzzle requires: fen, solution_moves (UCI), solution_san, motif, difficulty, explanation
----
-
-## 2026-02-06 - US-013: Create Claude Settings and Run Integration Verification
-- Verified .claude/settings.json exists with correct MCP server config (command: python, args: [mcp-server/server.py])
-- Ran py_compile on all 8 Python files (7 in scripts/, 1 in mcp-server/) - all pass
-- Ran validate_puzzles.py - all 69 puzzles across 6 files valid
-- Verified all 8 required directories exist: data/sessions, data/games, data/lesson_plans, references/, puzzles/, mcp-server/, scripts/, .claude/
-- Verified all 10 required files exist: install.sh, engine.py, srs.py, tui.py, export.py, models.py, validate_puzzles.py, server.py, SKILL.md, settings.json
-- Committed remaining untracked project files: scripts/__init__.py, scripts/models.py, scripts/install.sh, documentation/, uv.lock
-
-**Files changed:**
-- Verified: .claude/settings.json (already had correct MCP config)
-- Updated: prd.json (US-013 passes: true)
-- Committed untracked: scripts/__init__.py, scripts/models.py, scripts/install.sh, documentation/, uv.lock
-
-**Learnings for future iterations:**
-- .claude/settings.json was created by earlier iterations - always check if it exists before creating
-- Integration verification is about running ALL checks, not writing new code
-- Some files created in US-001 (models.py, __init__.py, install.sh) may remain untracked through many iterations - final story catches these
-- chess-openings/ directory is external data, not part of the project structure
----
-
-## 2026-02-06 - US-014: Auto-save PGN on game over
-- Added `_auto_save_pgn(game_id, game)` helper to mcp-server/server.py
-- Builds PGN with Event/Site/Date/White/Black Elo headers using chess.pgn.Game
-- Reads player Elo from data/progress.json for PGN header
-- Writes atomically to data/games/game_{timestamp}_{game_id[:8]}.pgn
-- Hooked into make_move() and engine_move() after board.push() when board.is_game_over()
-- Files changed: mcp-server/server.py
+## 2026-02-09T05:00:00Z - US-034
+- Already implemented in previous iteration (evaluate_move stores evals, undo_move filters, save_session auto-computes accuracy)
+- Just marked passes: true in prd.json
+- Files changed: prd.json
 - **Learnings for future iterations:**
-  - datetime import needed: `from datetime import datetime, timezone`
-  - PGN setup from non-standard FEN: use `pgn_game.setup(chess.Board(fen))`
-  - Fire-and-forget pattern: auto-save does not affect return value of make_move/engine_move
+  - Always check if a story is already implemented before starting work
+  - US-034 code was already in server.py lines 209-235, 456-471, 609-613, 768-774
 ---
 
-## 2026-02-06 - US-015: Add save_session MCP tool
-- New @mcp.tool() save_session() in mcp-server/server.py
-- Loads/updates data/progress.json: increments sessions_completed, total_games, streak, appends accuracy
-- Writes both current_elo and estimated_elo for forward compatibility
-- Writes session log to data/sessions/session_NNN.json with full game metadata
-- All writes use atomic temp file + os.replace() pattern
-- Files changed: mcp-server/server.py
+## 2026-02-09T05:10:00Z - US-027
+- Created mcp-server/response_schemas.py (~240 lines)
+- Four minification functions: minify_game_state, minify_move_evaluation, minify_analysis, minify_save_session
+- Dict-based validation schemas: GAME_STATE_SCHEMA, MOVE_EVALUATION_SCHEMA, ANALYSIS_SCHEMA, ERROR_SCHEMA
+- validate_response() gated by CHESS_SPEEDRUN_VALIDATE=1 env var
+- Helper _moves_to_pgn_string() converts move list to PGN notation
+- Files changed: mcp-server/response_schemas.py (new), prd.json
 - **Learnings for future iterations:**
-  - progress.json defaults must include all keys for backward compat
-  - Session numbering is zero-padded 3 digits: session_001.json
+  - minify_game_state removes: board_display, session_number, streak, lesson_name
+  - minify_game_state compacts: move_list (array->PGN string), legal_moves (list->count), accuracy (dict->float), current_opening ({name,eco} only)
+  - minify_move_evaluation removes: tactical_motif, is_best; truncates best_line to 3
+  - minify_analysis truncates PV to 5 moves, removes null mate_in
+  - minify_save_session keeps only: current_elo, sessions_completed, streak, total_games in progress
 ---
 
-## 2026-02-06 - US-016: Add create_srs_cards_from_game MCP tool
-- New @mcp.tool() create_srs_cards_from_game() in mcp-server/server.py
-- Replays game from starting_fen, evaluates each player move at depth 20
-- Creates SRS cards for moves with cp_loss >= threshold (default 80)
-- Uses fresh ChessEngine at full strength (3000) for analysis, closes when done
-- Files changed: mcp-server/server.py
+## 2026-02-09T05:30:00Z - US-028
+- Modified mcp-server/server.py to return minified responses from all MCP tools
+- Added import of minify_game_state, minify_move_evaluation, minify_analysis, minify_save_session from response_schemas
+- Wrapped return values of 9 tool functions: new_game, get_board, make_move, engine_move, undo_move, set_position (minify_game_state), analyze_position (minify_analysis), evaluate_move (minify_move_evaluation), save_session (minify_save_session)
+- _sync_game_json() calls remain unchanged — full state still written for TUI
+- Error dict returns pass through as-is (not wrapped by minification)
+- Files changed: mcp-server/server.py, prd.json, progress.txt
 - **Learnings for future iterations:**
-  - Must determine player moves by checking board.turn vs player_color
-  - evaluate_move() must be called BEFORE board.push() (it needs the pre-move position)
-  - Always close analysis engine in finally block to prevent Stockfish process leaks
----
-
-## 2026-02-06 - US-017: Fix export.py estimated_elo key mismatch
-- One-line fix: progress.get('estimated_elo', progress.get('current_elo', 'Unknown'))
-- Files changed: scripts/export.py
-- **Learnings for future iterations:**
-  - progress.json may have either key name depending on which tool wrote it
-  - Always use fallback chain for backward compatibility with data files
----
-
-## 2026-02-06 - US-018: Update CLAUDE.md and SKILL.md for post-game automation
-- CLAUDE.md: Updated Post-Game Flow (PGN auto-saved, create_srs_cards_from_game)
-- CLAUDE.md: Updated Session End Flow (save_session tool replaces manual writes)
-- CLAUDE.md: Added save_session and create_srs_cards_from_game to MCP Tools table
-- SKILL.md: Updated sections 7, 8, and 13 to reference new automated tools
-- Files changed: CLAUDE.md, SKILL.md
-- **Learnings for future iterations:**
-  - Keep MCP tool count in SKILL.md section 13 updated when adding tools (now 15)
----
-
-## 2026-02-06 - US-019: End-to-end post-game flow integration test
-- Created tests/test_post_game.py with 9 pytest tests using real Stockfish
-- Tests cover: auto PGN save, save_session, create_srs_cards_from_game, export_progress
-- Uses importlib.util to import from hyphenated mcp-server/ directory
-- _clean_data fixture backs up and restores data files around each test
-- All 42 tests pass (33 existing + 9 new) in ~7.5s
-- Files changed: tests/test_post_game.py (new)
-- **Learnings for future iterations:**
-  - mcp-server/ directory has hyphen: cannot use normal Python import, use importlib.util
-  - set_position with a near-mate FEN is the fastest way to test game completion
-  - Scholar's mate position (Qxf7#) is ideal for tests: one move to checkmate
----
-
-## 2026-02-07 - US-020: Build openings data pipeline
-- Created scripts/build_openings_db.py: downloads 5 Lichess TSVs, builds SQLite DB + JSON trie
-- Downloads cached in data/openings_raw/ to avoid re-downloading
-- Derives UCI moves and EPD from PGN using python-chess (TSVs only have eco, name, pgn columns)
-- SQLite: 3,641 openings with indexes on eco, eco_volume, family, name
-- Trie: 330KB nested dict keyed on UCI moves, `_eco`/`_name` at named nodes
-- Deleted chess-openings/ directory (LFS Parquet replaced by TSV download)
-- Updated .gitignore with data/openings_raw/, data/openings.db, data/openings_trie.json
-- Updated scripts/install.sh with `uv run python scripts/build_openings_db.py` step
-
-**Files changed:**
-- Created: scripts/build_openings_db.py
-- Modified: .gitignore
-- Modified: scripts/install.sh
-- Modified: prd.json (US-020 passes: true)
-- Deleted: chess-openings/ directory
-
-**Learnings for future iterations:**
-- Lichess TSV files only have 3 columns (eco, name, pgn) - no uci or epd columns
-- Must derive UCI moves from PGN using chess.pgn.read_game() and board iteration
-- EPD derived from final board position after replaying all PGN moves
-- python-chess is required dependency (not stdlib-only as originally planned)
-- Trie is 330KB (well under 1MB limit) for 3,641 openings
-- Lichess count is 3,641 (close to the ~3,627 mentioned in PRD)
-- 2 pre-existing test failures in test_post_game.py (session numbering brittleness, not caused by US-020)
----
-
-## 2026-02-07 - US-021: Opening recognition library
-- Created scripts/openings.py with OpeningsDB class
-- Trie-based identify_opening() returns deepest matching named node with eco, name, family, moves_matched, pgn
-- get_continuations() walks trie to find named openings branching from current position
-- SQLite methods: search_openings (LIKE query), get_opening_by_eco, get_opening_lines (by family)
-- get_openings_for_level: Phase 1 (<600) short common openings, Phase 2 (600-1000) medium, Phase 3 (1000+) full
-- get_random_opening with optional eco_volume and max_moves filters
-- Graceful degradation: all methods return None or empty lists when DB/trie files don't exist
-- All methods return plain dicts (not dataclasses), matching MCP server pattern
-- SQLite connections opened per-query for thread safety
-
-**Files changed:**
-- Created: scripts/openings.py (346 lines)
-- Modified: prd.json (US-021 passes: true)
-
-**Learnings for future iterations:**
-- Trie identify_opening returns deepest match: e.g. ["e2e4","c7c5","a2a3"] matches "Sicilian Defense: Mengarini Variation" (3 moves), not just "Sicilian Defense" (2 moves)
-- 1. a3 IS in the Lichess openings as "Anderssen's Opening" - almost every first move has a named opening
-- _BEGINNER_FAMILIES set controls Phase 1 filtering - update it if curriculum changes
-- sqlite3.Row + dict() conversion gives clean dicts without needing dataclasses
-- New MCP tools go in separate files (e.g. openings_tools.py), registered via register_*_tools() in server.py
-- server.py needs sys.path.insert(0, mcp-server dir) to import sibling modules when loaded from other directories
----
-
-## 2026-02-07 - US-022: Opening MCP tools
-- Created mcp-server/openings_tools.py with register_openings_tools() function
-- 5 tools registered: identify_opening, search_openings, get_opening_details, suggest_opening, opening_quiz
-- identify_opening(game_id): extracts UCI moves from game, returns opening info via OpeningsDB trie
-- search_openings(query, eco, eco_volume, limit): LIKE search on openings DB
-- get_opening_details(eco): returns all variations for an ECO code
-- suggest_opening(elo, color): reads elo from progress.json if not provided, filters by color and level
-- opening_quiz(eco, difficulty): picks opening, plays N-1 moves, creates real game via set_position pattern, returns correct_move_san
-- opening_quiz tracks openings_studied in progress.json, resets when all covered
-- All 5 tools return error dict when openings DB not built
-- server.py modified: added sys.path insert for mcp-server/ dir + import/call register_openings_tools()
-- All 33 existing tests pass, py_compile passes on both files
-
-**Files changed:**
-- Created: mcp-server/openings_tools.py (264 lines)
-- Modified: mcp-server/server.py (~5 lines added for import and registration)
-- Modified: prd.json (US-022 passes: true)
-
-**Learnings for future iterations:**
-- New tool modules in mcp-server/ need sys.path manipulation in server.py for reliable import
-- server.py can be imported from project root (by tests) or from mcp-server/ dir (by MCP runtime) - imports must work in both cases
-- Opening quiz creates real games in _games dict so make_move/engine_move work on them
-- suggest_opening uses color heuristic: "defense"/"gambit" keywords for black, rest for white
----
-
-## 2026-02-07 - US-023: Live game opening integration
-- Added `current_opening: dict | None = None` field to GameState dataclass in scripts/models.py
-- Initialized OpeningsDB in mcp-server/server.py (graceful degradation if DB not built)
-- Updated `_build_game_state()` to call `_openings_db.identify_opening()` with UCI moves from board.move_stack
-- `current_opening` is set to None when moves don't match any trie path (out of book behavior)
-- Updated scripts/tui.py sidebar to display "Opening: {name} ({eco})" when in book, "Out of book" when not
-- Updated data/sample_game.json with current_opening field (Italian Game: Two Knights Defense, C55)
-- All py_compile checks pass, TUI --sample renders correctly, 40/42 tests pass (2 pre-existing failures)
-
-**Files changed:**
-- Modified: scripts/models.py (added current_opening field)
-- Modified: mcp-server/server.py (import OpeningsDB, init _openings_db, update _build_game_state)
-- Modified: scripts/tui.py (display opening in sidebar)
-- Modified: data/sample_game.json (added current_opening)
-- Modified: prd.json (US-023 passes: true)
-
-**Learnings for future iterations:**
-- OpeningsDB graceful degradation means _openings_db can be initialized at module level safely - returns None if DB files don't exist
-- identify_opening() returns None for out-of-book positions (when moves diverge from trie), not an empty dict
-- Trie lookup is O(d) where d = number of moves played, adding zero perceptible latency to _build_game_state
-- current_opening dict has 4 keys: eco, name, family, moves_matched (subset of full identify_opening result, no pgn)
-- TUI uses isinstance(current_opening, dict) check to handle both None and missing key gracefully
----
-
-## 2026-02-07 - US-024: Opening puzzle generation
-- Created scripts/generate_opening_puzzles.py with two puzzle generators:
-  - Opening-moves: ~35 "next book move" knowledge tests from openings DB, covering all 5 ECO volumes (A-E)
-  - Opening-traps: ~22 opening trap refutation puzzles (10 curated famous traps + 12 auto-generated via Stockfish)
-- Curated traps include: Scholar's Mate, Fried Liver Attack, Fishing Pole, King's Gambit traps, Fool's Mate, Legal's Mate prep, Englund Gambit, French Advance, Budapest Gambit
-- Auto-generated traps use Stockfish depth 15 to find positions where a natural move loses >= 150cp
-- Updated scripts/validate_puzzles.py EXPECTED_FILES to include opening-moves.json and opening-traps.json
-- All 126 puzzles across 8 files pass validation (FEN validity, legal move sequences)
-
-**Files changed:**
-- Created: scripts/generate_opening_puzzles.py (285 lines)
-- Created: puzzles/opening-moves.json (35 puzzles)
-- Created: puzzles/opening-traps.json (22 puzzles)
-- Modified: scripts/validate_puzzles.py (added 2 new files to EXPECTED_FILES)
-- Modified: prd.json (US-024 passes: true)
-
-**Learnings for future iterations:**
-- Curated trap FENs must be validated before committing - one had Qh4# (checkmate, no legal moves) instead of Qh4+ (check)
-- Auto-generated traps: use depth 15 for speed (full-strength depth 20 is too slow for scanning 200 openings)
-- cp_loss calculation after a move: best_cp - (-after_cp) where after_cp is from the opponent's perspective
-- random.seed(42) ensures reproducible puzzle generation across runs
-- Puzzle schema must match existing format: fen, solution_moves (UCI), solution_san, motif, difficulty, explanation
-- 2 pre-existing test_post_game.py failures (session numbering brittleness) are NOT caused by this story
----
-
-## 2026-02-07 - US-025: Opening integration documentation updates
-- Updated CLAUDE.md: added Opening Study Mode section, 5 opening tools to MCP Tools Reference (Openings subsection), opening-moves.json and opening-traps.json to puzzle table, openings.db and openings_trie.json to Data Files table, opening identification mention in Play phase
-- Updated SKILL.md: mirrored all CLAUDE.md changes (Opening Study Mode, puzzle table, data files, system files with openings_tools.py and openings.py, tool count updated to 20)
-- Updated references/opening-guide.md: added Full Opening Database section with MCP tool references, level-based study approach table, and opening puzzle descriptions
-- Updated references/curriculum.md: added Opening Study Goal to Phase 1 (learn 2-3 openings), Phase 2 (expand to 5-6 across ECO families), Phase 3 (full repertoire with traps)
-- Verified scripts/install.sh already had `uv run python scripts/build_openings_db.py` step (added in US-020)
-- All 126 puzzles across 8 files pass validation, install.sh is executable
-
-**Files changed:**
-- Modified: CLAUDE.md (Opening Study Mode, tools, puzzles, data files)
-- Modified: SKILL.md (mirror of CLAUDE.md changes, updated system files)
-- Modified: references/opening-guide.md (Full Opening Database section)
-- Modified: references/curriculum.md (Opening Study Goals per phase)
-- Modified: prd.json (US-025 passes: true)
-
-**Learnings for future iterations:**
-- Documentation-only stories require no py_compile checks but should verify puzzle validation and file permissions
-- SKILL.md System Files section should track tool count (now 20) and list all script/server files
-- Opening study goals in curriculum.md connect specific MCP tools to each learning phase
-- install.sh was already updated in US-020 - always check before adding duplicate steps
----
-
-## 2026-02-07 - US-026: Opening integration tests
-- Created tests/test_openings.py with 35 comprehensive pytest tests covering:
-  - Trie tests (6): Sicilian Defense B20 identification, empty moves, non-book moves, deepest match, single move, PGN enrichment
-  - SQLite tests (9): search by name/ECO, get_opening_by_eco, get_opening_lines, level filtering (400 vs 1200), random opening, filters, limit
-  - Graceful degradation tests (2): nonexistent paths no crash, missing trie with valid DB
-  - MCP tool tests (9): identify_opening valid/invalid game, search_openings results/ECO filter, get_opening_details B20/nonexistent, suggest_opening list/progress read
-  - MCP quiz tests (3): quiz creates game, quiz with ECO filter, quiz updates openings_studied in progress.json
-  - DB-not-built error tests (5): all 5 tools return error dict when DB files renamed away
-  - Live game integration tests (2): current_opening populated after book moves, field present in GameState
-- All 35 tests pass in 1.69s; full suite 75/77 pass (2 pre-existing test_post_game.py session numbering failures)
-- Uses importlib.util to import from hyphenated mcp-server/ directory (same pattern as test_post_game.py)
-- Accesses MCP tool functions via _server.mcp._tool_manager._tools[name].fn
-
-**Files changed:**
-- Created: tests/test_openings.py (35 tests)
-- Modified: prd.json (US-026 passes: true)
-
-**Learnings for future iterations:**
-- FastMCP tool functions accessed via mcp._tool_manager._tools["name"].fn for direct testing
-- Use unique module name in importlib.util.spec_from_file_location to avoid conflicts with other test files loading the same server
-- _clean_data fixture pattern: backup progress.json and srs_cards.json, restore after test, clear _games dict
-- DB-not-built tests: rename .db and .trie files to .bak during test, restore in fixture teardown
-- 2 pre-existing test_post_game.py failures are session numbering brittleness (session_001 vs session_003) — not caused by any opening stories
+  - response_schemas is imported via `from response_schemas import ...` because sys.path already includes mcp-server/ dir
+  - Pattern: _sync_game_json(state) BEFORE return minify_game_state(state) — sync gets full state, MCP client gets minified
+  - Error dicts return early before reaching minification calls — no special handling needed
+  - ~10 lines changed for the minification wrapping (plus the import block)
 ---
