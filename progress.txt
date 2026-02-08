@@ -46,3 +46,12 @@ Started: Mon Feb  9 04:25:30 IST 2026
   - Error dicts return early before reaching minification calls — no special handling needed
   - ~10 lines changed for the minification wrapping (plus the import block)
 ---
+
+## 2026-02-09T05:35:00Z - US-029
+- Removed epd field from suggest_opening() suggestion dicts in mcp-server/openings_tools.py
+- Suggestion dicts now contain only: name, eco, pgn
+- Files changed: mcp-server/openings_tools.py, prd.json, progress.txt
+- **Learnings for future iterations:**
+  - epd field was on line 215 of openings_tools.py, single line removal
+  - All other opening tools remain unchanged
+---

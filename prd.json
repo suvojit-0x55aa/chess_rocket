@@ -671,7 +671,7 @@
         "python -m py_compile mcp-server/openings_tools.py passes"
       ],
       "priority": 29,
-      "passes": false,
+      "passes": true,
       "notes": "Small independent change. epd field is not used by the tutor agent — it rebuilds positions from PGN when needed. See ~/.claude/plans/witty-moseying-seal.md Phase 3."
     },
     {

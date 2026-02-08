@@ -212,7 +212,6 @@ def register_openings_tools(mcp, games: dict, data_dir: Path, project_root: Path
                 "name": opening["name"],
                 "eco": opening["eco"],
                 "pgn": pgn,
-                "epd": opening.get("epd", ""),
             })
 
             if len(suggestions) >= 10:
