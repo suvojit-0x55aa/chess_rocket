@@ -1036,7 +1036,7 @@
         "python -m py_compile scripts/validate_puzzles.py passes"
       ],
       "priority": 44,
-      "passes": false,
+      "passes": true,
       "notes": "Quick win - unblocks opening puzzle validation. Opening/trap moves test book knowledge, not engine optimality. e.g. 1.d4 is book but engine might prefer 1.e4. Depends on nothing - can be done in parallel with US-042."
     },
     {

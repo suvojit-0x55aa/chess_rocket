@@ -152,3 +152,18 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - backRankMate puzzles are rarer in the Lichess DB (~1 per 7000 rows at advanced level vs ~1 per 7 rows for mateIn1 at beginner)
   - All Lichess-sourced puzzles have source='lichess' and lichess_id fields for traceability
 ---
+
+## 2026-02-09 - US-044
+- What was implemented: Added opening/opening_trap exemption to validate_puzzle_engine() Check 1 (engine-best-move check)
+- Files changed:
+  - scripts/validate_puzzles.py (exemption for opening/opening_trap motifs in Check 1)
+  - prd.json (US-044 passes: true)
+- opening-moves.json (40 puzzles) PASS engine verification with exemption
+- opening-traps.json (30 puzzles) PASS engine verification with exemption
+- All other puzzle files still fully engine-verified (no exemption leakage)
+- 186 tests pass, 1 skipped, 0 failures
+- **Learnings for future iterations:**
+  - Opening book moves test knowledge not engine optimality - 1.d4 is book but engine might prefer 1.e4
+  - Motif mismatch warnings (Check 4) are expected for opening puzzles since detect_motif looks for tactics, not book moves
+  - The exemption is a simple `if motif in ("opening", "opening_trap"): pass` guard around the engine analysis block
+---

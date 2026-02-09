@@ -103,59 +103,60 @@ def validate_puzzle_engine(
         return errors, warnings  # Already caught by legality check
 
     # Check 1: Solution move is engine's #1 choice (or within 20cp of best)
-    try:
-        result = engine.analyse(board, chess.engine.Limit(depth=15), multipv=2)
-        if result and len(result) >= 1:
-            best_info = result[0]
-            best_move = best_info.get("pv", [None])[0]
-            best_score = best_info["score"].pov(board.turn)
+    # Opening/opening_trap puzzles are exempt — book moves test knowledge, not engine optimality
+    if motif in ("opening", "opening_trap"):
+        pass  # opening exemption — skip engine-best check
+    else:
+        try:
+            result = engine.analyse(board, chess.engine.Limit(depth=15), multipv=2)
+            if result and len(result) >= 1:
+                best_info = result[0]
+                best_move = best_info.get("pv", [None])[0]
+                best_score = best_info["score"].pov(board.turn)
 
-            if best_move != first_move:
-                # Check if within 20cp of best
-                solution_found = False
-                for info in result:
-                    pv = info.get("pv", [])
-                    if pv and pv[0] == first_move:
-                        sol_score = info["score"].pov(board.turn)
-                        if best_score.is_mate() and sol_score.is_mate():
-                            # Both are mates — accept if solution also mates
-                            solution_found = True
-                        elif best_score.is_mate() and not sol_score.is_mate():
-                            # Best is mate but solution isn't — error
-                            pass
-                        elif not best_score.is_mate() and sol_score.is_mate():
-                            solution_found = True  # Solution finds mate, even better
-                        else:
-                            diff = abs(best_score.score() - sol_score.score())
-                            if diff <= 20:
+                if best_move != first_move:
+                    # Check if within 20cp of best
+                    solution_found = False
+                    for info in result:
+                        pv = info.get("pv", [])
+                        if pv and pv[0] == first_move:
+                            sol_score = info["score"].pov(board.turn)
+                            if best_score.is_mate() and sol_score.is_mate():
                                 solution_found = True
-                        break
+                            elif best_score.is_mate() and not sol_score.is_mate():
+                                pass
+                            elif not best_score.is_mate() and sol_score.is_mate():
+                                solution_found = True
+                            else:
+                                diff = abs(best_score.score() - sol_score.score())
+                                if diff <= 20:
+                                    solution_found = True
+                            break
 
-                if not solution_found:
-                    # Do single analysis of the solution move to get its score
-                    board_after_sol = board.copy()
-                    board_after_sol.push(first_move)
-                    try:
-                        sol_result = engine.analyse(
-                            board_after_sol, chess.engine.Limit(depth=15)
-                        )
-                        sol_score = sol_result["score"].pov(board.turn)
-                        if best_score.is_mate() and not sol_score.is_mate():
-                            errors.append(
-                                f"{prefix}: solution {solution_moves[0]} is not best move "
-                                f"(engine prefers {best_move.uci()}, mate vs no mate)"
+                    if not solution_found:
+                        board_after_sol = board.copy()
+                        board_after_sol.push(first_move)
+                        try:
+                            sol_result = engine.analyse(
+                                board_after_sol, chess.engine.Limit(depth=15)
                             )
-                        elif not best_score.is_mate() and not sol_score.is_mate():
-                            diff = abs(best_score.score() - (-sol_score.score()))
-                            if diff > 20:
+                            sol_score = sol_result["score"].pov(board.turn)
+                            if best_score.is_mate() and not sol_score.is_mate():
                                 errors.append(
                                     f"{prefix}: solution {solution_moves[0]} is not best move "
-                                    f"(engine prefers {best_move.uci()}, diff={diff}cp)"
+                                    f"(engine prefers {best_move.uci()}, mate vs no mate)"
                                 )
-                    except Exception:
-                        pass  # Can't verify, skip
-    except Exception:
-        pass  # Engine analysis failed, skip this check
+                            elif not best_score.is_mate() and not sol_score.is_mate():
+                                diff = abs(best_score.score() - (-sol_score.score()))
+                                if diff > 20:
+                                    errors.append(
+                                        f"{prefix}: solution {solution_moves[0]} is not best move "
+                                        f"(engine prefers {best_move.uci()}, diff={diff}cp)"
+                                    )
+                        except Exception:
+                            pass  # Can't verify, skip
+        except Exception:
+            pass  # Engine analysis failed, skip this check
 
     # Check 2: Checkmate puzzles result in board.is_checkmate() after solution
     if motif in ("checkmate", "back_rank_mate", "back-rank", "checkmate_pattern"):
