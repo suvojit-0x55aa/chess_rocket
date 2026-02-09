@@ -274,6 +274,7 @@ Available puzzle sets:
 | `srs_add_card(game_id, move, explanation)` | Save mistake for SRS review |
 | `save_session(game_id, ...)` | Persist progress + session log in one call |
 | `create_srs_cards_from_game(game_id)` | Batch-create SRS cards for all mistakes in a completed game |
+| `generate_puzzles_from_game(game_id, cp_threshold)` | Generate puzzles from completed game and append to puzzles/from-games.json |
 
 ## Reference Materials
 

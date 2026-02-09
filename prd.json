@@ -924,7 +924,7 @@
         "CLAUDE.md MCP Tools Reference updated to include generate_puzzles_from_game"
       ],
       "priority": 39,
-      "passes": false,
+      "passes": true,
       "notes": "Bridges the MCP server with Pipeline 2 for real-time puzzle generation during tutoring sessions. Depends on US-035, US-037. See ~/.claude/plans/gentle-fluttering-curry.md Step 6."
     },
     {

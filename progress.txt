@@ -101,3 +101,19 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Scale fetch_limit with target (target * 20) for auto-trap generation to ensure enough candidates
   - Opening-moves ECO distribution is naturally even when using per_volume parameter
 ---
+
+## 2026-02-09 - US-039
+- What was implemented: generate_puzzles_from_game MCP tool in mcp-server/server.py
+- Files changed:
+  - mcp-server/server.py (added ~100 lines: generate_puzzles_from_game tool)
+  - CLAUDE.md (added tool to MCP Tools Reference table)
+  - prd.json (US-039 passes: true)
+- Tool replays completed game, evaluates player moves at full strength, creates puzzles for cp_loss >= threshold
+- Runs motif detection on each puzzle for classification
+- Deduplicates by normalized FEN against existing puzzles/from-games.json
+- Atomic write via tempfile + os.replace
+- 112 tests pass, 0 failures
+- **Learnings for future iterations:**
+  - parse_san() returns a Move object that can be used with detect_motif directly
+  - Reuse the same dedup pattern (normalize FEN to first 4 parts) across all puzzle generators
+---
