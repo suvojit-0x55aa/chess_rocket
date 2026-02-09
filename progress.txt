@@ -1,131 +1,21 @@
 # Ralph Progress Log
-Started: Mon Feb  9 04:25:30 IST 2026
+Started: Mon Feb  9 14:59:35 IST 2026
 ---
 
 ## Codebase Patterns
-- MCP server imports use importlib for hyphenated directory (mcp-server/): `importlib.util.spec_from_file_location("mcp_server_mod", path)`
-- response_schemas.py is in mcp-server/ dir - import with PYTHONPATH or sys.path
-- Validation gated by CHESS_SPEEDRUN_VALIDATE=1 env var (off by default, on in tests)
-- _sync_game_json() writes FULL state for TUI; MCP return values get minified separately
-- PGN move string format: "1.e4 e5 2.Nf3 Nc6" (no spaces between number and move)
-- server.py sys.path: BOTH _PROJECT_ROOT and _MCP_SERVER_DIR must be inserted BEFORE any local imports (response_schemas, openings_tools)
-- Stockfish UCI_Elo max is 3190 — tests using set_difficulty should stay <= 3190 to avoid EngineError
-- ChessEngine has __del__ for GC cleanup, but always call close() explicitly — don't rely on GC
-- pytest_sessionfinish in conftest.py kills remaining Stockfish children to prevent hanging
-
-## 2026-02-09T05:00:00Z - US-034
-- Already implemented in previous iteration (evaluate_move stores evals, undo_move filters, save_session auto-computes accuracy)
-- Just marked passes: true in prd.json
-- Files changed: prd.json
-- **Learnings for future iterations:**
-  - Always check if a story is already implemented before starting work
-  - US-034 code was already in server.py lines 209-235, 456-471, 609-613, 768-774
+- Pin test positions: ensure no pieces block the ray between pinner and king (e.g., d7 pawn blocks Bb5-Nc6-Ke8 diagonal)
+- Rook movement tests: ensure own king doesn't block the rook's rank/file path
+- python-chess `is_pinned()` only detects pins to the king, not to other pieces
+- `test_quiz_updates_openings_studied` in test_openings.py is flaky — depends on random opening selection sometimes picking a too-short opening
 ---
 
-## 2026-02-09T05:10:00Z - US-027
-- Created mcp-server/response_schemas.py (~240 lines)
-- Four minification functions: minify_game_state, minify_move_evaluation, minify_analysis, minify_save_session
-- Dict-based validation schemas: GAME_STATE_SCHEMA, MOVE_EVALUATION_SCHEMA, ANALYSIS_SCHEMA, ERROR_SCHEMA
-- validate_response() gated by CHESS_SPEEDRUN_VALIDATE=1 env var
-- Helper _moves_to_pgn_string() converts move list to PGN notation
-- Files changed: mcp-server/response_schemas.py (new), prd.json
+## 2026-02-09 - US-035
+- What was implemented: Fixed 2 failing pin detection test positions in test_motif_detector.py
+- Files changed: tests/test_motif_detector.py (2 FEN positions corrected)
+- The motif_detector.py module and test file already existed but had 2 broken test positions
 - **Learnings for future iterations:**
-  - minify_game_state removes: board_display, session_number, streak, lesson_name
-  - minify_game_state compacts: move_list (array->PGN string), legal_moves (list->count), accuracy (dict->float), current_opening ({name,eco} only)
-  - minify_move_evaluation removes: tactical_motif, is_best; truncates best_line to 3
-  - minify_analysis truncates PV to 5 moves, removes null mate_in
-  - minify_save_session keeps only: current_elo, sessions_completed, streak, total_games in progress
----
-
-## 2026-02-09T05:30:00Z - US-028
-- Modified mcp-server/server.py to return minified responses from all MCP tools
-- Added import of minify_game_state, minify_move_evaluation, minify_analysis, minify_save_session from response_schemas
-- Wrapped return values of 9 tool functions: new_game, get_board, make_move, engine_move, undo_move, set_position (minify_game_state), analyze_position (minify_analysis), evaluate_move (minify_move_evaluation), save_session (minify_save_session)
-- _sync_game_json() calls remain unchanged — full state still written for TUI
-- Error dict returns pass through as-is (not wrapped by minification)
-- Files changed: mcp-server/server.py, prd.json, progress.txt
-- **Learnings for future iterations:**
-  - response_schemas is imported via `from response_schemas import ...` because sys.path already includes mcp-server/ dir
-  - Pattern: _sync_game_json(state) BEFORE return minify_game_state(state) — sync gets full state, MCP client gets minified
-  - Error dicts return early before reaching minification calls — no special handling needed
-  - ~10 lines changed for the minification wrapping (plus the import block)
----
-
-## 2026-02-09T05:35:00Z - US-029
-- Removed epd field from suggest_opening() suggestion dicts in mcp-server/openings_tools.py
-- Suggestion dicts now contain only: name, eco, pgn
-- Files changed: mcp-server/openings_tools.py, prd.json, progress.txt
-- **Learnings for future iterations:**
-  - epd field was on line 215 of openings_tools.py, single line removal
-  - All other opening tools remain unchanged
----
-
-## 2026-02-09T05:45:00Z - US-030
-- Created tests/conftest.py (~180 lines) with shared test fixtures
-- Registered --e2e CLI flag and @pytest.mark.e2e marker
-- mock_chess_engine fixture: patches ChessEngine with mock returning valid legal moves, skipped when --e2e
-- clean_data_dir fixture: backs up/restores progress.json, srs_cards.json, cleans test files
-- enable_validation fixture (autouse): sets CHESS_SPEEDRUN_VALIDATE=1 for all tests
-- Fixed server.py import order: moved _MCP_SERVER_DIR sys.path.insert before response_schemas import
-- Files changed: tests/conftest.py (new), mcp-server/server.py (import reorder), prd.json, progress.txt
-- **Learnings for future iterations:**
-  - server.py needs both _PROJECT_ROOT and _MCP_SERVER_DIR in sys.path BEFORE any local imports
-  - response_schemas.py and openings_tools.py both live in mcp-server/ dir, need sys.path for importlib-based test loading
-  - test_openings.py has 1 expected failure from US-028 minification (family field removed) — fix in US-033
----
-
-## 2026-02-09T06:00:00Z - US-031
-- Created tests/test_mcp_tools.py (~410 lines) with 14 test classes + TestResponseSchemas
-- 52 tests covering all MCP server tools for minified response shapes
-- Key assertions: no board_display, legal_moves_count is int, move_list is PGN string, accuracy is float
-- TUI JSON integrity verified: data/current_game.json has full unminified state
-- Schema validation via validate_response() on all tool responses
-- Files changed: tests/test_mcp_tools.py (new), prd.json, progress.txt
-- **Learnings for future iterations:**
-  - Stockfish UCI_Elo max is 3190 on this install — don't test with values > 3190
-  - Server clamps to 100-3500 but engine.py passes directly to UCI_Elo without capping at 3190
-  - get_board does NOT write to current_game.json (verified via mtime check)
-  - Tests run with real Stockfish (~28s) — mock support available but not used here
----
-
-## 2026-02-09T06:30:00Z - US-032
-- Created tests/test_mcp_flows.py (~350 lines) with 6 test classes, 26 tests
-- TestGameLifecycle: full game + mate lifecycle, all responses minified, TUI JSON full
-- TestOpeningStudyFlow: suggest_opening has no epd, quiz creates game entry
-- TestSrsReviewFlow: play to completion -> create_srs_cards_from_game
-- TestSessionPersistence: save_session updates progress, multiple calls increment
-- TestErrorPaths: 15 tests covering all error returns across all tools
-- TestResponseSizeRegression: game state < 500, analysis < 400, evaluation < 200 chars
-- Files changed: tests/test_mcp_flows.py (new), prd.json, progress.txt
-- **Learnings for future iterations:**
-  - opening_quiz has a bug: starting_fen doesn't match board state when moves were played before copy — avoid make_move on quiz games in tests
-  - Background bash tests with pipe (| tail) may never produce output — run without pipe
-  - Response size regression thresholds: game_state < 500, analysis < 400, evaluation < 200
----
-
-## 2026-02-09T06:45:00Z - US-033
-- Updated tests/test_openings.py: removed assertions for `family` and `moves_matched` in current_opening (minified to {name, eco} only)
-- Fixed flaky test_quiz_creates_game: skip when random opening too short for quiz
-- tests/test_post_game.py: already compatible with minified responses (no changes needed)
-- All 124 tests pass across test_openings, test_post_game, test_mcp_tools, test_mcp_flows
-- Files changed: tests/test_openings.py, prd.json, progress.txt
-- **Learnings for future iterations:**
-  - test_post_game.py reads progress.json directly for detailed assertions — already compatible with minification
-  - opening_quiz randomly picks openings; some are too short (1 move) for quiz — use pytest.skip for "too short" errors
-  - Minified current_opening only has {name, eco} — no family, moves_matched, pgn
----
-
-## 2026-02-09T07:30:00Z - US-034 (verified + test hang fix)
-- US-034 implementation already existed in server.py (evaluate_move stores evals, undo_move filters, save_session auto-computes, _recompute_accuracy helper)
-- Verified all acceptance criteria met, marked passes: true
-- Fixed pytest hanging after all 157 tests pass:
-  - Root cause: python-chess spawns Stockfish subprocesses with asyncio background threads; unclosed engines prevent process exit
-  - Added `__del__` method to ChessEngine as GC safety net
-  - Added `pytest_sessionfinish` hook in conftest.py to `pkill -P <pid>` remaining children
-- Files changed: scripts/engine.py, tests/conftest.py, prd.json
-- **Learnings for future iterations:**
-  - python-chess SimpleEngine.popen_uci() spawns subprocess + asyncio thread — must always close()
-  - ChessEngine.__del__ prevents leaked Stockfish processes on GC
-  - pytest_sessionfinish with pkill -P is a reliable safety net for subprocess cleanup
-  - All 34 stories now pass, 157 tests green
+  - Pin test 1: Original FEN had d7 pawn blocking the bishop pin ray from b5 through c6 to e8. Fixed by removing the d7 pawn.
+  - Pin test 2: Original FEN had white king on d1 blocking rook from traversing a1 to e1. Fixed by moving king to g1.
+  - The flaky `test_quiz_updates_openings_studied` test is a pre-existing issue (random opening too short for quiz)
+  - All 187 tests pass across the full suite
 ---

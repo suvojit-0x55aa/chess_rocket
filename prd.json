@@ -830,7 +830,7 @@
         "uv run python -m pytest tests/test_motif_detector.py -v passes"
       ],
       "priority": 35,
-      "passes": false,
+      "passes": true,
       "notes": "Foundation for all puzzle generation. No external dependencies beyond python-chess. See ~/.claude/plans/gentle-fluttering-curry.md Step 1."
     },
     {
