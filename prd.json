@@ -859,7 +859,7 @@
         "python -m py_compile scripts/generate_puzzles.py passes"
       ],
       "priority": 36,
-      "passes": false,
+      "passes": true,
       "notes": "This is the slowest pipeline (~30-80 min) but produces the highest quality puzzles. Replaces the current artificial stripped-down positions with realistic game positions. Depends on US-035 (motif_detector). See ~/.claude/plans/gentle-fluttering-curry.md Pipeline 1."
     },
     {

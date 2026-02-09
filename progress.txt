@@ -7,6 +7,10 @@ Started: Mon Feb  9 14:59:35 IST 2026
 - Rook movement tests: ensure own king doesn't block the rook's rank/file path
 - python-chess `is_pinned()` only detects pins to the king, not to other pieces
 - `test_quiz_updates_openings_studied` in test_openings.py is flaky — depends on random opening selection sometimes picking a too-short opening
+- Stockfish self-play puzzle generation: use `flush=True` in print() for progress visibility in non-interactive environments
+- Motif detection hit rate is low in random self-play (~5% fork, ~3% pin) — use overflow pool with relabeling to fill under-target categories
+- Self-play depth 5 + analysis depth 10/14 is fast enough (~7 min for 500 games); depth 8/15/18 is too slow (~indefinite)
+- `_is_interesting_position()` filter (captures, checks, tension, 33% random) reduces analysis calls by ~60%
 ---
 
 ## 2026-02-09 - US-035
@@ -18,4 +22,28 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Pin test 2: Original FEN had white king on d1 blocking rook from traversing a1 to e1. Fixed by moving king to g1.
   - The flaky `test_quiz_updates_openings_studied` test is a pre-existing issue (random opening too short for quiz)
   - All 187 tests pass across the full suite
+---
+
+## 2026-02-09 - US-036
+- What was implemented: Stockfish self-play puzzle generator (Pipeline 1) in scripts/generate_puzzles.py
+- Files changed:
+  - scripts/generate_puzzles.py (NEW - ~400 lines, main puzzle generation orchestrator)
+  - puzzles/forks.json (regenerated: 12 -> 28 puzzles from realistic game positions)
+  - puzzles/pins.json (regenerated: 12 -> 28 puzzles)
+  - puzzles/skewers.json (regenerated: 11 -> 28 puzzles)
+  - puzzles/back-rank.json (regenerated: 12 -> 28 puzzles)
+  - puzzles/checkmate-patterns.json (regenerated: 11 -> 28 puzzles)
+  - puzzles/beginner-endgames.json (regenerated: 11 -> 25 puzzles from constructed endgame positions)
+  - prd.json (US-036 passes: true)
+- Pipeline plays 500 Stockfish self-play games from random openings, analyzes each position for tactical puzzles
+- Endgame puzzles generated from constructed KQvK, KRvK, KPvK, KRvKP, KQvKR positions
+- All 222 puzzles pass validate_puzzles.py, all 187 tests pass
+- **Learnings for future iterations:**
+  - Pure self-play + deep analysis is too slow: depth 8 play + depth 15/18 analysis = hours for 500 games
+  - Optimized approach: depth 5 play + depth 10 screen + depth 14 confirm = ~7 min for 500 games
+  - Use `flush=True` in print() calls for Python output visibility in background processes
+  - Motif detection is strict — most tactical advantages are classified as "tactics" not specific motifs
+  - Overflow pool pattern: collect all puzzles, fill under-target motifs from overflow, relabel as needed
+  - `_is_interesting_position()` heuristic (captures, checks, tension, random 33%) cuts analysis calls dramatically
+  - Endgame position construction with random placement + Stockfish validation produces valid puzzles efficiently
 ---

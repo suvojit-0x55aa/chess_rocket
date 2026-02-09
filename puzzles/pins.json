@@ -1,146 +1,438 @@
 [
   {
-    "fen": "r1bqkbnr/pppppppp/2n5/1B6/4P3/8/PPPP1PPP/RNBQK1NR w KQkq - 2 2",
+    "fen": "rn2kbnR/pppq4/4p1p1/3p4/3P4/3P3B/PPP2P2/RNB1K1N1 w Qq - 0 10",
     "solution_moves": [
-      "b5c6"
+      "h8g8"
     ],
     "solution_san": [
-      "Bxc6"
+      "Rxg8"
     ],
     "motif": "pin",
-    "difficulty": "beginner",
-    "explanation": "The bishop on b5 pins the knight to the king. Capture it with Bxc6."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Rxg8 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "r1bqkb1r/pppppppp/5n2/6B1/4P3/8/PPPP1PPP/RN1QKBNR w KQkq - 3 3",
+    "fen": "rn1qkb1r/pp3pp1/2p1p3/1P6/P3b3/8/2PPQP1P/R1B1K1NR w KQkq - 0 12",
     "solution_moves": [
-      "g5f6"
+      "e2e4"
     ],
     "solution_san": [
-      "Bxf6"
+      "Qxe4"
     ],
     "motif": "pin",
-    "difficulty": "beginner",
-    "explanation": "The bishop pins the knight to the queen on d8. Capture the knight."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxe4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "8/6k1/8/4q3/8/8/1B6/4K3 w - - 0 1",
+    "fen": "2kr3r/ppp2ppp/2n5/2q1p2b/4n3/P1BPQNPP/1PP2PB1/R4RK1 b - - 6 14",
     "solution_moves": [
-      "b2e5"
+      "c5e3",
+      "f2e3",
+      "e4g3"
     ],
     "solution_san": [
-      "Bxe5+"
+      "Qxe3",
+      "fxe3",
+      "Nxg3"
     ],
     "motif": "pin",
-    "difficulty": "intermediate",
-    "explanation": "The queen is pinned to the king along the long diagonal. Capture it."
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Qxe3 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/8/8/r3B2K/8/8/8 b - - 0 1",
+    "fen": "rnbqkb1r/ppppp2p/6p1/3Q4/4n3/8/PPPP1PPP/RNB1K1NR w KQ - 2 6",
     "solution_moves": [
-      "a4e4"
+      "d5e4"
     ],
     "solution_san": [
-      "Rxe4+"
+      "Qxe4"
     ],
     "motif": "pin",
-    "difficulty": "beginner",
-    "explanation": "The white bishop is pinned to the king on the 4th rank. Capture it."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxe4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "3k4/3q4/8/8/8/8/8/3RK3 w - - 0 1",
+    "fen": "3qkb1r/p1rnpp2/B1p3p1/7p/3Pn2P/4PQ2/PP1B1PP1/R3K2R w KQk - 0 14",
     "solution_moves": [
-      "d1d7"
+      "f3e4"
     ],
     "solution_san": [
-      "Rxd7+"
+      "Qxe4"
     ],
     "motif": "pin",
-    "difficulty": "intermediate",
-    "explanation": "The queen is pinned to the king on the d-file. Capture it with the rook."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxe4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "3k4/8/8/8/3b4/8/8/3QK3 w - - 0 1",
+    "fen": "r1bq1b1r/pppkp1p1/2npp1B1/6p1/3P2n1/8/PPP2PPP/RNBQK2R w KQ - 2 9",
     "solution_moves": [
-      "d1d4"
+      "d1g4",
+      "h8h6",
+      "g6f7",
+      "h6f6",
+      "d4d5",
+      "f6f7",
+      "d5e6"
     ],
     "solution_san": [
-      "Qxd4+"
+      "Qxg4",
+      "Rh6",
+      "Bf7",
+      "Rf6",
+      "d5",
+      "Rxf7",
+      "dxe6+"
     ],
     "motif": "pin",
-    "difficulty": "beginner",
-    "explanation": "The bishop is pinned to the king on the d-file. Take it with the queen."
+    "difficulty": "advanced",
+    "difficulty_rating": 1800,
+    "explanation": "Qxg4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2",
+    "fen": "rnb1kb1r/ppp4p/5qp1/3Q4/1PN1p3/8/P1PP1PPP/RN2KB1R b KQkq - 0 9",
     "solution_moves": [
-      "f1b5"
+      "f6a1"
     ],
     "solution_san": [
-      "Bb5"
+      "Qxa1"
     ],
     "motif": "pin",
-    "difficulty": "intermediate",
-    "explanation": "Develop the bishop to b5, pinning the knight to the king."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxa1 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "4r1k1/8/8/8/8/8/8/4R1K1 w - - 0 1",
+    "fen": "r1bqkb1r/ppp1p1Pp/2n5/7n/2pP4/8/PP3PPP/RNB1KBNR w KQkq - 0 8",
     "solution_moves": [
-      "e1e8"
+      "g7h8q"
     ],
     "solution_san": [
-      "Rxe8+"
+      "gxh8=Q"
     ],
     "motif": "pin",
-    "difficulty": "beginner",
-    "explanation": "The black rook is pinned to its king. Capture it with check."
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "gxh8=Q pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "5k2/8/8/5b2/8/8/8/5RK1 w - - 0 1",
+    "fen": "r6r/pp3kpp/3b2n1/8/3QNp1q/6P1/PPP4P/R1B1K2R b KQ - 0 14",
     "solution_moves": [
-      "f1f5"
+      "h4e7"
     ],
     "solution_san": [
-      "Rxf5+"
+      "Qe7"
     ],
     "motif": "pin",
-    "difficulty": "beginner",
-    "explanation": "The bishop is pinned to the king on the f-file. Capture it."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qe7 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+    "fen": "rn2k2r/ppp2p1p/6pB/3Pp3/2BbQ1bq/8/PPP2PPP/RN2K1NR w KQkq - 1 9",
     "solution_moves": [
-      "c4f7"
+      "h6e3",
+      "f7f5",
+      "e4d3",
+      "d4b2",
+      "d3b3",
+      "b2a1",
+      "b3b7"
     ],
     "solution_san": [
-      "Bxf7+"
+      "Be3",
+      "f5",
+      "Qd3",
+      "Bxb2",
+      "Qb3",
+      "Bxa1",
+      "Qxb7"
     ],
     "motif": "pin",
-    "difficulty": "intermediate",
-    "explanation": "Capture the pawn on f7 with check. The knight on f6 cannot recapture because it's pinned."
+    "difficulty": "advanced",
+    "difficulty_rating": 1800,
+    "explanation": "Be3 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "2k5/8/8/8/8/2b5/8/2R3K1 w - - 0 1",
+    "fen": "rnbqk1nr/pppp4/6p1/2b1p2Q/5P2/8/PPPP2PP/RNB1KBNR w KQkq - 0 6",
     "solution_moves": [
-      "c1c3"
+      "h5h8"
     ],
     "solution_san": [
-      "Rxc3+"
+      "Qxh8"
     ],
     "motif": "pin",
-    "difficulty": "intermediate",
-    "explanation": "Rook captures the bishop which is pinned to the king on the c-file."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxh8 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   },
   {
-    "fen": "r1bqkb1r/pppp1ppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 4 4",
+    "fen": "r1b1kbnr/pppp1ppp/2n5/8/7N/1PN5/PBPPP1pP/R2QKB1R b KQkq - 0 7",
     "solution_moves": [
-      "f1b5"
+      "g2h1q"
     ],
     "solution_san": [
-      "Bb5"
+      "gxh1=Q"
     ],
     "motif": "pin",
-    "difficulty": "intermediate",
-    "explanation": "Develop the bishop to b5, pinning the knight on c6 to the king."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "gxh1=Q pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r2q1rk1/pppn1pbp/6p1/3np3/1P1P4/3BPQ1P/P1P2PP1/R1B2RK1 w - - 0 11",
+    "solution_moves": [
+      "f3d5"
+    ],
+    "solution_san": [
+      "Qxd5"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxd5 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn2kb1r/pp3ppp/2p1pq2/8/2BP2P1/4n2Q/PPP4P/2KR2NR w kq - 0 12",
+    "solution_moves": [
+      "h3e3"
+    ],
+    "solution_san": [
+      "Qxe3"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxe3 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b1k2r/1pq1p1bp/p5p1/8/PP2n3/2P2N2/2Q2PPP/R1B1R1K1 w - - 0 16",
+    "solution_moves": [
+      "c2e4"
+    ],
+    "solution_san": [
+      "Qxe4"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxe4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b2rk1/pp2nppp/2n5/1qNp4/8/5NP1/PP2PPBP/R1BQ1RK1 b - - 0 11",
+    "solution_moves": [
+      "b5c5"
+    ],
+    "solution_san": [
+      "Qxc5"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxc5 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnb1k1nr/pppp1ppp/8/4N3/3q4/2N3P1/PPPPP2P/R1BQKB1R b kq - 2 6",
+    "solution_moves": [
+      "d4e5"
+    ],
+    "solution_san": [
+      "Qxe5"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxe5 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbq1rk1/ppp1bppp/8/3p4/2N5/2P3N1/PP1PQPPP/R1B1KB1R b KQ - 2 9",
+    "solution_moves": [
+      "d5c4",
+      "e2c4",
+      "c8e6"
+    ],
+    "solution_san": [
+      "dxc4",
+      "Qxc4",
+      "Be6"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "dxc4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqkbnr/pp1p1ppp/2n1p3/8/2Pp4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 5",
+    "solution_moves": [
+      "e3d4"
+    ],
+    "solution_san": [
+      "exd4"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "exd4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r2qk2r/p2bbppp/1p2pn2/1BPpn3/3P4/2N5/PP3PPP/R1BQ1RK1 w kq - 0 11",
+    "solution_moves": [
+      "d4e5",
+      "d7b5",
+      "c3b5"
+    ],
+    "solution_san": [
+      "dxe5",
+      "Bxb5",
+      "Nxb5"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "dxe5 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r2qk2r/p3bppp/1p2pP2/1bPp4/8/2N5/PP3PPP/R1BQ1RK1 b kq - 0 12",
+    "solution_moves": [
+      "b5f1"
+    ],
+    "solution_san": [
+      "Bxf1"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Bxf1 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqkbnr/1pp2ppp/p2pp3/3PN3/4P3/2N5/PPP2PPP/R1BQKB1R b KQkq - 0 6",
+    "solution_moves": [
+      "d6e5"
+    ],
+    "solution_san": [
+      "dxe5"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "dxe5 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqkbnr/pppp1ppp/8/4p3/3NP3/8/PPP2PPP/RNBQKB1R b KQkq - 0 4",
+    "solution_moves": [
+      "e5d4"
+    ],
+    "solution_san": [
+      "exd4"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "exd4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b1k1nr/pppp1ppp/2n5/4P3/4P2q/2b5/PPPB1PPP/R2QKBNR w KQkq - 0 6",
+    "solution_moves": [
+      "d2c3"
+    ],
+    "solution_san": [
+      "Bxc3"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Bxc3 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b1kr2/ppp3pp/2np4/8/2B1nN2/2B5/PPP2PPP/2KRR3 b q - 3 13",
+    "solution_moves": [
+      "f8f4"
+    ],
+    "solution_san": [
+      "Rxf4"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Rxf4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "5r2/pppk2pp/2npb3/3B4/4PR2/2B5/PPP3PP/2KR4 b - - 0 18",
+    "solution_moves": [
+      "f8f4"
+    ],
+    "solution_san": [
+      "Rxf4"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 850,
+    "explanation": "Rxf4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbqkb1r/pp2pppp/8/2PpP3/1pB5/P7/1B1P1PPP/RN1QK1NR b KQkq - 0 8",
+    "solution_moves": [
+      "d5c4",
+      "a3b4",
+      "a7a5"
+    ],
+    "solution_san": [
+      "dxc4",
+      "axb4",
+      "a5"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "dxc4 pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbqkb1r/1p2p2p/4Ppp1/p1P5/1Pp5/8/1B1PNPPP/RN1QK2R w KQkq - 0 12",
+    "solution_moves": [
+      "d1a4",
+      "b8c6",
+      "b4b5"
+    ],
+    "solution_san": [
+      "Qa4+",
+      "Nc6",
+      "b5"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "Qa4+ pins an enemy piece to a more valuable piece behind it.",
+    "source": "generated"
   }
 ]

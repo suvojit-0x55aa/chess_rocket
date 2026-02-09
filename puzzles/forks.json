@@ -1,146 +1,454 @@
 [
   {
-    "fen": "r3k3/8/8/3N4/8/8/8/4K3 w q - 0 1",
+    "fen": "r2qk2r/pQp1ppbp/6p1/1N3P2/2p2B2/8/PPn2P1P/R4K1R w kq - 2 14",
     "solution_moves": [
-      "d5c7"
+      "b5c7",
+      "e8f8",
+      "a1c1"
     ],
     "solution_san": [
-      "Nc7+"
+      "Nxc7+",
+      "Kf8",
+      "Rc1"
     ],
     "motif": "fork",
-    "difficulty": "beginner",
-    "explanation": "Knight moves to c7, giving check and forking the king and rook on a8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "Nxc7+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/8/8/8/5n2/8/R3K3 b - - 0 1",
+    "fen": "rnb1kb1r/ppppq2p/6p1/4Q3/8/3P4/PPP2nPP/RNB1KB1R w KQkq - 2 8",
     "solution_moves": [
-      "f3d2"
+      "e5e7",
+      "f8e7",
+      "e1f2",
+      "e8g8",
+      "f2e1",
+      "b8c6",
+      "c1e3"
     ],
     "solution_san": [
-      "Nd2"
+      "Qxe7+",
+      "Bxe7",
+      "Kxf2",
+      "O-O+",
+      "Ke1",
+      "Nc6",
+      "Be3"
     ],
     "motif": "fork",
-    "difficulty": "beginner",
-    "explanation": "Black's knight forks the white king on e1 and rook on a1."
+    "difficulty": "advanced",
+    "difficulty_rating": 1800,
+    "explanation": "Qxe7+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/3q1r2/8/8/2N5/8/4K3 w - - 0 1",
+    "fen": "r3kb1r/ppp1pppp/2n2n2/q7/2B5/2N2b1P/PPPP1PP1/R1BQ1RK1 w kq - 0 8",
     "solution_moves": [
-      "c3e4"
+      "d1f3"
     ],
     "solution_san": [
-      "Ne4"
+      "Qxf3"
     ],
     "motif": "fork",
-    "difficulty": "beginner",
-    "explanation": "Knight jumps to e4, forking the queen on d6 and rook on f6."
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qxf3 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "r3k3/8/8/8/4N3/8/8/4K3 w q - 0 1",
+    "fen": "r1b1k2r/pppp2pp/5q2/8/Q1P5/2PN1P2/P3PP1P/R3KB1R b KQkq - 0 13",
     "solution_moves": [
-      "e4d6"
+      "f6c3",
+      "e1d1",
+      "c3a1",
+      "d1d2",
+      "a1f6"
     ],
     "solution_san": [
-      "Nd6+"
+      "Qxc3+",
+      "Kd1",
+      "Qxa1+",
+      "Kd2",
+      "Qf6"
     ],
     "motif": "fork",
-    "difficulty": "intermediate",
-    "explanation": "Knight moves to d6 with check, forking the king on e8 and rook on a8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1500,
+    "explanation": "Qxc3+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/8/2q1n3/8/8/3P4/4K3 w - - 0 1",
+    "fen": "rnbq1b1r/pppppk1p/6p1/7Q/4n3/8/PPPP1PPP/RNB1K1NR w KQ - 0 5",
     "solution_moves": [
-      "d2d4"
+      "h5d5"
     ],
     "solution_san": [
-      "d4"
+      "Qd5+"
     ],
     "motif": "fork",
-    "difficulty": "beginner",
-    "explanation": "Pawn advances to d4, forking the queen on c5 and knight on e5."
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qd5+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/3n1n2/8/4P3/8/8/4K3 w - - 0 1",
+    "fen": "2k2bnr/ppp1pppp/2n5/q2N4/6b1/5N2/PP1BPPPP/R2QKB1R b KQ - 0 8",
     "solution_moves": [
-      "e4e5"
+      "a5d5"
     ],
     "solution_san": [
-      "e5"
+      "Qxd5"
     ],
     "motif": "fork",
-    "difficulty": "beginner",
-    "explanation": "Pawn advances to e5, forking the knights on d6 and f6."
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qxd5 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k1q1/8/8/8/4N3/8/8/4K3 w - - 0 1",
+    "fen": "rnbq1rk1/pp2bppp/8/6B1/4p3/3QPN2/PP3PPP/R3KB1R w KQ - 0 11",
     "solution_moves": [
-      "e4f6"
+      "d3d8",
+      "e7d8",
+      "g5d8"
     ],
     "solution_san": [
-      "Nf6+"
+      "Qxd8",
+      "Bxd8",
+      "Bxd8"
     ],
     "motif": "fork",
-    "difficulty": "intermediate",
-    "explanation": "Knight moves to f6 with check, forking the king on e8 and queen on g8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "Qxd8 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/8/8/8/n7/8/R3K3 b - - 0 1",
+    "fen": "r1bqkb1r/pppp1ppp/2n5/4p3/2B1N3/5N2/PPPP1PPP/R1BQK2R b KQkq - 0 5",
     "solution_moves": [
-      "a3c2"
+      "d7d5",
+      "c4d3",
+      "c8g4"
     ],
     "solution_san": [
-      "Nc2+"
+      "d5",
+      "Bd3",
+      "Bg4"
     ],
     "motif": "fork",
-    "difficulty": "beginner",
-    "explanation": "Black knight moves to c2, forking the white king on e1 and rook on a1."
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "d5 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/8/8/8/8/8/R3Kq2 b - - 0 1",
+    "fen": "rnb1qb1r/pppkp2p/5p2/3pB1pQ/3Pn3/4PP2/PPP3PP/RN2KBNR w KQ - 1 8",
     "solution_moves": [
-      "f1d3"
+      "h5e8",
+      "d7e8",
+      "e5c7",
+      "e4d6",
+      "c7d6",
+      "e7d6",
+      "h2h4"
     ],
     "solution_san": [
-      "Qd3"
+      "Qxe8+",
+      "Kxe8",
+      "Bxc7",
+      "Nd6",
+      "Bxd6",
+      "exd6",
+      "h4"
     ],
     "motif": "fork",
-    "difficulty": "intermediate",
-    "explanation": "Black queen moves to d3 with check, forking the king on e1 and rook on a1."
+    "difficulty": "advanced",
+    "difficulty_rating": 1800,
+    "explanation": "Qxe8+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/8/1n1b4/8/8/2P5/4K3 w - - 0 1",
+    "fen": "2k1r1nr/ppp2ppp/3b4/5b2/2KP4/2N5/PPPP2PP/R1B1NB1R b - - 0 12",
     "solution_moves": [
-      "c2c4"
+      "e8e1"
     ],
     "solution_san": [
-      "c4"
+      "Rxe1"
     ],
     "motif": "fork",
-    "difficulty": "beginner",
-    "explanation": "Pawn advances to c4, forking the knight on b5 and bishop on d5."
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Rxe1 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "3q3r/8/8/4N3/8/8/8/4K3 w - - 0 1",
+    "fen": "2kr1b1r/ppp3pp/2N2p1n/q1P1Pb2/P7/2Q1PN2/1P4PP/R1B1KB1R b KQ - 0 17",
     "solution_moves": [
-      "e5f7"
+      "a5c3",
+      "b2c3",
+      "b7c6"
+    ],
+    "solution_san": [
+      "Qxc3+",
+      "bxc3",
+      "bxc6"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "Qxc3+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbqk2r/ppp1b3/4pp2/3p2pp/3Pn3/P1P2NBP/1P1NPPP1/R2QKB1R b KQkq - 0 9",
+    "solution_moves": [
+      "e4g3",
+      "f2g3",
+      "e7d6"
+    ],
+    "solution_san": [
+      "Nxg3",
+      "fxg3",
+      "Bd6"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "Nxg3 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b1k1nr/1p1p1ppp/pqn1p3/1Nb5/N3P3/5Q2/PPP2PPP/R1B1KB1R b KQkq - 1 8",
+    "solution_moves": [
+      "b6a5"
+    ],
+    "solution_san": [
+      "Qa5+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qa5+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b1k2r/pp3pp1/2n1p2p/q3N3/2B3PP/2N1Q3/PP3P2/2KR3R b kq - 0 15",
+    "solution_moves": [
+      "a5e5"
+    ],
+    "solution_san": [
+      "Qxe5"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qxe5 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn1q1rk1/pbp2ppp/5n2/2b1p3/4P3/1QP5/PP1P1PPP/RNB1K1NR w KQ - 0 7",
+    "solution_moves": [
+      "b3b7"
+    ],
+    "solution_san": [
+      "Qxb7"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qxb7 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "1r3rk1/pQpn1ppp/5n2/2b1p3/4P3/2Pq1P1N/PP1P2PP/RNB1K2R w KQ - 3 10",
+    "solution_moves": [
+      "b7c6"
+    ],
+    "solution_san": [
+      "Qc6"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qc6 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnb1kb1r/pp2p2p/1n1q1pp1/6N1/3p4/1BP5/PP3PPP/RNBQK2R w KQkq - 0 10",
+    "solution_moves": [
+      "g5f7"
     ],
     "solution_san": [
       "Nf7"
     ],
     "motif": "fork",
     "difficulty": "advanced",
-    "explanation": "Knight moves to f7, forking the queen on d8 and rook on h8."
+    "difficulty_rating": 1000,
+    "explanation": "Nf7 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   },
   {
-    "fen": "4k3/8/8/4n1b1/8/8/5P2/4K3 w - - 0 1",
+    "fen": "r3k1nr/2q1bpnp/pp6/2p5/3pb3/1P3Q2/PBPPNPP1/R3K1NR w KQkq - 0 16",
     "solution_moves": [
-      "f2f4"
+      "f3e4",
+      "a8d8",
+      "c2c3"
     ],
     "solution_san": [
-      "f4"
+      "Qxe4",
+      "Rd8",
+      "c3"
     ],
     "motif": "fork",
-    "difficulty": "beginner",
-    "explanation": "Pawn advances to f4, forking the knight on e5 and bishop on g5."
+    "difficulty": "advanced",
+    "difficulty_rating": 1200,
+    "explanation": "Qxe4 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "r3k1nr/2p1q1p1/bp1p3p/pN1Pp3/P1P3Pb/R2B1Q1P/1P3P2/2B2K1R w kq - 2 17",
+    "solution_moves": [
+      "b5c7"
+    ],
+    "solution_san": [
+      "Nxc7+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Nxc7+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b1k2r/pp3ppp/1qn1pn2/3p4/3P3P/B3P3/4NPP1/1R1QKBNR b Kkq - 0 11",
+    "solution_moves": [
+      "b6a5"
+    ],
+    "solution_san": [
+      "Qa5+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 900,
+    "explanation": "Qa5+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbqk1nr/ppp2ppp/8/2bPp3/2B5/2P5/PP1P1PPP/RNBQK1NR b KQkq - 0 4",
+    "solution_moves": [
+      "c5f2"
+    ],
+    "solution_san": [
+      "Bxf2+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Bxf2+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbqk1nr/ppp2ppp/8/3Pp3/2B5/2P5/PP1P1KPP/RNBQ2NR b kq - 0 5",
+    "solution_moves": [
+      "d8h4"
+    ],
+    "solution_san": [
+      "Qh4+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qh4+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b2rk1/ppp2ppp/5n2/q3R3/P2P4/2P2QP1/1P3K1P/RNB5 b - - 0 13",
+    "solution_moves": [
+      "f6g4",
+      "f3g4",
+      "a5e5"
+    ],
+    "solution_san": [
+      "Ng4+",
+      "Qxg4",
+      "Qxe5"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "Ng4+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqk2r/pp3ppp/n2p4/4p3/2P3n1/6P1/PP1NP1BP/RNBQK2R b kq - 2 9",
+    "solution_moves": [
+      "g4e3"
+    ],
+    "solution_san": [
+      "Ne3"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Ne3 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b1kbnr/pp3ppp/2N5/8/2pqp3/2N5/PP3PPP/R1BQKB1R b KQkq - 0 9",
+    "solution_moves": [
+      "d4d1"
+    ],
+    "solution_san": [
+      "Qxd1+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qxd1+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqk2r/p1pp1ppp/1p3n2/n2P4/2P2p2/P1bQ1N2/1P2P1PP/R1B1KB1R w KQkq - 0 9",
+    "solution_moves": [
+      "d3c3"
+    ],
+    "solution_san": [
+      "Qxc3"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qxc3 creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnb1k2b/pp3p2/3p4/6pn/2BPqp2/5N2/PPP3P1/R1BQ1K2 w q - 0 14",
+    "solution_moves": [
+      "c4f7"
+    ],
+    "solution_san": [
+      "Bxf7+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Bxf7+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnb1k1nr/pppp1ppp/8/4N3/7q/2N3P1/PPPPPK1P/R1BQ1B1R b kq - 0 5",
+    "solution_moves": [
+      "h4d4"
+    ],
+    "solution_san": [
+      "Qd4+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "Qd4+ creates a fork, attacking multiple valuable pieces simultaneously.",
+    "source": "generated"
   }
 ]

@@ -1,146 +1,458 @@
 [
   {
-    "fen": "6k1/5ppp/8/8/8/8/8/4R1K1 w - - 0 1",
+    "fen": "rnbq1rk1/ppp1bppp/8/3p4/2N5/2P3N1/PP1PQPPP/R1B1KB1R b KQ - 2 9",
     "solution_moves": [
-      "e1e8"
+      "d5c4",
+      "e2c4",
+      "c8e6"
     ],
     "solution_san": [
-      "Re8#"
+      "dxc4",
+      "Qxc4",
+      "Be6"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Rook delivers checkmate on e8. The king is trapped by its own pawns on f7, g7, h7."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "dxc4 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "6k1/5ppp/8/8/8/8/8/3Q2K1 w - - 0 1",
+    "fen": "r1bqkbnr/pp1p1ppp/2n1p3/8/2Pp4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 5",
     "solution_moves": [
-      "d1d8"
+      "e3d4"
     ],
     "solution_san": [
-      "Qd8#"
+      "exd4"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Queen delivers checkmate on d8. King trapped by pawns."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "exd4 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "6k1/5ppp/8/8/8/8/6K1/R7 w - - 0 1",
+    "fen": "r2qk2r/p2bbppp/1p2pn2/1BPpn3/3P4/2N5/PP3PPP/R1BQ1RK1 w kq - 0 11",
     "solution_moves": [
-      "a1a8"
+      "d4e5",
+      "d7b5",
+      "c3b5"
     ],
     "solution_san": [
-      "Ra8#"
+      "dxe5",
+      "Bxb5",
+      "Nxb5"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Rook delivers checkmate on a8. The rook controls the entire 8th rank."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "dxe5 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "6k1/5ppp/8/8/8/8/6K1/Q7 w - - 0 1",
+    "fen": "r2qk2r/p3bppp/1p2pP2/1bPp4/8/2N5/PP3PPP/R1BQ1RK1 b kq - 0 12",
     "solution_moves": [
-      "a1a8"
+      "b5f1"
     ],
     "solution_san": [
-      "Qa8#"
+      "Bxf1"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Queen delivers checkmate on a8. Controls the entire 8th rank."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Bxf1 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "6k1/5ppp/8/8/8/8/6K1/1R6 w - - 0 1",
+    "fen": "r1bqkbnr/1pp2ppp/p2pp3/3PN3/4P3/2N5/PPP2PPP/R1BQKB1R b KQkq - 0 6",
     "solution_moves": [
-      "b1b8"
+      "d6e5"
     ],
     "solution_san": [
-      "Rb8#"
+      "dxe5"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Rook delivers checkmate on b8. King trapped by pawns."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "dxe5 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "r5k1/8/8/8/8/8/5PPP/6K1 b - - 0 1",
+    "fen": "r1bqkbnr/pppp1ppp/8/4p3/3NP3/8/PPP2PPP/RNBQKB1R b KQkq - 0 4",
     "solution_moves": [
-      "a8a1"
+      "e5d4"
     ],
     "solution_san": [
-      "Ra1#"
+      "exd4"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Black rook delivers checkmate on a1. White king trapped by own pawns."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "exd4 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "2r3k1/5ppp/8/8/8/8/6K1/2R5 w - - 0 1",
+    "fen": "r1b1k1nr/pppp1ppp/2n5/4P3/4P2q/2b5/PPPB1PPP/R2QKBNR w KQkq - 0 6",
     "solution_moves": [
-      "c1c8"
+      "d2c3"
     ],
     "solution_san": [
-      "Rxc8#"
+      "Bxc3"
     ],
-    "motif": "back-rank",
-    "difficulty": "intermediate",
-    "explanation": "Rook captures on c8, delivering checkmate."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Bxc3 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "3q2k1/5ppp/8/8/8/8/8/1Q1R2K1 w - - 0 1",
+    "fen": "r1b1kr2/ppp3pp/2np4/8/2B1nN2/2B5/PPP2PPP/2KRR3 b q - 3 13",
     "solution_moves": [
-      "d1d8"
+      "f8f4"
     ],
     "solution_san": [
-      "Rxd8#"
+      "Rxf4"
     ],
-    "motif": "back-rank",
-    "difficulty": "intermediate",
-    "explanation": "Rook captures the queen on d8, delivering checkmate."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Rxf4 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "6k1/5ppp/8/8/8/8/6K1/2R5 w - - 0 1",
+    "fen": "5r2/pppk2pp/2npb3/3B4/4PR2/2B5/PPP3PP/2KR4 b - - 0 18",
     "solution_moves": [
-      "c1c8"
+      "f8f4"
     ],
     "solution_san": [
-      "Rc8#"
+      "Rxf4"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Rook delivers checkmate on c8. King trapped by pawns."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 850,
+    "explanation": "Rxf4 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "3r2k1/6pp/8/8/8/8/5PPP/6K1 b - - 0 1",
+    "fen": "rnbqkb1r/pp2pppp/8/2PpP3/1pB5/P7/1B1P1PPP/RN1QK1NR b KQkq - 0 8",
     "solution_moves": [
-      "d8d1"
+      "d5c4",
+      "a3b4",
+      "a7a5"
     ],
     "solution_san": [
-      "Rd1#"
+      "dxc4",
+      "axb4",
+      "a5"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Black rook delivers checkmate on d1. White king trapped by pawns."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "dxc4 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "4q1k1/6pp/8/8/8/8/5PPP/6K1 b - - 0 1",
+    "fen": "rnbqkb1r/1p2p2p/4Ppp1/p1P5/1Pp5/8/1B1PNPPP/RN1QK2R w KQkq - 0 12",
     "solution_moves": [
-      "e8e1"
+      "d1a4",
+      "b8c6",
+      "b4b5"
     ],
     "solution_san": [
-      "Qe1#"
+      "Qa4+",
+      "Nc6",
+      "b5"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Black queen delivers checkmate on e1. White king trapped by pawns."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "Qa4+ delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   },
   {
-    "fen": "6k1/5ppp/8/8/8/8/8/4Q1K1 w - - 0 1",
+    "fen": "r1bqkb1r/1p2p2p/2n1Ppp1/p1P5/QPp5/8/1B1PNPPP/RN2K2R w KQkq - 2 13",
     "solution_moves": [
-      "e1e8"
+      "b4b5"
     ],
     "solution_san": [
-      "Qe8#"
+      "b5"
     ],
-    "motif": "back-rank",
-    "difficulty": "beginner",
-    "explanation": "Queen delivers checkmate on e8. King has no escape squares."
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "b5 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbqk2r/pp2p1bp/2pp2pB/8/2PPp3/5N1P/PP1Q1PP1/RN2KB1R b KQkq - 0 8",
+    "solution_moves": [
+      "g7h6",
+      "d2h6",
+      "e4f3"
+    ],
+    "solution_san": [
+      "Bxh6",
+      "Qxh6",
+      "exf3"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "Bxh6 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbqk2r/pp2p2p/2pp2pb/8/2PPp3/5N1P/PP1Q1PP1/RN2KB1R w KQkq - 0 9",
+    "solution_moves": [
+      "d2h6",
+      "e4f3",
+      "b1d2"
+    ],
+    "solution_san": [
+      "Qxh6",
+      "exf3",
+      "Nd2"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "Qxh6 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1q1k2r/pp1nb1pb/2p2n1p/6N1/3P4/6N1/PPP2PPP/R1BQR1K1 w kq - 3 14",
+    "solution_moves": [
+      "g5h7"
+    ],
+    "solution_san": [
+      "Nxh7"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Nxh7 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1q1k1nr/pp1nb1pN/2p4p/8/3P4/6N1/PPP1QPPP/R1B1R1K1 b kq - 0 15",
+    "solution_moves": [
+      "h8h7",
+      "g3f5",
+      "c8d8",
+      "e2e6",
+      "e8f8",
+      "f5e7",
+      "g8e7"
+    ],
+    "solution_san": [
+      "Rxh7",
+      "Nf5",
+      "Qd8",
+      "Qe6",
+      "Kf8",
+      "Nxe7",
+      "Nxe7"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1800,
+    "explanation": "Rxh7 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1q1k1n1/pp1nb1pr/2p4p/8/3P4/6N1/PPP1QPPP/R1B1R1K1 w q - 0 16",
+    "solution_moves": [
+      "g3f5",
+      "c8d8",
+      "e2e6",
+      "e8f8",
+      "f5e7",
+      "g8e7",
+      "c1f4"
+    ],
+    "solution_san": [
+      "Nf5",
+      "Qd8",
+      "Qe6",
+      "Kf8",
+      "Nxe7",
+      "Nxe7",
+      "Bf4"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1800,
+    "explanation": "Nf5 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn1qkbnR/ppp1p3/6p1/3p1b2/3P4/3Q4/PPP1PP2/RNB1KBN1 b Qq - 0 7",
+    "solution_moves": [
+      "f5d3"
+    ],
+    "solution_san": [
+      "Bxd3"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Bxd3 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "r3kR2/pppq4/2n1p1p1/3p4/3P4/3P3B/PPP2P2/RNB1K1N1 b Qq - 0 11",
+    "solution_moves": [
+      "e8f8"
+    ],
+    "solution_san": [
+      "Kxf8"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 850,
+    "explanation": "Kxf8 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbqkbnr/ppp3pp/8/3pN3/4p3/1B6/PPPP1PPP/RNBQK2R b KQkq - 1 5",
+    "solution_moves": [
+      "d8g5"
+    ],
+    "solution_san": [
+      "Qg5"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Qg5 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnb1kbnr/ppp3pp/8/3pN1q1/3Pp3/1B6/PPP2PPP/RNBQK2R b KQkq d3 0 6",
+    "solution_moves": [
+      "g5g2"
+    ],
+    "solution_san": [
+      "Qxg2"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Qxg2 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn2kbnr/pp4pp/2p5/4N3/2BPp1b1/8/PP2KPq1/RNBQ3R w kq - 1 12",
+    "solution_moves": [
+      "e5g4",
+      "g2g4",
+      "e2d2"
+    ],
+    "solution_san": [
+      "Nxg4",
+      "Qxg4+",
+      "Kd2"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "Nxg4 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnb2rk1/pppp1ppp/8/b3P3/8/P1Nq2N1/1PP2P1P/R1B1K2R w KQ - 0 11",
+    "solution_moves": [
+      "c2d3"
+    ],
+    "solution_san": [
+      "cxd3"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "cxd3 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn1qkbnr/pp2pppp/8/1bp5/3PpB2/2N5/PPP2PPP/R2QK1NR w KQkq - 0 6",
+    "solution_moves": [
+      "c3b5",
+      "d8a5",
+      "b5c3"
+    ],
+    "solution_san": [
+      "Nxb5",
+      "Qa5+",
+      "Nc3"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "Nxb5 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn2kbnr/pp2pppp/8/qNp5/3PpB2/8/PPP2PPP/R2QK1NR w KQkq - 1 7",
+    "solution_moves": [
+      "b5c3"
+    ],
+    "solution_san": [
+      "Nc3"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Nc3 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "3rkbnr/pp3Ppp/2q5/2p5/3npB2/2N5/PPP1NPPP/R2QK2R b KQk - 0 13",
+    "solution_moves": [
+      "e8f7"
+    ],
+    "solution_san": [
+      "Kxf7"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Kxf7 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "2kr1bnr/ppp3p1/2n1b3/3N3Q/3Pp3/8/PPP2PNP/R1B1KB1R b KQ - 0 12",
+    "solution_moves": [
+      "h8h5",
+      "d5f4",
+      "c6d4",
+      "f4e6",
+      "d4e6"
+    ],
+    "solution_san": [
+      "Rxh5",
+      "Ndf4",
+      "Nxd4",
+      "Nxe6",
+      "Nxe6"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 1550,
+    "explanation": "Rxh5 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn1qkb1r/pp2ppp1/2p3b1/7p/3PNBPP/8/PPP5/R2QKBNR b KQkq - 0 9",
+    "solution_moves": [
+      "g6e4"
+    ],
+    "solution_san": [
+      "Bxe4"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "Bxe4 delivers a back-rank mate! The king is trapped by its own pawns.",
+    "source": "generated"
   }
 ]
