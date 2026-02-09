@@ -576,22 +576,6 @@
     "move_number": 7
   },
   {
-    "fen": "2r1kbnr/1p2pppp/p1p2n2/2P4b/4QN2/2N3P1/PPP2P1P/R1B2RK1 w k - 1 13",
-    "solution_moves": [
-      "e4b4"
-    ],
-    "solution_san": [
-      "Qb4"
-    ],
-    "motif": "tactics",
-    "difficulty": "advanced",
-    "difficulty_rating": 850,
-    "explanation": "In your game, you played Qf3 (cp_loss: 1039). The best move was Qb4.",
-    "source": "game",
-    "source_file": "game_20260208_214405_5ec47a6c.pgn",
-    "move_number": 11
-  },
-  {
     "fen": "3rkbnr/1p2pp1p/p1p2np1/2P1R3/1P3N2/2N2bP1/P1P2P1P/R1B3K1 w k - 1 17",
     "solution_moves": [
       "e5e3"
@@ -796,38 +780,6 @@
     "move_number": 63
   },
   {
-    "fen": "8/2N5/2k3N1/pR6/8/6P1/P4PKP/8 w - - 11 51",
-    "solution_moves": [
-      "a2a4"
-    ],
-    "solution_san": [
-      "a4"
-    ],
-    "motif": "tactics",
-    "difficulty": "beginner",
-    "difficulty_rating": 650,
-    "explanation": "In your game, you played Ne5+ (cp_loss: 1871). The best move was a4.",
-    "source": "game",
-    "source_file": "game_20260208_214405_5ec47a6c.pgn",
-    "move_number": 87
-  },
-  {
-    "fen": "8/8/3k4/2R1N3/8/6P1/P4PKP/8 w - - 6 56",
-    "solution_moves": [
-      "c5b5"
-    ],
-    "solution_san": [
-      "Rb5"
-    ],
-    "motif": "tactics",
-    "difficulty": "beginner",
-    "difficulty_rating": 650,
-    "explanation": "In your game, you played Rd5+ (cp_loss: 8678). The best move was Rb5.",
-    "source": "game",
-    "source_file": "game_20260208_214405_5ec47a6c.pgn",
-    "move_number": 97
-  },
-  {
     "fen": "8/8/8/8/2k5/5NP1/P4PKP/8 w - - 2 58",
     "solution_moves": [
       "h2h4",
@@ -878,25 +830,5 @@
     "source": "game",
     "source_file": "game_20260208_214709_5ec47a6c.pgn",
     "move_number": 137
-  },
-  {
-    "fen": "8/8/8/8/8/2k2NPP/P4PK1/8 w - - 1 59",
-    "solution_moves": [
-      "h3h4",
-      "c3b4",
-      "a2a4"
-    ],
-    "solution_san": [
-      "h4",
-      "Kb4",
-      "a4"
-    ],
-    "motif": "tactics",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "In your game, you played a3 (cp_loss: 8605). The best move was h4.",
-    "source": "game",
-    "source_file": "game_20260208_214818_5ec47a6c.pgn",
-    "move_number": 103
   }
 ]

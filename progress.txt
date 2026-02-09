@@ -167,3 +167,19 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Motif mismatch warnings (Check 4) are expected for opening puzzles since detect_motif looks for tactics, not book moves
   - The exemption is a simple `if motif in ("opening", "opening_trap"): pass` guard around the engine analysis block
 ---
+
+## 2026-02-09 - US-045
+- What was implemented: Verified and cleaned from-games.json with fresh engine verification
+- Files changed:
+  - puzzles/from-games.json (52 -> 48 puzzles, 4 bad puzzles removed via iterative engine verification)
+  - prd.json (US-045 passes: true)
+- Fresh engine verification at depth 15, iterative removal until clean (3 passes needed)
+- Removed puzzles had cp_loss >20 vs engine best move (indices shifted across iterations)
+- 48 remaining puzzles >= 10 minimum threshold
+- from-games.json passes both fast and engine-verify validation modes
+- 187 tests pass, 0 failures
+- **Learnings for future iterations:**
+  - Engine analysis at depth 15 is non-deterministic - same puzzle can pass or fail on different runs
+  - Iterative cleanup (verify -> remove -> re-verify) handles this better than single-pass removal
+  - from-games.json grows naturally via generate_puzzles_from_game MCP tool - new puzzles are validated on insert
+---

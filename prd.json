@@ -1052,7 +1052,7 @@
         "Removed puzzle count logged for audit"
       ],
       "priority": 45,
-      "passes": false,
+      "passes": true,
       "notes": "from-games.json currently has 52 puzzles with 4 known bad ones. May have more after fresh engine verification. File grows naturally as student plays more games via generate_puzzles_from_game MCP tool. Depends on US-044 (needs working validator)."
     },
     {
