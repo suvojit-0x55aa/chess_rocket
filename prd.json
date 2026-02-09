@@ -949,7 +949,7 @@
       ],
       "priority": 40,
       "passes": false,
-      "notes": "Depends on US-035 (motif_detector), US-036 (regenerated tactical files), US-037 (from-games.json). The --engine-verify mode is slower but catches false checkmates and suboptimal solutions. See ~/.claude/plans/gentle-fluttering-curry.md Step 5."
+      "notes": "Depends on US-035 (motif_detector), US-043 (Lichess puzzle replacements), US-044 (validator exemptions), US-045 (from-games.json fix). The --engine-verify mode is slower but catches false checkmates and suboptimal solutions. Blocked until puzzle quality issues are resolved by US-042 through US-046. See ~/.claude/plans/giggly-bouncing-cake.md for full analysis."
     },
     {
       "id": "US-041",
@@ -962,8 +962,9 @@
         "TestManifest: verifies manifest loads, saves, tracks processed files correctly",
         "TestGameMining: verifies mining a PGN file extracts puzzles (uses real Stockfish, marked @pytest.mark.e2e)",
         "TestPipelineCLI: verifies CLI --pipeline flag routing works",
+        "TestLichessImport: verifies Lichess importer produces valid puzzles with correct schema",
         "CLAUDE.md puzzle table updated with all 9 puzzle files and accurate counts",
-        "CLAUDE.md has note about uv run python scripts/generate_puzzles.py for puzzle regeneration",
+        "CLAUDE.md has note about uv run python scripts/import_lichess_puzzles.py for Lichess puzzle import",
         "CLAUDE.md has note about generate_puzzles_from_game MCP tool for dynamic expansion",
         "progress.txt updated with puzzle generation system learnings",
         "uv run python -m pytest tests/test_puzzle_generation.py -v passes",
@@ -971,7 +972,129 @@
       ],
       "priority": 41,
       "passes": false,
-      "notes": "Final story for the puzzle overhaul. Depends on US-035 through US-040. See ~/.claude/plans/gentle-fluttering-curry.md for full context."
+      "notes": "Final story for the puzzle overhaul. Depends on US-035 through US-040, plus US-042 (Lichess importer), US-043 (puzzle replacements), US-044 (validator exemptions), US-045 (from-games fix). See ~/.claude/plans/giggly-bouncing-cake.md for full analysis."
+    },
+    {
+      "id": "US-042",
+      "title": "Create Lichess puzzle importer",
+      "description": "As a developer, I need a streaming importer that extracts high-quality puzzles from the Lichess puzzle database (data/lichess_db_puzzle.csv.zst, 5.75M puzzles) filtered by theme, rating, and popularity, converting them to chess_rocket puzzle format.",
+      "acceptanceCriteria": [
+        "scripts/import_lichess_puzzles.py exists with CLI interface",
+        "Streams data/lichess_db_puzzle.csv.zst using zstandard (no full file load into memory)",
+        "CLI flags: --themes (comma-separated), --min-rating, --max-rating, --min-popularity (default 80), --limit, --output",
+        "Correctly handles Lichess move format: applies moves[0] to FEN to get puzzle position, then moves[1:] alternates solution/opponent-response",
+        "For our format: puzzle FEN = position after moves[0], solution_moves = full moves[1:] sequence (solution + forced responses)",
+        "Theme-to-motif mapping: backRankMate->back_rank_mate, mateIn1/mateIn2/mateIn3->checkmate, smotheredMate/arabianMate/anastasiasMate->checkmate, fork->fork, pin->pin, skewer->skewer, discoveredAttack->discovered_attack, doubleCheck->double_check, promotion->promotion",
+        "Rating-to-difficulty mapping: <1200 beginner, 1200-1800 intermediate, 1800+ advanced",
+        "difficulty_rating field set to Lichess puzzle rating",
+        "Generates explanation from motif templates (e.g., 'Find the back-rank mate! The king is trapped by its own pieces.')",
+        "Output schema matches chess_rocket format: {fen, solution_moves (UCI list), solution_san (SAN list), motif, difficulty, difficulty_rating, explanation, source: 'lichess', lichess_id, lichess_themes}",
+        "FEN deduplication: normalizes FEN (strips move counters) to avoid duplicates",
+        "Validates every imported puzzle: FEN loads in python-chess, all solution moves are legal in sequence",
+        "Checkmate puzzles additionally verified: board.is_checkmate() after full solution",
+        "Back-rank mate puzzles additionally verified: mated king on rank 1 or 8",
+        "zstandard added to pyproject.toml dependencies",
+        "python -m py_compile scripts/import_lichess_puzzles.py passes",
+        "uv run python scripts/import_lichess_puzzles.py --themes mateIn1 --limit 5 --output /tmp/test.json produces valid puzzle file"
+      ],
+      "priority": 42,
+      "passes": true,
+      "notes": "Foundation for replacing broken puzzle files. Lichess CSV columns: PuzzleId, FEN, Moves, Rating, RatingDeviation, Popularity, NbPlays, Themes, GameUrl, OpeningTags. Key insight: Lichess FEN is the game position BEFORE the puzzle setup move - must apply moves[0] first. See ~/.claude/plans/giggly-bouncing-cake.md for full analysis."
+    },
+    {
+      "id": "US-043",
+      "title": "Replace checkmate-patterns.json and back-rank.json with Lichess puzzles",
+      "description": "As a developer, I need checkmate-patterns.json (0/28 actual checkmates) and back-rank.json (all constructed/repetitive) fully replaced with high-quality real-game puzzles from the Lichess database.",
+      "acceptanceCriteria": [
+        "puzzles/checkmate-patterns.json replaced with ~30 Lichess puzzles from themes: mateIn1, mateIn2, smotheredMate, arabianMate, anastasiasMate",
+        "ALL checkmate puzzles verified: board.is_checkmate() returns True after full solution",
+        "Checkmate difficulty mix: ~15 beginner (<1200), ~10 intermediate (1200-1800), ~5 advanced (1800+)",
+        "puzzles/back-rank.json replaced with ~30 Lichess puzzles from theme: backRankMate",
+        "ALL back-rank puzzles verified: checkmate occurs AND mated king is on rank 1 or 8",
+        "Back-rank difficulty mix: ~15 beginner, ~10 intermediate, ~5 advanced",
+        "Both files pass uv run python scripts/validate_puzzles.py (fast mode)",
+        "Both files pass uv run python scripts/validate_puzzles.py --engine-verify",
+        "All puzzles have source: 'lichess' and lichess_id fields",
+        "Old constructed/generated puzzles fully removed (not mixed in)"
+      ],
+      "priority": 43,
+      "passes": false,
+      "notes": "Critical fix. checkmate-patterns.json currently has 0/28 actual checkmates (all misclassified tactical exchanges from Pipeline 1). back-rank.json works (28/28 mates) but all are trivial constructed rook-to-8th-rank patterns. Depends on US-042."
+    },
+    {
+      "id": "US-044",
+      "title": "Add validator exemptions for opening puzzles",
+      "description": "As a developer, I need validate_puzzles.py to exempt opening and opening_trap motif puzzles from the engine-best-move check, since book moves and trap refutations are not always engine-preferred.",
+      "acceptanceCriteria": [
+        "validate_puzzle_engine() in scripts/validate_puzzles.py skips Check 1 (solution is engine's #1 choice) for motif in ('opening', 'opening_trap')",
+        "Check 3 (no stalemate in solution line) still runs for opening puzzles",
+        "Check 4 (motif classification warning) still runs for opening puzzles",
+        "Exemption logged in validation output: shows 'opening exemption' in status line",
+        "opening-moves.json (40 puzzles) passes uv run python scripts/validate_puzzles.py --engine-verify",
+        "opening-traps.json (30 puzzles) passes uv run python scripts/validate_puzzles.py --engine-verify",
+        "All other puzzle files still fully engine-verified (no exemption leakage)",
+        "python -m py_compile scripts/validate_puzzles.py passes"
+      ],
+      "priority": 44,
+      "passes": false,
+      "notes": "Quick win - unblocks opening puzzle validation. Opening/trap moves test book knowledge, not engine optimality. e.g. 1.d4 is book but engine might prefer 1.e4. Depends on nothing - can be done in parallel with US-042."
+    },
+    {
+      "id": "US-045",
+      "title": "Verify and fix from-games.json with engine verification",
+      "description": "As a developer, I need from-games.json cleaned up by running engine verification and removing puzzles with incorrect best moves.",
+      "acceptanceCriteria": [
+        "Run uv run python scripts/validate_puzzles.py --engine-verify on from-games.json",
+        "All puzzles that fail engine verification (solution not within 20cp of best) are removed",
+        "Fresh verification used (not hardcoded indices [14, 33, 40, 48] from repair script)",
+        "Remaining puzzles >= 10 (minimum threshold for EXPECTED_FILES)",
+        "from-games.json passes both fast and engine-verify validation modes",
+        "Removed puzzle count logged for audit"
+      ],
+      "priority": 45,
+      "passes": false,
+      "notes": "from-games.json currently has 52 puzzles with 4 known bad ones. May have more after fresh engine verification. File grows naturally as student plays more games via generate_puzzles_from_game MCP tool. Depends on US-044 (needs working validator)."
+    },
+    {
+      "id": "US-046",
+      "title": "SRS card to puzzle pipeline",
+      "description": "As a tutor, I need SRS mistake cards to be convertible into validated puzzles for 'blunder board' review practice, with an MCP tool to export them.",
+      "acceptanceCriteria": [
+        "SRSManager.export_as_puzzles(min_cp_loss=100) method added to scripts/srs.py",
+        "Filters SRS cards where cp_loss >= min_cp_loss",
+        "Each card converted to chess_rocket puzzle format: {fen, solution_moves: [best_move UCI], solution_san, motif, difficulty, difficulty_rating, explanation, source: 'srs', card_id}",
+        "Validates each exported puzzle: FEN loads in python-chess, best_move is legal",
+        "Skips cards with invalid/corrupt FEN or illegal best_move (warns, doesn't crash)",
+        "New @mcp.tool() srs_to_puzzles(min_cp_loss=100) in mcp-server/server.py",
+        "MCP tool returns {puzzles: [...], total_cards, exported_count, skipped_count}",
+        "python -m py_compile scripts/srs.py passes",
+        "python -m py_compile mcp-server/server.py passes"
+      ],
+      "priority": 46,
+      "passes": false,
+      "notes": "Closes the loop: game mistakes -> SRS cards -> validated puzzles -> review practice. The blunder board concept lets students revisit their own mistakes as puzzles. Depends on nothing."
+    },
+    {
+      "id": "US-047",
+      "title": "Final puzzle validation - make US-040 and US-041 pass",
+      "description": "As a developer, I need all puzzle quality issues resolved so US-040 (enhanced validation) and US-041 (generation tests) can be marked as passing.",
+      "acceptanceCriteria": [
+        "uv run python scripts/validate_puzzles.py exits with code 0 (fast mode)",
+        "uv run python scripts/validate_puzzles.py --engine-verify exits with code 0 (all 9 files pass)",
+        "All checkmate-motif puzzles verified: board.is_checkmate() after solution",
+        "All back-rank puzzles verified: mate on rank 1 or 8",
+        "Opening puzzles pass with exemption (no engine-best check)",
+        "from-games.json has no incorrect best moves",
+        "US-040 'passes' field set to true in prd.json",
+        "tests/test_puzzle_generation.py updated for Lichess-sourced puzzles (source='lichess' assertions)",
+        "US-041 'passes' field set to true in prd.json",
+        "uv run python -m pytest tests/test_puzzle_generation.py -v passes",
+        "uv run python -m pytest tests/ -v passes (no regressions)",
+        "CLAUDE.md puzzle table updated with accurate puzzle counts and sources"
+      ],
+      "priority": 47,
+      "passes": false,
+      "notes": "Final verification story. Depends on US-043, US-044, US-045. See ~/.claude/plans/giggly-bouncing-cake.md for implementation order and full analysis."
     }
   ]
 }
