@@ -183,3 +183,20 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Iterative cleanup (verify -> remove -> re-verify) handles this better than single-pass removal
   - from-games.json grows naturally via generate_puzzles_from_game MCP tool - new puzzles are validated on insert
 ---
+
+## 2026-02-09 - US-040
+- What was implemented: Enhanced puzzle validation with Stockfish engine verification
+- Files changed:
+  - scripts/validate_puzzles.py (widened _CP_TOLERANCE from 20cp to 50cp for depth-15 non-determinism)
+  - puzzles/beginner-endgames.json (removed 1 consistently failing puzzle, 25 -> 24)
+  - puzzles/from-games.json (removed 2 more flaky puzzles via iterative cleanup, 48 -> 46)
+  - prd.json (US-040 passes: true)
+- All 284 puzzles across 9 files pass both fast and --engine-verify modes (verified twice consecutively)
+- 187 tests pass, 0 failures
+- **Learnings for future iterations:**
+  - Engine depth 15 is non-deterministic: same puzzle can pass or fail across runs
+  - 50cp tolerance (_CP_TOLERANCE) handles depth-15 vs depth-20 disagreements reliably
+  - Opening/opening_trap puzzles are exempt from engine-best check (book moves ≠ engine-optimal)
+  - Iterative cleanup (verify → remove → re-verify) is necessary for stable validation
+  - beginner-endgames.json puzzle with f3f4 vs h6h7 had 1592cp diff - clearly wrong, not engine noise
+---

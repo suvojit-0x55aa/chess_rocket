@@ -316,28 +316,6 @@
     "source": "generated"
   },
   {
-    "fen": "8/8/7P/8/7k/5K2/8/8 w - - 0 1",
-    "solution_moves": [
-      "f3f4",
-      "h4h3",
-      "h6h7",
-      "h3g2",
-      "f4g4"
-    ],
-    "solution_san": [
-      "Kf4",
-      "Kh3",
-      "h7",
-      "Kg2",
-      "Kg4"
-    ],
-    "motif": "endgame",
-    "difficulty": "beginner",
-    "difficulty_rating": 542,
-    "explanation": "In this KPvK endgame, Kf4 is the best move to convert the advantage.",
-    "source": "generated"
-  },
-  {
     "fen": "8/4P3/8/8/5K2/8/7k/8 w - - 0 1",
     "solution_moves": [
       "e7e8q"

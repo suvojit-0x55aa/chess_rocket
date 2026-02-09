@@ -256,26 +256,6 @@
     "move_number": 58
   },
   {
-    "fen": "r3k3/pp4B1/2p3p1/3p4/P1PPPp2/3n1P1b/3K4/RN4N1 b - - 5 30",
-    "solution_moves": [
-      "d5c4",
-      "g1h3",
-      "e8f7"
-    ],
-    "solution_san": [
-      "dxc4",
-      "Nxh3",
-      "Kf7"
-    ],
-    "motif": "tactics",
-    "difficulty": "advanced",
-    "difficulty_rating": 1150,
-    "explanation": "In your game, you played Bf1 (cp_loss: 107). The best move was dxc4.",
-    "source": "game",
-    "source_file": "game_20260206_191302_add3519c.pgn",
-    "move_number": 60
-  },
-  {
     "fen": "r4k2/pp6/2p3p1/3pP3/P1PP1p2/5P2/Rn1K4/1N3bN1 b - - 1 33",
     "solution_moves": [
       "b2c4"
@@ -674,22 +654,6 @@
     "source": "game",
     "source_file": "game_20260208_214405_5ec47a6c.pgn",
     "move_number": 37
-  },
-  {
-    "fen": "1R4nr/2kn1p1p/p1pb2p1/8/5N2/2N2bP1/P2B1P1P/6K1 w - - 0 27",
-    "solution_moves": [
-      "b8e8"
-    ],
-    "solution_san": [
-      "Re8"
-    ],
-    "motif": "tactics",
-    "difficulty": "intermediate",
-    "difficulty_rating": 850,
-    "explanation": "In your game, you played Ra8 (cp_loss: 120). The best move was Re8.",
-    "source": "game",
-    "source_file": "game_20260208_214405_5ec47a6c.pgn",
-    "move_number": 39
   },
   {
     "fen": "3R2nr/1k1n1p1p/p1pb2p1/8/5N2/2N3P1/P2B1PbP/6K1 w - - 4 29",

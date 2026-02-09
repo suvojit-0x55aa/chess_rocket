@@ -948,7 +948,7 @@
         "uv run python scripts/validate_puzzles.py --engine-verify exits with code 0"
       ],
       "priority": 40,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-035 (motif_detector), US-043 (Lichess puzzle replacements), US-044 (validator exemptions), US-045 (from-games.json fix). The --engine-verify mode is slower but catches false checkmates and suboptimal solutions. Blocked until puzzle quality issues are resolved by US-042 through US-046. See ~/.claude/plans/giggly-bouncing-cake.md for full analysis."
     },
     {

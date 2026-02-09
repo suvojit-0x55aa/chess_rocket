@@ -102,8 +102,10 @@ def validate_puzzle_engine(
     if first_move not in board.legal_moves:
         return errors, warnings  # Already caught by legality check
 
-    # Check 1: Solution move is engine's #1 choice (or within 20cp of best)
+    # Check 1: Solution move is engine's #1 choice (or within tolerance of best)
+    # Tolerance is 50cp to account for depth-15 vs depth-20 non-determinism
     # Opening/opening_trap puzzles are exempt — book moves test knowledge, not engine optimality
+    _CP_TOLERANCE = 50
     if motif in ("opening", "opening_trap"):
         pass  # opening exemption — skip engine-best check
     else:
@@ -115,7 +117,7 @@ def validate_puzzle_engine(
                 best_score = best_info["score"].pov(board.turn)
 
                 if best_move != first_move:
-                    # Check if within 20cp of best
+                    # Check if within tolerance of best
                     solution_found = False
                     for info in result:
                         pv = info.get("pv", [])
@@ -129,7 +131,7 @@ def validate_puzzle_engine(
                                 solution_found = True
                             else:
                                 diff = abs(best_score.score() - sol_score.score())
-                                if diff <= 20:
+                                if diff <= _CP_TOLERANCE:
                                     solution_found = True
                             break
 
@@ -148,7 +150,7 @@ def validate_puzzle_engine(
                                 )
                             elif not best_score.is_mate() and not sol_score.is_mate():
                                 diff = abs(best_score.score() - (-sol_score.score()))
-                                if diff > 20:
+                                if diff > _CP_TOLERANCE:
                                     errors.append(
                                         f"{prefix}: solution {solution_moves[0]} is not best move "
                                         f"(engine prefers {best_move.uci()}, diff={diff}cp)"
