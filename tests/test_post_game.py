@@ -28,6 +28,7 @@ _DATA_DIR = _server._DATA_DIR
 _games = _server._games
 create_srs_cards_from_game = _server.create_srs_cards_from_game
 engine_move = _server.engine_move
+evaluate_move = _server.evaluate_move
 make_move = _server.make_move
 new_game = _server.new_game
 save_session = _server.save_session
@@ -195,6 +196,44 @@ class TestSaveSession:
     def test_save_session_invalid_game(self):
         result = save_session(game_id="nonexistent")
         assert "error" in result
+
+    def test_save_session_auto_computes_accuracy(self):
+        """Verify save_session computes accuracy_pct from stored move evals when not provided."""
+        # Set up a position where white has a clear move
+        mate_fen = "r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4"
+        result = set_position(mate_fen)
+        game_id = result["game_id"]
+
+        # Evaluate a move to populate move_evals
+        evaluate_move(game_id, "Qxf7+")
+
+        # Now deliver the mate
+        make_move(game_id, "Qxf7#")
+
+        # Save session WITHOUT providing accuracy_pct
+        session_result = save_session(game_id=game_id)
+        assert "error" not in session_result
+
+        # Verify accuracy was auto-computed and stored
+        progress = json.loads(
+            (_DATA_DIR / "progress.json").read_text(encoding="utf-8")
+        )
+        assert len(progress["accuracy_history"]) == 1
+        assert isinstance(progress["accuracy_history"][0], float)
+
+    def test_save_session_no_evals_no_accuracy(self):
+        """Verify accuracy_history is not appended when no evals exist and no accuracy_pct provided."""
+        game_id, _ = _play_to_checkmate()
+
+        # Save session without accuracy_pct and without any evaluate_move calls
+        session_result = save_session(game_id=game_id)
+        assert "error" not in session_result
+
+        # Verify accuracy_history was NOT appended to
+        progress = json.loads(
+            (_DATA_DIR / "progress.json").read_text(encoding="utf-8")
+        )
+        assert len(progress["accuracy_history"]) == 0
 
 
 class TestCreateSRSCardsFromGame:

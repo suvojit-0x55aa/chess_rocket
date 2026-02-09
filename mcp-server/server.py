@@ -15,9 +15,11 @@ from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Add project root to path so we can import scripts.*
+# Add project root and mcp-server dir to path for imports
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_MCP_SERVER_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(_PROJECT_ROOT))
+sys.path.insert(0, str(_MCP_SERVER_DIR))
 
 import chess
 import chess.pgn
@@ -28,6 +30,14 @@ from scripts.models import GameState, MoveEvaluation
 from scripts.openings import OpeningsDB
 from scripts.srs import SRSManager
 
+from openings_tools import register_openings_tools  # noqa: E402
+from response_schemas import (  # noqa: E402
+    minify_analysis,
+    minify_game_state,
+    minify_move_evaluation,
+    minify_save_session,
+)
+
 mcp = FastMCP("chess-speedrun")
 
 # In-memory game store: game_id -> {engine, board, metadata}
@@ -37,11 +47,6 @@ _DATA_DIR = _PROJECT_ROOT / "data"
 
 # Opening recognition (graceful degradation if DB not built)
 _openings_db = OpeningsDB()
-
-# Register opening tools from separate module
-_MCP_SERVER_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(_MCP_SERVER_DIR))
-from openings_tools import register_openings_tools  # noqa: E402
 
 register_openings_tools(mcp, _games, _DATA_DIR, _PROJECT_ROOT)
 
@@ -206,6 +211,35 @@ def _get_game(game_id: str) -> dict | None:
     return _games.get(game_id)
 
 
+def _recompute_accuracy(game: dict) -> None:
+    """Recompute accuracy percentages from stored move evaluations.
+
+    Updates game['accuracy'] dict with per-color accuracy based on
+    the proportion of moves with cp_loss <= 30 (great or best).
+
+    Args:
+        game: Internal game record with 'move_evals' list.
+    """
+    move_evals = game.get("move_evals", [])
+    counts = {"white": 0, "black": 0}
+    good = {"white": 0, "black": 0}
+
+    for ev in move_evals:
+        color = ev.get("color", "white")
+        counts[color] += 1
+        if ev.get("cp_loss", 999) <= 30:
+            good[color] += 1
+
+    accuracy = {}
+    for color in ("white", "black"):
+        if counts[color] > 0:
+            accuracy[color] = round(good[color] / counts[color] * 100, 1)
+        else:
+            accuracy[color] = 0.0
+
+    game["accuracy"] = accuracy
+
+
 # ---------------------------------------------------------------------------
 # US-004: Core game tools
 # ---------------------------------------------------------------------------
@@ -257,7 +291,7 @@ def new_game(
 
     state = _build_game_state(game_id, game)
     _sync_game_json(state)
-    return state
+    return minify_game_state(state)
 
 
 @mcp.tool()
@@ -274,7 +308,7 @@ def get_board(game_id: str) -> dict:
     if game is None:
         return {"error": f"Game not found: {game_id}"}
 
-    return _build_game_state(game_id, game)
+    return minify_game_state(_build_game_state(game_id, game))
 
 
 @mcp.tool()
@@ -314,7 +348,7 @@ def make_move(game_id: str, move: str) -> dict:
 
     state = _build_game_state(game_id, game)
     _sync_game_json(state)
-    return state
+    return minify_game_state(state)
 
 
 @mcp.tool()
@@ -345,7 +379,7 @@ def engine_move(game_id: str) -> dict:
 
     state = _build_game_state(game_id, game)
     _sync_game_json(state)
-    return state
+    return minify_game_state(state)
 
 
 # ---------------------------------------------------------------------------
@@ -389,7 +423,7 @@ def analyze_position(
                 "moves": line["pv"],
                 "mate_in": line["mate"],
             })
-        return {"fen": fen, "depth": depth, "lines": lines}
+        return minify_analysis({"fen": fen, "depth": depth, "lines": lines})
     finally:
         engine.close()
 
@@ -422,7 +456,26 @@ def evaluate_move(game_id: str, move: str) -> dict:
 
     engine: ChessEngine = game["engine"]
     evaluation = engine.evaluate_move(board, chess_move)
-    return asdict(evaluation)
+
+    # Store evaluation for accuracy tracking
+    color = "white" if board.turn == chess.WHITE else "black"
+    ply = len(board.move_stack)
+    eval_record = {
+        "move_san": evaluation.move_san,
+        "best_move_san": evaluation.best_move_san,
+        "cp_loss": evaluation.cp_loss,
+        "classification": evaluation.classification,
+        "color": color,
+        "ply": ply,
+    }
+    game.setdefault("move_evals", []).append(eval_record)
+
+    # Recompute accuracy and sync to TUI
+    _recompute_accuracy(game)
+    state = _build_game_state(game_id, game)
+    _sync_game_json(state)
+
+    return minify_move_evaluation(asdict(evaluation))
 
 
 @mcp.tool()
@@ -558,9 +611,15 @@ def undo_move(game_id: str) -> dict:
     if board.move_stack and board.turn != player_turn:
         board.pop()
 
+    # Filter out move evals that are no longer valid after undo
+    current_ply = len(board.move_stack)
+    move_evals = game.get("move_evals", [])
+    game["move_evals"] = [ev for ev in move_evals if ev.get("ply", 0) < current_ply]
+    _recompute_accuracy(game)
+
     state = _build_game_state(game_id, game)
     _sync_game_json(state)
-    return state
+    return minify_game_state(state)
 
 
 @mcp.tool()
@@ -606,7 +665,7 @@ def set_position(fen: str) -> dict:
 
     state = _build_game_state(game_id, game)
     _sync_game_json(state)
-    return state
+    return minify_game_state(state)
 
 
 @mcp.tool()
@@ -710,6 +769,15 @@ def save_session(
     except (json.JSONDecodeError, OSError):
         progress = dict(defaults)
 
+    # Auto-compute accuracy_pct from stored move evals if not provided
+    if accuracy_pct is None:
+        move_evals = game.get("move_evals", [])
+        player_color = game["player_color"]
+        player_evals = [ev for ev in move_evals if ev.get("color") == player_color]
+        if player_evals:
+            good_moves = sum(1 for ev in player_evals if ev.get("cp_loss", 999) <= 30)
+            accuracy_pct = round(good_moves / len(player_evals) * 100, 1)
+
     # Update progress
     if estimated_elo is not None:
         progress["current_elo"] = estimated_elo
@@ -768,12 +836,12 @@ def save_session(
     )
     os.replace(tmp_session, sessions_dir / session_file)
 
-    return {
+    return minify_save_session({
         "message": f"Session {session_id} saved successfully",
         "session_id": session_id,
         "session_file": f"data/sessions/{session_file}",
         "progress": progress,
-    }
+    })
 
 
 # ---------------------------------------------------------------------------
