@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit:*)",
+      "Bash(python3:*)",
+      "Bash(bash:*)",
+      "Bash(uv run:*)",
+      "mcp__plugin_oh-my-claudecode_omc-tools__python_repl",
+      "mcp__chess-speedrun__new_game",
+      "mcp__chess-speedrun__engine_move",
+      "mcp__chess-speedrun__make_move",
+      "mcp__chess-speedrun__get_board",
+      "mcp__chess-speedrun__undo_move",
+      "mcp__chess-speedrun__save_session",
+      "mcp__chess-speedrun__analyze_position",
+      "mcp__chess-speedrun__set_position",
+      "mcp__chess-speedrun__evaluate_move",
+      "mcp__chess-speedrun__create_srs_cards_from_game",
+      "mcp__chess-speedrun__get_game_pgn",
+      "mcp__chess-speedrun__get_legal_moves",
+      "mcp__chess-speedrun__srs_add_card",
+      "Bash(test:*)",
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python:*)",
+      "Bash(find:*)",
+      "Bash(zstd:*)",
+      "WebSearch"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "chess-speedrun"
+  ],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/ralph-story-done.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
