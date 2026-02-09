@@ -904,7 +904,7 @@
         "python -m py_compile scripts/generate_puzzles.py passes"
       ],
       "priority": 38,
-      "passes": false,
+      "passes": true,
       "notes": "Lower priority than Pipelines 1 and 2 since existing opening puzzles are already reasonable quality. Depends on US-035. See ~/.claude/plans/gentle-fluttering-curry.md Pipeline 3."
     },
     {

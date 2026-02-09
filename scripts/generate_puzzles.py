@@ -919,6 +919,108 @@ def _write_puzzle_file(filepath: Path, puzzles: list[dict]) -> None:
     os.replace(str(tmp), str(filepath))
 
 
+def generate_opening_puzzles_expanded(
+    openings_db_path: str | Path = _DB_PATH,
+    target_moves: int = 40,
+    target_traps: int = 30,
+) -> dict[str, list[dict]]:
+    """Generate expanded opening puzzle sets with better coverage.
+
+    Delegates to scripts/generate_opening_puzzles.py logic with higher targets
+    and deeper Stockfish analysis for auto-trap detection.
+
+    Args:
+        openings_db_path: Path to openings.db SQLite database.
+        target_moves: Target number of opening-moves puzzles (default 40).
+        target_traps: Target number of opening-traps puzzles (default 30).
+
+    Returns:
+        Dict with 'opening_moves' and 'opening_traps' lists of puzzle dicts.
+    """
+    if not os.path.exists(openings_db_path):
+        _log(f"ERROR: Openings database not found at {openings_db_path}")
+        _log("Run: uv run python scripts/build_openings_db.py")
+        sys.exit(1)
+
+    from scripts.generate_opening_puzzles import (
+        generate_opening_moves_puzzles,
+        generate_opening_traps_puzzles,
+    )
+
+    conn = sqlite3.connect(str(openings_db_path))
+    conn.row_factory = sqlite3.Row
+
+    try:
+        # Opening-moves: per_volume = ceil(target_moves / 5) to cover all ECO volumes
+        per_volume = max(6, -(-target_moves // 5))  # ceiling division
+        _log(f"  Generating opening-moves puzzles ({per_volume} per ECO volume)...")
+        moves_puzzles = generate_opening_moves_puzzles(conn, per_volume=per_volume)
+
+        # Add source field
+        for p in moves_puzzles:
+            p["source"] = "opening_db"
+
+        _log(f"  Generated {len(moves_puzzles)} opening-moves puzzles")
+
+        # Verify ECO distribution
+        volume_counts: dict[str, int] = {}
+        for p in moves_puzzles:
+            exp = p.get("explanation", "")
+            parts = exp.split("(")
+            if len(parts) >= 2:
+                eco = parts[-1].split(")")[0]
+                if len(eco) >= 1 and eco[0] in "ABCDE":
+                    volume_counts[eco[0]] = volume_counts.get(eco[0], 0) + 1
+        _log(f"  ECO distribution: {dict(sorted(volume_counts.items()))}")
+
+        # Opening-traps: curated (~10) + auto-generated
+        # auto_target = target_traps - 10 curated (approximately)
+        auto_target = max(12, target_traps - 10)
+        _log(f"  Generating opening-traps puzzles (auto target: {auto_target}, depth: 18)...")
+        traps_puzzles = generate_opening_traps_puzzles(
+            conn, auto_target=auto_target, depth=18,
+        )
+
+        # Add source field
+        for p in traps_puzzles:
+            p["source"] = "opening_db"
+
+        _log(f"  Generated {len(traps_puzzles)} opening-traps puzzles")
+
+    finally:
+        conn.close()
+
+    return {
+        "opening_moves": moves_puzzles,
+        "opening_traps": traps_puzzles,
+    }
+
+
+def run_openings_pipeline(
+    target_moves: int = 40,
+    target_traps: int = 30,
+) -> None:
+    """Run the expanded opening puzzle generation pipeline."""
+    _log("Pipeline 3: Expanding opening puzzle sets...")
+
+    start = time.time()
+    result = generate_opening_puzzles_expanded(
+        target_moves=target_moves,
+        target_traps=target_traps,
+    )
+    elapsed = time.time() - start
+
+    _log(f"\nWriting opening puzzle files (generated in {elapsed:.1f}s)...")
+
+    moves_path = _PUZZLES_DIR / "opening-moves.json"
+    _write_puzzle_file(moves_path, result["opening_moves"])
+    _log(f"  opening-moves.json: {len(result['opening_moves'])} puzzles")
+
+    traps_path = _PUZZLES_DIR / "opening-traps.json"
+    _write_puzzle_file(traps_path, result["opening_traps"])
+    _log(f"  opening-traps.json: {len(result['opening_traps'])} puzzles")
+
+
 def run_stockfish_pipeline(
     target: int = 28,
     seed: int = 42,
@@ -975,7 +1077,7 @@ def main() -> None:
         run_games_pipeline(incremental=args.incremental)
 
     if args.pipeline in ("openings", "all"):
-        _log("Pipeline 'openings' will be implemented in US-038")
+        run_openings_pipeline(target_moves=40, target_traps=30)
 
 
 if __name__ == "__main__":

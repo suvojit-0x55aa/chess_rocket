@@ -3,6 +3,18 @@ Started: Mon Feb  9 14:59:35 IST 2026
 ---
 
 ## Codebase Patterns
+- MCP server imports use importlib for hyphenated directory (mcp-server/): `importlib.util.spec_from_file_location("mcp_server_mod", path)`
+- response_schemas.py is in mcp-server/ dir - import with PYTHONPATH or sys.path
+- Validation gated by CHESS_SPEEDRUN_VALIDATE=1 env var (off by default, on in tests)
+- _sync_game_json() writes FULL state for TUI; MCP return values get minified separately
+- PGN move string format: "1.e4 e5 2.Nf3 Nc6" (no spaces between number and move)
+- server.py sys.path: BOTH _PROJECT_ROOT and _MCP_SERVER_DIR must be inserted BEFORE any local imports (response_schemas, openings_tools)
+- Stockfish UCI_Elo max is 3190 — tests using set_difficulty should stay <= 3190 to avoid EngineError
+- ChessEngine has __del__ for GC cleanup, but always call close() explicitly — don't rely on GC
+- pytest_sessionfinish in conftest.py kills remaining Stockfish children to prevent hanging
+
+
+## Codebase Patterns
 - Pin test positions: ensure no pieces block the ray between pinner and king (e.g., d7 pawn blocks Bb5-Nc6-Ke8 diagonal)
 - Rook movement tests: ensure own king doesn't block the rook's rank/file path
 - python-chess `is_pinned()` only detects pins to the king, not to other pieces
@@ -67,4 +79,25 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Depth 20 analysis per player move is slow but acceptable for 6 games (~2 min total)
   - Manifest pattern: JSON file with processed_files list, check filename membership for incremental
   - from-games.json includes source metadata (source_file, move_number) for traceability
+---
+
+## 2026-02-09 - US-038
+- What was implemented: Expanded opening puzzle generation (Pipeline 3) in scripts/generate_puzzles.py
+- Files changed:
+  - scripts/generate_puzzles.py (added ~80 lines: generate_opening_puzzles_expanded, run_openings_pipeline)
+  - scripts/generate_opening_puzzles.py (parameterized: per_volume, target, depth arguments)
+  - puzzles/opening-moves.json (expanded: 35 -> 40 puzzles, 8 per ECO volume)
+  - puzzles/opening-traps.json (expanded: 22 -> 30 puzzles, depth 18 analysis)
+  - prd.json (US-038 passes: true)
+- Pipeline 3 delegates to existing generate_opening_puzzles.py with higher targets
+- All 5 ECO volumes (A-E) have 8 puzzles each in opening-moves (40 total)
+- Auto-trap detection uses depth 18 (vs previous 15) for more accurate trap identification
+- All puzzles have source='opening_db' field
+- CLI: `uv run python scripts/generate_puzzles.py --pipeline openings`
+- All 235 puzzles pass validate_puzzles.py, 154 tests pass
+- **Learnings for future iterations:**
+  - Parameterize existing functions (per_volume, target, depth) rather than duplicating logic
+  - Ceiling division trick: `-(-n // d)` for Python integer ceiling division
+  - Scale fetch_limit with target (target * 20) for auto-trap generation to ensure enough candidates
+  - Opening-moves ECO distribution is naturally even when using per_volume parameter
 ---

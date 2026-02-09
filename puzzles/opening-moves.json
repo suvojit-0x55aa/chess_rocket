@@ -1,18 +1,45 @@
 [
   {
-    "fen": "rnbq1rk1/pp3pbp/3p1np1/2pp4/2P1P3/2N2PN1/PP4PP/R1BQKB1R w KQ - 0 9",
+    "fen": "rnbqkb1r/pp3p1p/3p1np1/2pP4/4P3/2N5/PP3PPP/R1BQKBNR w KQkq - 0 7",
     "solution_moves": [
-      "c4d5"
+      "f2f4"
     ],
     "solution_san": [
-      "cxd5"
+      "f4"
     ],
     "motif": "opening",
     "difficulty": "advanced",
-    "explanation": "This is the book move in the Benoni Defense: King's Pawn Line, with Nge2 (A65). cxd5 continues the opening theory."
+    "explanation": "This is the book move in the Benoni Defense: Pawn Storm Variation (A66). f4 continues the opening theory.",
+    "source": "opening_db"
   },
   {
-    "fen": "rnbqkbnr/pppppppp/8/8/5P2/8/PPPPP1PP/RNBQKBNR b KQkq - 0 1",
+    "fen": "rnbqkbnr/pppp1ppp/8/4P3/8/8/PPPPP1PP/RNBQKBNR b KQkq - 0 2",
+    "solution_moves": [
+      "g8e7"
+    ],
+    "solution_san": [
+      "Ne7"
+    ],
+    "motif": "opening",
+    "difficulty": "beginner",
+    "explanation": "This is the book move in the Bird Opening: Platz Gambit (A02). Ne7 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bqkbnr/pppp1ppp/2n5/4P3/8/5N2/PPP1PPPP/RNBQKB1R b KQkq - 2 3",
+    "solution_moves": [
+      "d8e7"
+    ],
+    "solution_san": [
+      "Qe7"
+    ],
+    "motif": "opening",
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the Englund Gambit: Main Line (A40). Qe7 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqkb1r/pppp1ppp/5n2/4p3/2P5/2N3P1/PP1PPP1P/R1BQKBNR b KQkq - 0 3",
     "solution_moves": [
       "d7d5"
     ],
@@ -20,35 +47,25 @@
       "d5"
     ],
     "motif": "opening",
-    "difficulty": "beginner",
-    "explanation": "This is the book move in the Bird Opening: Dutch Variation (A03). d5 continues the opening theory."
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the English Opening: King's English Variation, Two Knights Variation, Reversed Dragon (A22). d5 continues the opening theory.",
+    "source": "opening_db"
   },
   {
-    "fen": "rnbqkb1r/pppppp1p/5np1/8/2P5/5N2/PP1PPPPP/RNBQKB1R w KQkq - 0 3",
+    "fen": "rnbqk2r/pp3pbp/3p1np1/2pP4/4P3/2N2N2/PP3PPP/R1BQKB1R w KQkq - 1 8",
     "solution_moves": [
-      "b2b4"
+      "h2h3"
     ],
     "solution_san": [
-      "b4"
-    ],
-    "motif": "opening",
-    "difficulty": "beginner",
-    "explanation": "This is the book move in the English Orangutan (A15). b4 continues the opening theory."
-  },
-  {
-    "fen": "r1bqk2r/ppp2ppp/2np1n2/2b1p3/2P5/2NP1NP1/PP2PPBP/R1BQK2R b KQkq - 1 6",
-    "solution_moves": [
-      "h7h6"
-    ],
-    "solution_san": [
-      "h6"
+      "h3"
     ],
     "motif": "opening",
     "difficulty": "advanced",
-    "explanation": "This is the book move in the English Opening: King's English Variation, Four Knights Variation, Fianchetto Line, with .. d6, h6 (A29). h6 continues the opening theory."
+    "explanation": "This is the book move in the Benoni Defense: Classical Variation, New York Variation (A70). h3 continues the opening theory.",
+    "source": "opening_db"
   },
   {
-    "fen": "rnbq1rk1/ppppb1pp/4pn2/5p2/2PP4/5NP1/PP2PPBP/RNBQ1RK1 b - - 5 6",
+    "fen": "rnbqkbnr/pppp1ppp/8/4P3/8/8/PPP1PPPP/RNBQKBNR b KQkq - 0 2",
     "solution_moves": [
       "d7d6"
     ],
@@ -56,95 +73,12 @@
       "d6"
     ],
     "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Dutch Defense: Classical Variation (A96). d6 continues the opening theory."
-  },
-  {
-    "fen": "rn1qkb1r/pp3ppp/2p1pn2/3p1b2/2P5/5NP1/PP1PPPBP/RNBQ1RK1 w kq - 0 6",
-    "solution_moves": [
-      "d2d3"
-    ],
-    "solution_san": [
-      "d3"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Réti Opening: Anglo-Slav Variation, with g3 (A11). d3 continues the opening theory."
-  },
-  {
-    "fen": "rnbqkbnr/ppp1pppp/8/3p4/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 0 2",
-    "solution_moves": [
-      "c2c4"
-    ],
-    "solution_san": [
-      "c4"
-    ],
-    "motif": "opening",
     "difficulty": "beginner",
-    "explanation": "This is the book move in the Réti Opening (A09). c4 continues the opening theory."
+    "explanation": "This is the book move in the Englund Gambit: Hartlaub-Charlick Gambit (A40). d6 continues the opening theory.",
+    "source": "opening_db"
   },
   {
-    "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/2N5/PPPP1PPP/R1BQKBNR b KQkq - 1 2",
-    "solution_moves": [
-      "e7e6"
-    ],
-    "solution_san": [
-      "e6"
-    ],
-    "motif": "opening",
-    "difficulty": "beginner",
-    "explanation": "This is the book move in the Sicilian Defense: Closed (B23). e6 continues the opening theory."
-  },
-  {
-    "fen": "rnbqkb1r/1p3ppp/p2ppn2/6B1/3NPP2/2N5/PPP3PP/R2QKB1R b KQkq - 0 7",
-    "solution_moves": [
-      "b8c6"
-    ],
-    "solution_san": [
-      "Nc6"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Sicilian Defense: Najdorf Variation, Neo-Classical Defense (B96). Nc6 continues the opening theory."
-  },
-  {
-    "fen": "rnbqkb1r/pppppppp/8/3nP3/2P5/8/PP1P1PPP/RNBQKBNR b KQkq - 0 3",
-    "solution_moves": [
-      "d5f4"
-    ],
-    "solution_san": [
-      "Nf4"
-    ],
-    "motif": "opening",
-    "difficulty": "intermediate",
-    "explanation": "This is the book move in the Alekhine Defense: The Squirrel (B02). Nf4 continues the opening theory."
-  },
-  {
-    "fen": "r1bqkb1r/pp2pppp/2np1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 3 6",
-    "solution_moves": [
-      "f1e2"
-    ],
-    "solution_san": [
-      "Be2"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Sicilian Defense: Classical Variation (B58). Be2 continues the opening theory."
-  },
-  {
-    "fen": "r1bqkbnr/pp1ppppp/2n5/2p5/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3",
-    "solution_moves": [
-      "c5d4"
-    ],
-    "solution_san": [
-      "cxd4"
-    ],
-    "motif": "opening",
-    "difficulty": "intermediate",
-    "explanation": "This is the book move in the Sicilian Defense: Open (B32). cxd4 continues the opening theory."
-  },
-  {
-    "fen": "rnbqkbnr/pppppp1p/6p1/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2",
+    "fen": "r1bqkbnr/pppp1p1p/2n3p1/4p3/2P5/2N3P1/PP1PPPBP/R1BQK1NR b KQkq - 1 4",
     "solution_moves": [
       "f8g7"
     ],
@@ -152,11 +86,12 @@
       "Bg7"
     ],
     "motif": "opening",
-    "difficulty": "beginner",
-    "explanation": "This is the book move in the Modern Defense (B06). Bg7 continues the opening theory."
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the English Opening: King's English Variation, Taimanov Variation (A25). Bg7 continues the opening theory.",
+    "source": "opening_db"
   },
   {
-    "fen": "r1bqk1nr/pp2ppbp/2np2p1/2p5/4PP2/2NP2P1/PPP3BP/R1BQK1NR b KQkq - 0 6",
+    "fen": "rnbqkbnr/pppppp1p/8/6p1/2PP4/8/PP2PPPP/RNBQKBNR b KQkq - 0 2",
     "solution_moves": [
       "e7e5"
     ],
@@ -164,251 +99,12 @@
       "e5"
     ],
     "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Sicilian Defense: Closed, Botvinnik Defense, with f4 (B25). e5 continues the opening theory."
+    "difficulty": "beginner",
+    "explanation": "This is the book move in the English Opening: Zilbermints Gambit (A10). e5 continues the opening theory.",
+    "source": "opening_db"
   },
   {
-    "fen": "rnb1kbnr/ppp2p1p/8/3B2p1/4Pp1q/8/PPPP2PP/RNBQ1KNR w kq - 0 6",
-    "solution_moves": [
-      "g2g3"
-    ],
-    "solution_san": [
-      "g3"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the King's Gambit Accepted: Bishop's Gambit, Chigorin's Attack (C33). g3 continues the opening theory."
-  },
-  {
-    "fen": "rnbqk1nr/pppp1ppp/8/2b1N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3",
-    "solution_moves": [
-      "b8c6"
-    ],
-    "solution_san": [
-      "Nc6"
-    ],
-    "motif": "opening",
-    "difficulty": "intermediate",
-    "explanation": "This is the book move in the King's Pawn Game: Busch-Gass Gambit, Chiodini Gambit (C40). Nc6 continues the opening theory."
-  },
-  {
-    "fen": "r1bqk1nr/pppp1pp1/2n5/2b1p2p/4P3/2N2NP1/PPPP1PBP/R1BQK2R b KQkq - 1 5",
-    "solution_moves": [
-      "h5h4"
-    ],
-    "solution_san": [
-      "h4"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Vienna Game: Paulsen Variation, Mariotti Gambit (C25). h4 continues the opening theory."
-  },
-  {
-    "fen": "r1bqkbnr/pppp1p1p/2n5/8/2B1Ppp1/2N2N2/PPPP2PP/R1BQK2R w KQkq - 0 6",
-    "solution_moves": [
-      "e1g1"
-    ],
-    "solution_san": [
-      "O-O"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Vienna Game: Hamppe-Muzio Gambit (C25). O-O continues the opening theory."
-  },
-  {
-    "fen": "r1bq1rk1/pp1n1ppp/2n1p3/2bpP3/5PQ1/P1N2N2/1PP3PP/R1B1KB1R b KQ - 3 9",
-    "solution_moves": [
-      "f7f6"
-    ],
-    "solution_san": [
-      "f6"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the French Defense: Steinitz Variation, Brodsky-Jones Variation (C11). f6 continues the opening theory."
-  },
-  {
-    "fen": "r1bqkbnr/2pp1ppp/p7/np2p3/4P3/1B3N2/PPPP1PPP/RNBQK2R w KQkq - 2 6",
-    "solution_moves": [
-      "b3f7"
-    ],
-    "solution_san": [
-      "Bxf7+"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Ruy Lopez: Morphy Defense, Norwegian Variation, Nightingale Gambit (C70). Bxf7+ continues the opening theory."
-  },
-  {
-    "fen": "rnbqkb1r/pppp1ppp/5n2/4p3/2B1P3/2N5/PPPP1PPP/R1BQK1NR b KQkq - 3 3",
-    "solution_moves": [
-      "f8b4"
-    ],
-    "solution_san": [
-      "Bb4"
-    ],
-    "motif": "opening",
-    "difficulty": "intermediate",
-    "explanation": "This is the book move in the Vienna Game: Stanley Variation, Reversed Spanish (C26). Bb4 continues the opening theory."
-  },
-  {
-    "fen": "rnbq1rk1/ppp1ppbp/6p1/8/2BPP3/2P5/P3NPPP/R1BQK2R b KQ - 4 8",
-    "solution_moves": [
-      "d8d7"
-    ],
-    "solution_san": [
-      "Qd7"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Grünfeld Defense: Exchange Variation, Larsen Variation (D86). Qd7 continues the opening theory."
-  },
-  {
-    "fen": "r1bqkb1r/pp1n1ppp/2p1pn2/8/2BP4/2N1PN2/PP3PPP/R1BQK2R b KQkq - 0 7",
-    "solution_moves": [
-      "b7b5"
-    ],
-    "solution_san": [
-      "b5"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Semi-Slav Defense: Meran Variation (D47). b5 continues the opening theory."
-  },
-  {
-    "fen": "r1bqkb1r/3n1ppp/p1p1pn2/1p6/3PP3/2NB1N2/PP3PPP/R1BQK2R b KQkq - 0 9",
-    "solution_moves": [
-      "c6c5"
-    ],
-    "solution_san": [
-      "c5"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Semi-Slav Defense: Meran Variation (D48). c5 continues the opening theory."
-  },
-  {
-    "fen": "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 5",
-    "solution_moves": [
-      "c2c3"
-    ],
-    "solution_san": [
-      "c3"
-    ],
-    "motif": "opening",
-    "difficulty": "intermediate",
-    "explanation": "This is the book move in the Queen's Pawn Game: Colle System, Traditional Colle (D05). c3 continues the opening theory."
-  },
-  {
-    "fen": "rn1qkbnr/pp2pppp/2P5/8/Q2P4/8/PP2PPPP/RbB1KBNR b KQkq - 0 5",
-    "solution_moves": [
-      "b8c6"
-    ],
-    "solution_san": [
-      "Nxc6"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Queen's Gambit Declined: Baltic Defense, Argentinian Gambit (D06). Nxc6 continues the opening theory."
-  },
-  {
-    "fen": "r1b2rk1/pp1nqppp/2p1p3/3n4/2BP4/2N1PN2/PP3PPP/2RQK2R w K - 0 11",
-    "solution_moves": [
-      "e1g1"
-    ],
-    "solution_san": [
-      "O-O"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Queen's Gambit Declined: Orthodox Defense, Main Line (D67). O-O continues the opening theory."
-  },
-  {
-    "fen": "rnbqkb1r/ppp2ppp/4pn2/3p4/2PP4/2N2N2/PP2PPPP/R1BQKB1R b KQkq - 1 4",
-    "solution_moves": [
-      "c7c5"
-    ],
-    "solution_san": [
-      "c5"
-    ],
-    "motif": "opening",
-    "difficulty": "intermediate",
-    "explanation": "This is the book move in the Queen's Gambit Declined: Semi-Tarrasch Defense (D40). c5 continues the opening theory."
-  },
-  {
-    "fen": "r1bq1rk1/pp2ppbp/2np1np1/2P5/2P5/2N2NP1/PP2PPBP/R1BQ1RK1 b - - 0 8",
-    "solution_moves": [
-      "d6c5"
-    ],
-    "solution_san": [
-      "dxc5"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the King's Indian Defense: Fianchetto Variation, Yugoslav Variation, Exchange Line (E65). dxc5 continues the opening theory."
-  },
-  {
-    "fen": "rnbq1rk1/pp3ppp/4pn2/3P4/1b1N4/2N3P1/PP2PPBP/R1BQK2R b KQ - 0 8",
-    "solution_moves": [
-      "f6d5"
-    ],
-    "solution_san": [
-      "Nxd5"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Nimzo-Indian Defense: Romanishin Variation, English Hybrid (E20). Nxd5 continues the opening theory."
-  },
-  {
-    "fen": "r1bqk2r/pp3ppp/2nppn2/2p5/2PP4/2PBPN2/P4PPP/R1BQ1RK1 b kq - 1 8",
-    "solution_moves": [
-      "e8g8"
-    ],
-    "solution_san": [
-      "O-O"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Nimzo-Indian Defense: Rubinstein System, Hübner Variation (E41). O-O continues the opening theory."
-  },
-  {
-    "fen": "rnbqkb1r/ppp2ppp/4pn2/8/2pP4/6P1/PP2PPBP/RNBQK1NR w KQkq - 0 5",
-    "solution_moves": [
-      "g1f3"
-    ],
-    "solution_san": [
-      "Nf3"
-    ],
-    "motif": "opening",
-    "difficulty": "intermediate",
-    "explanation": "This is the book move in the Catalan Opening: Open Defense (E04). Nf3 continues the opening theory."
-  },
-  {
-    "fen": "r2q1rk1/pb1nbppp/1pp1pn2/3p4/2PP1B2/5NP1/PPQNPPBP/R4RK1 w - - 2 10",
-    "solution_moves": [
-      "e2e4"
-    ],
-    "solution_san": [
-      "e4"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the Catalan Opening: Closed (E08). e4 continues the opening theory."
-  },
-  {
-    "fen": "1rbq1rk1/2p1ppbp/p1np1np1/1p6/2PP4/2N1BNPP/PP2PPB1/R2Q1RK1 w - - 0 10",
-    "solution_moves": [
-      "f3d2"
-    ],
-    "solution_san": [
-      "Nd2"
-    ],
-    "motif": "opening",
-    "difficulty": "advanced",
-    "explanation": "This is the book move in the King's Indian Defense: Fianchetto Variation, Panno Variation, Korchnoi Line (E63). Nd2 continues the opening theory."
-  },
-  {
-    "fen": "rnbqkb1r/pppppp1p/5np1/8/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 0 3",
+    "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
     "solution_moves": [
       "c2c4"
     ],
@@ -417,6 +113,410 @@
     ],
     "motif": "opening",
     "difficulty": "beginner",
-    "explanation": "This is the book move in the King's Indian Defense: Normal Variation, King's Knight Variation (E60). c4 continues the opening theory."
+    "explanation": "This is the book move in the Sicilian Defense: Staunton-Cochrane Variation (B20). c4 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqkb1r/pp1npppp/2p5/3pP3/3P4/3B4/PPP2PPP/RNBQK1NR w KQkq - 1 5",
+    "solution_moves": [
+      "e5e6"
+    ],
+    "solution_san": [
+      "e6"
+    ],
+    "motif": "opening",
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the Caro-Kann Defense: Mieses Attack, Landau Gambit (B12). e6 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2",
+    "solution_moves": [
+      "d8d5"
+    ],
+    "solution_san": [
+      "Qxd5"
+    ],
+    "motif": "opening",
+    "difficulty": "beginner",
+    "explanation": "This is the book move in the Scandinavian Defense: Mieses-Kotroc Variation (B01). Qxd5 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqk2r/1p2bppp/p2ppn2/6B1/3NPP2/2N2Q2/PPP3PP/R3KB1R b KQkq - 2 8",
+    "solution_moves": [
+      "d8c7"
+    ],
+    "solution_san": [
+      "Qc7"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Sicilian Defense: Najdorf Variation, Traditional Line (B98). Qc7 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bqkbnr/pppp1ppp/8/4n3/4P3/8/PPP2PPP/RNBQKBNR w KQkq - 0 4",
+    "solution_moves": [
+      "b1c3"
+    ],
+    "solution_san": [
+      "Nc3"
+    ],
+    "motif": "opening",
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the Nimzowitsch Defense: Kennedy Variation, Keres Attack (B00). Nc3 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R b KQkq - 2 5",
+    "solution_moves": [
+      "g7g6"
+    ],
+    "solution_san": [
+      "g6"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Sicilian Defense: Dragon Variation (B70). g6 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1b1kbnr/pp3ppp/2n5/3qp3/1pP5/P4N2/1B1P1PPP/RN1QKB1R b KQkq c3 0 7",
+    "solution_moves": [
+      "d5e6"
+    ],
+    "solution_san": [
+      "Qe6"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Sicilian Defense: Wing Gambit, Romanian Defense (B20). Qe6 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/3NP3/2N1B3/PPPQBPPP/R3K2R w KQ - 4 9",
+    "solution_moves": [
+      "e1c1"
+    ],
+    "solution_san": [
+      "O-O-O"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Sicilian Defense: Dragon Variation, Classical Variation, Grigoriev Variation (B72). O-O-O continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1b1kbnr/pppp1ppp/2n5/8/3NP2q/8/PPP2PPP/RNBQKB1R w KQkq - 1 5",
+    "solution_moves": [
+      "c1e3"
+    ],
+    "solution_san": [
+      "Be3"
+    ],
+    "motif": "opening",
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the Scotch Game: Braune Variation (C45). Be3 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1b2rk1/5ppp/p1pb4/1p1n4/3P3q/1BP3P1/PP3P1P/RNBQR1K1 b - - 0 14",
+    "solution_moves": [
+      "h4h3"
+    ],
+    "solution_san": [
+      "Qh3"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Ruy Lopez: Marshall Attack, Modern Main Line (C89). Qh3 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqkb1r/pppp1ppp/5n2/8/2B1Pp2/8/PPPP2PP/RNBQK1NR w KQkq - 2 4",
+    "solution_moves": [
+      "b1c3"
+    ],
+    "solution_san": [
+      "Nc3"
+    ],
+    "motif": "opening",
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the King's Gambit Accepted: Bishop's Gambit, Bogoljubow Variation (C33). Nc3 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqk1nr/ppp2ppp/3p4/2b1p3/4PP2/2P2N2/PP1P2PP/RNBQKB1R b KQkq - 0 4",
+    "solution_moves": [
+      "f7f5"
+    ],
+    "solution_san": [
+      "f5"
+    ],
+    "motif": "opening",
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the King's Gambit Declined: Classical Variation, Rubinstein Countergambit (C30). f5 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r2qk2r/pppbbppp/2np1n2/1B2p3/3PP3/2N2N2/PPP2PPP/R1BQ1RK1 w kq - 3 7",
+    "solution_moves": [
+      "c1g5"
+    ],
+    "solution_san": [
+      "Bg5"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Ruy Lopez: Berlin Defense, Closed Bernstein Variation (C66). Bg5 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bq1rk1/4bppp/p2p1n2/npp1p3/3PP3/2P2N1P/PPB2PP1/RNBQR1K1 b - - 0 11",
+    "solution_moves": [
+      "f6d7"
+    ],
+    "solution_san": [
+      "Nd7"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Ruy Lopez: Closed, Keres Defense (C96). Nd7 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqkbnr/pppp1ppp/8/8/3pP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3",
+    "solution_moves": [
+      "d1d4"
+    ],
+    "solution_san": [
+      "Qxd4"
+    ],
+    "motif": "opening",
+    "difficulty": "beginner",
+    "explanation": "This is the book move in the Center Game (C21). Qxd4 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bqkbnr/pppp2pp/2n5/4pp2/4P3/3P1N2/PPP2PPP/RNBQKB1R w KQkq - 0 4",
+    "solution_moves": [
+      "e4f5"
+    ],
+    "solution_san": [
+      "exf5"
+    ],
+    "motif": "opening",
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the Latvian Gambit: Clam Gambit (C44). exf5 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bqkb1r/pp3ppp/2n1p3/2pn4/3P4/2N1PN2/PP3PPP/R1BQKB1R w KQkq - 1 7",
+    "solution_moves": [
+      "f1d3"
+    ],
+    "solution_san": [
+      "Bd3"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Queen's Gambit Declined: Semi-Tarrasch Defense, Main Line (D42). Bd3 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 2",
+    "solution_moves": [
+      "c1g5"
+    ],
+    "solution_san": [
+      "Bg5"
+    ],
+    "motif": "opening",
+    "difficulty": "beginner",
+    "explanation": "This is the book move in the Queen's Pawn Game: Levitsky Attack (D00). Bg5 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bqkb1r/p2n1ppp/2p1pn2/1p6/3P4/2NBPN2/PP3PPP/R1BQK2R b KQkq - 1 8",
+    "solution_moves": [
+      "b5b4"
+    ],
+    "solution_san": [
+      "b4"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Semi-Slav Defense: Meran Variation, Lundin Variation (D47). b4 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnb1kbnr/ppp1qppp/8/8/2Bp4/1Q2P3/PP3PPP/RNB1K1NR w KQkq - 2 6",
+    "solution_moves": [
+      "g1f3"
+    ],
+    "solution_san": [
+      "Nf3"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Queen's Gambit Accepted: Old Variation, Christensen Gambit (D20). Nf3 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnb1k1nr/pp3ppp/4p3/2B5/2P1q3/8/PP2BPPP/R2QK1NR b KQkq - 0 9",
+    "solution_moves": [
+      "e4g2"
+    ],
+    "solution_san": [
+      "Qxg2"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Semi-Slav Defense: Marshall Gambit, Tolush Variation (D31). Qxg2 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqkb1r/pppppp1p/5np1/8/2PP4/5N2/PP2PPPP/RNBQKB1R b KQkq - 1 3",
+    "solution_moves": [
+      "d7d5"
+    ],
+    "solution_san": [
+      "d5"
+    ],
+    "motif": "opening",
+    "difficulty": "intermediate",
+    "explanation": "This is the book move in the Neo-Grünfeld Defense: with Nf3 (D70). d5 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bqkbnr/pp3ppp/2n5/2pp4/3P4/2N2NP1/PP2PP1P/R1BQKB1R b KQkq - 0 6",
+    "solution_moves": [
+      "g8f6"
+    ],
+    "solution_san": [
+      "Nf6"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Tarrasch Defense: Prague Variation (D33). Nf6 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bqrnk1/ppp1bppp/5n2/3p2B1/3P4/2NBP3/PPQ1NPPP/R3K2R w KQ - 7 10",
+    "solution_moves": [
+      "e1c1"
+    ],
+    "solution_san": [
+      "O-O-O"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Queen's Gambit Declined: Exchange Variation, Chameleon Variation (D35). O-O-O continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bq1rk1/ppp2ppp/2n1pn2/3p4/1bPP4/2NBPN2/PP3PPP/R1BQ1RK1 b - - 3 7",
+    "solution_moves": [
+      "d5c4"
+    ],
+    "solution_san": [
+      "dxc4"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Nimzo-Indian Defense: Ragozin Variation (E51). dxc4 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bq1rk1/pp1nbppp/2p1pn2/3p4/2PP4/5NP1/PPQ1PPBP/RNB2RK1 w - - 0 8",
+    "solution_moves": [
+      "b1d2"
+    ],
+    "solution_san": [
+      "Nbd2"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Catalan Opening: Closed, Main Line (E09). Nbd2 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbq1rk1/ppp2pbp/3p1np1/4p3/2PPP3/2N2N2/PP2BPPP/R1BQK2R w KQ - 0 7",
+    "solution_moves": [
+      "e1g1"
+    ],
+    "solution_san": [
+      "O-O"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the King's Indian Defense: Orthodox Variation (E94). O-O continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rn1q1rk1/pbppbppp/1p2pn2/8/2PP4/2N2NP1/PP2PPBP/R1BQ1RK1 b - - 6 7",
+    "solution_moves": [
+      "b8a6"
+    ],
+    "solution_san": [
+      "Na6"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Queen's Indian Defense: Classical Variation, Tiviakov Defense (E18). Na6 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bq1rk1/pppnn1bp/3p2p1/3Ppp2/2P1P3/2N2P2/PP2B1PP/R1BQNRK1 w - - 0 11",
+    "solution_moves": [
+      "g2g4"
+    ],
+    "solution_san": [
+      "g4"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the King's Indian Defense: Orthodox Variation, Classical System, Benko Attack (E99). g4 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rn1q1rk1/pb2bppp/1pp1pn2/3p4/2PPP3/5NP1/PPQN1PBP/R1B2RK1 b - - 0 9",
+    "solution_moves": [
+      "b8d7"
+    ],
+    "solution_san": [
+      "Nbd7"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Catalan Opening: Closed, Main Line (E09). Nbd7 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "rnbqk2r/p1pp1pp1/1p2pn1p/8/1bPP3B/2N2N2/PP2PPPP/R2QKB1R b KQkq - 1 6",
+    "solution_moves": [
+      "c8b7"
+    ],
+    "solution_san": [
+      "Bb7"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the Queen's Indian Defense: Kasparov Variation (E13). Bb7 continues the opening theory.",
+    "source": "opening_db"
+  },
+  {
+    "fen": "r1bq1rk1/pppnnpbp/3p2p1/3Pp3/2P1P3/2N2P2/PP2B1PP/R1BQNRK1 b - - 0 10",
+    "solution_moves": [
+      "f7f5"
+    ],
+    "solution_san": [
+      "f5"
+    ],
+    "motif": "opening",
+    "difficulty": "advanced",
+    "explanation": "This is the book move in the King's Indian Defense: Orthodox Variation, Classical System, Traditional Line (E99). f5 continues the opening theory.",
+    "source": "opening_db"
   }
 ]
