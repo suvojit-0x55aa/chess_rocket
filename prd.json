@@ -155,7 +155,7 @@
       "description": "As a user, I need a terminal chess board display that auto-updates during games by watching current_game.json.",
       "acceptanceCriteria": [
         "scripts/tui.py exists using Rich library",
-        "Renders chess board with Unicode piece symbols (K=\u2654, Q=\u2655, R=\u2656, B=\u2657, N=\u2658, P=\u2659, etc.)",
+        "Renders chess board with Unicode piece symbols (K=♔, Q=♕, R=♖, B=♗, N=♘, P=♙, etc.)",
         "Board has alternating dark/light square colors",
         "Highlights last move source/destination squares",
         "Board flips orientation if player is black",
@@ -971,7 +971,7 @@
         "uv run python -m pytest tests/ -v passes (no regressions)"
       ],
       "priority": 41,
-      "passes": false,
+      "passes": true,
       "notes": "Final story for the puzzle overhaul. Depends on US-035 through US-040, plus US-042 (Lichess importer), US-043 (puzzle replacements), US-044 (validator exemptions), US-045 (from-games fix). See ~/.claude/plans/giggly-bouncing-cake.md for full analysis."
     },
     {

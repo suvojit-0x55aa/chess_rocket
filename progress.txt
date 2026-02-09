@@ -200,3 +200,18 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Iterative cleanup (verify → remove → re-verify) is necessary for stable validation
   - beginner-endgames.json puzzle with f3f4 vs h6h7 had 1592cp diff - clearly wrong, not engine noise
 ---
+
+## 2026-02-09 - US-041
+- What was implemented: Puzzle generation integration tests and documentation
+- Files changed:
+  - tests/test_puzzle_generation.py (NEW - 28 tests across 6 test classes)
+  - CLAUDE.md (puzzle table updated with accurate counts for all 9 files, added Source column, added puzzle generation tools section)
+  - prd.json (US-041 passes: true)
+- Test classes: TestMotifIntegration (8), TestPuzzleDeduplication (4), TestManifest (4), TestGameMining (1 e2e), TestPipelineCLI (3), TestLichessImport (8)
+- 215 tests pass across full suite, 0 failures
+- **Learnings for future iterations:**
+  - TestGameMining uses real Stockfish (marked @pytest.mark.e2e) but runs fast with depth=10
+  - Manifest tests use tmp_path + patch to avoid touching real manifest.json
+  - Lichess importer functions (_pick_motif, _rating_to_difficulty, _validate_checkmate) are easily unit-testable
+  - detect_motif won't match all puzzles (heuristic) — test for >0 detections, not 100%
+---
