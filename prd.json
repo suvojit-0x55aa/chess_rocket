@@ -1018,7 +1018,7 @@
         "Old constructed/generated puzzles fully removed (not mixed in)"
       ],
       "priority": 43,
-      "passes": false,
+      "passes": true,
       "notes": "Critical fix. checkmate-patterns.json currently has 0/28 actual checkmates (all misclassified tactical exchanges from Pipeline 1). back-rank.json works (28/28 mates) but all are trivial constructed rook-to-8th-rank patterns. Depends on US-042."
     },
     {

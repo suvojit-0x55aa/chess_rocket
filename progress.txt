@@ -117,3 +117,38 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - parse_san() returns a Move object that can be used with detect_motif directly
   - Reuse the same dedup pattern (normalize FEN to first 4 parts) across all puzzle generators
 ---
+
+## 2026-02-09 - US-042
+- What was implemented: Lichess puzzle importer (scripts/import_lichess_puzzles.py)
+- Files changed:
+  - scripts/import_lichess_puzzles.py (NEW - ~260 lines, streaming CSV.ZST reader)
+  - pyproject.toml (added zstandard dependency)
+  - prd.json (US-042 passes: true)
+- Streams data/lichess_db_puzzle.csv.zst with zstandard, filters by theme/rating/popularity
+- Key Lichess format handling: FEN is BEFORE puzzle setup move; apply moves[0] to get puzzle FEN, moves[1:] are solution
+- Theme-to-motif mapping: backRankMate->back_rank_mate, mateIn1/2/3->checkmate, fork/pin/skewer direct
+- Extra validation: checkmate puzzles verify board.is_checkmate(), back-rank verify king on rank 1/8
+- FEN deduplication using normalized FEN (first 4 parts)
+- **Learnings for future iterations:**
+  - Lichess CSV is sorted by PuzzleId (not theme) - scanning is fast for common themes (mateIn1 found 5 in 42 rows)
+  - python-chess square 0 (a1) is falsy in Python - always use `is None` check, never `if king_sq`
+  - zstandard was already installed in the venv but not in pyproject.toml - always declare deps
+  - Popularity >= 80 is a good default filter - cuts junk puzzles while keeping plenty of candidates
+---
+
+## 2026-02-09 - US-043
+- What was implemented: Replaced checkmate-patterns.json and back-rank.json with high-quality Lichess puzzles
+- Files changed:
+  - puzzles/checkmate-patterns.json (replaced: 28 fake checkmates -> 30 real Lichess checkmates from mateIn1/mateIn2/smotheredMate/arabianMate/anastasiasMate themes)
+  - puzzles/back-rank.json (replaced: 28 trivial constructed -> 30 real Lichess back-rank mates from backRankMate theme)
+  - prd.json (US-043 passes: true)
+- Difficulty mix for both files: 15 beginner (<1200), 10 intermediate (1200-1800), 5 advanced (1800+)
+- All 30/30 checkmate puzzles verified: board.is_checkmate() after full solution
+- All 30/30 back-rank puzzles verified: checkmate on rank 1 or 8
+- All 291 puzzles across 9 files pass validate_puzzles.py, all 187 tests pass
+- **Learnings for future iterations:**
+  - Use separate import runs per difficulty bracket (--min-rating/--max-rating) then merge for controlled difficulty mix
+  - Lichess importer's built-in validation (_validate_checkmate, _validate_back_rank) catches bad puzzles during import
+  - backRankMate puzzles are rarer in the Lichess DB (~1 per 7000 rows at advanced level vs ~1 per 7 rows for mateIn1 at beginner)
+  - All Lichess-sourced puzzles have source='lichess' and lichess_id fields for traceability
+---

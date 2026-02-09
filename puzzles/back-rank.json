@@ -1,458 +1,850 @@
 [
   {
-    "fen": "rnbq1rk1/ppp1bppp/8/3p4/2N5/2P3N1/PP1PQPPP/R1B1KB1R b KQ - 2 9",
+    "fen": "6k1/5ppp/r1p5/p1n1rP2/8/2P2N1P/2P3P1/3R2K1 w - - 0 22",
     "solution_moves": [
-      "d5c4",
-      "e2c4",
-      "c8e6"
+      "d1d8",
+      "e5e8",
+      "d8e8"
     ],
     "solution_san": [
-      "dxc4",
-      "Qxc4",
-      "Be6"
+      "Rd8+",
+      "Re8",
+      "Rxe8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 1118,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "001Wz",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn2",
+      "short"
+    ]
+  },
+  {
+    "fen": "6k1/5ppp/5n2/pp6/4b1rP/5N1Q/Pq2r1P1/3R2RK w - - 5 33",
+    "solution_moves": [
+      "d1d8",
+      "f6e8",
+      "d8e8"
+    ],
+    "solution_san": [
+      "Rd8+",
+      "Ne8",
+      "Rxe8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 565,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "0030b",
+    "lichess_themes": [
+      "backRankMate",
+      "mate",
+      "mateIn2",
+      "middlegame",
+      "short"
+    ]
+  },
+  {
+    "fen": "3r2k1/4nppp/pq3b2/1p2p3/2r2P2/2P1NR2/PP1Q2BP/3R2K1 w - - 0 25",
+    "solution_moves": [
+      "d2d8",
+      "b6d8",
+      "d1d8"
+    ],
+    "solution_san": [
+      "Qxd8+",
+      "Qxd8",
+      "Rxd8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 429,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "0042j",
+    "lichess_themes": [
+      "backRankMate",
+      "mate",
+      "mateIn2",
+      "middlegame",
+      "short"
+    ]
+  },
+  {
+    "fen": "5r1k/pp4pp/2p5/6q1/5R2/2P5/P1P2PPP/3rR1K1 w - - 0 28",
+    "solution_moves": [
+      "f4f8"
+    ],
+    "solution_san": [
+      "Rxf8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 568,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00465",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn1",
+      "oneMove",
+      "queenRookEndgame"
+    ]
+  },
+  {
+    "fen": "r6k/2q3pp/8/2p5/R1np4/7P/2PB1PP1/6K1 w - - 0 33",
+    "solution_moves": [
+      "a4a8",
+      "c7b8",
+      "a8b8"
+    ],
+    "solution_san": [
+      "Rxa8+",
+      "Qb8",
+      "Rxb8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 662,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "005N7",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "hangingPiece",
+      "mate",
+      "mateIn2",
+      "short"
+    ]
+  },
+  {
+    "fen": "5k2/p2r3p/1p4pP/3r1q2/4R3/2P5/PP3PQ1/K3R3 b - - 0 33",
+    "solution_moves": [
+      "d5d1",
+      "e1d1",
+      "d7d1"
+    ],
+    "solution_san": [
+      "Rd1+",
+      "Rxd1",
+      "Rxd1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 711,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "007mr",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn2",
+      "short"
+    ]
+  },
+  {
+    "fen": "1k6/ppp3p1/8/1P5p/8/P3n2P/2P1r1P1/B2rNRK1 w - - 5 32",
+    "solution_moves": [
+      "f1f8",
+      "d1d8",
+      "f8d8"
+    ],
+    "solution_san": [
+      "Rf8+",
+      "Rd8",
+      "Rxd8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 495,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "008GK",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn2",
+      "short"
+    ]
+  },
+  {
+    "fen": "6k1/2p2ppp/pnp5/B7/2P3PP/1P2PPR1/r3b2r/3R2K1 w - - 2 30",
+    "solution_moves": [
+      "d1d8"
+    ],
+    "solution_san": [
+      "Rd8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 473,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "008Nz",
+    "lichess_themes": [
+      "backRankMate",
+      "mate",
+      "mateIn1",
+      "middlegame",
+      "oneMove"
+    ]
+  },
+  {
+    "fen": "4r3/3R1pkp/6p1/1P6/1b6/5B2/1P1R1PPP/6K1 b - - 0 36",
+    "solution_moves": [
+      "e8e1"
+    ],
+    "solution_san": [
+      "Re1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 727,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00BQD",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn1",
+      "oneMove"
+    ]
+  },
+  {
+    "fen": "1R6/6kp/3p1pp1/2r1p3/PP6/8/2r2PPP/1R4K1 b - - 0 30",
+    "solution_moves": [
+      "c2c1",
+      "b1c1",
+      "c5c1"
+    ],
+    "solution_san": [
+      "Rc1+",
+      "Rxc1",
+      "Rxc1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 539,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00DYf",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn2",
+      "rookEndgame",
+      "short"
+    ]
+  },
+  {
+    "fen": "2n3k1/p4ppp/2p1p3/P1NrP3/1N1r4/8/5PPP/1R1R2K1 b - - 0 29",
+    "solution_moves": [
+      "d4d1",
+      "b1d1",
+      "d5d1"
+    ],
+    "solution_san": [
+      "Rxd1+",
+      "Rxd1",
+      "Rxd1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 647,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00EXP",
+    "lichess_themes": [
+      "backRankMate",
+      "mate",
+      "mateIn2",
+      "middlegame",
+      "short"
+    ]
+  },
+  {
+    "fen": "q4r1k/1p3Qpp/1n6/3P2pP/2PP2P1/1P6/2K5/5R2 w - - 0 30",
+    "solution_moves": [
+      "f7f8",
+      "a8f8",
+      "f1f8"
+    ],
+    "solution_san": [
+      "Qxf8+",
+      "Qxf8",
+      "Rxf8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 704,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00HAM",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn2",
+      "short"
+    ]
+  },
+  {
+    "fen": "6k1/5ppp/3rp3/8/8/8/1P3PPP/2R3K1 w - - 0 35",
+    "solution_moves": [
+      "c1c8",
+      "d6d8",
+      "c8d8"
+    ],
+    "solution_san": [
+      "Rc8+",
+      "Rd8",
+      "Rxd8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 400,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00JET",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn2",
+      "rookEndgame",
+      "short"
+    ]
+  },
+  {
+    "fen": "rn1qr1k1/1p3ppp/2p2b2/p2p4/3P4/2N2N2/PPP1QPPP/2KRR3 w - - 0 13",
+    "solution_moves": [
+      "e2e8",
+      "d8e8",
+      "e1e8"
+    ],
+    "solution_san": [
+      "Qxe8+",
+      "Qxe8",
+      "Rxe8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 809,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00MS3",
+    "lichess_themes": [
+      "backRankMate",
+      "mate",
+      "mateIn2",
+      "middlegame",
+      "short"
+    ]
+  },
+  {
+    "fen": "1k3r2/q5r1/2Qp3p/3Bp3/2N1P1p1/P7/1PP2PPP/R5K1 b - - 13 35",
+    "solution_moves": [
+      "a7f2",
+      "g1h1",
+      "f2f1",
+      "a1f1",
+      "f8f1"
+    ],
+    "solution_san": [
+      "Qxf2+",
+      "Kh1",
+      "Qf1+",
+      "Rxf1",
+      "Rxf1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "beginner",
+    "difficulty_rating": 985,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00O9a",
+    "lichess_themes": [
+      "backRankMate",
+      "long",
+      "mate",
+      "mateIn3",
+      "middlegame",
+      "sacrifice"
+    ]
+  },
+  {
+    "fen": "2r5/pR5p/5p1k/4p3/4R3/B4nPP/PP3P2/1K6 b - - 0 27",
+    "solution_moves": [
+      "f3d2",
+      "b1a1",
+      "c8c1"
+    ],
+    "solution_san": [
+      "Nd2+",
+      "Ka1",
+      "Rc1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1517,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "003Tx",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "fork",
+      "mate",
+      "mateIn2",
+      "short"
+    ]
+  },
+  {
+    "fen": "5Q1R/5p1p/1b3qp1/p6k/P2P4/8/1P2rPPP/5RK1 b - - 8 32",
+    "solution_moves": [
+      "f6f2",
+      "f1f2",
+      "e2e1",
+      "f2f1",
+      "b6d4",
+      "g1h1",
+      "e1f1"
+    ],
+    "solution_san": [
+      "Qxf2+",
+      "Rxf2",
+      "Re1+",
+      "Rf1",
+      "Bxd4+",
+      "Kh1",
+      "Rxf1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1625,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00O9Z",
+    "lichess_themes": [
+      "backRankMate",
+      "deflection",
+      "endgame",
+      "fork",
+      "master",
+      "mate",
+      "mateIn4",
+      "pin",
+      "sacrifice",
+      "veryLong"
+    ]
+  },
+  {
+    "fen": "3r2k1/6pp/8/5Q2/2pP4/2q3P1/5RKP/8 w - - 0 36",
+    "solution_moves": [
+      "f5f7",
+      "g8h8",
+      "f7f8",
+      "d8f8",
+      "f2f8"
+    ],
+    "solution_san": [
+      "Qf7+",
+      "Kh8",
+      "Qf8+",
+      "Rxf8",
+      "Rxf8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1338,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "00gH0",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "long",
+      "mate",
+      "mateIn3",
+      "sacrifice"
+    ]
+  },
+  {
+    "fen": "1k1rR3/p1p3pp/Pp3r2/3p4/Q2N4/8/1PPq1PPP/4R1K1 b - - 4 25",
+    "solution_moves": [
+      "d2f2",
+      "g1h1",
+      "f2f1",
+      "e1f1",
+      "f6f1"
+    ],
+    "solution_san": [
+      "Qxf2+",
+      "Kh1",
+      "Qf1+",
+      "Rxf1",
+      "Rxf1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1297,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "014It",
+    "lichess_themes": [
+      "backRankMate",
+      "long",
+      "mate",
+      "mateIn3",
+      "middlegame",
+      "sacrifice"
+    ]
+  },
+  {
+    "fen": "4r1k1/4qp2/3p3p/3P1np1/8/2Q5/1P3PPP/R2N1K2 b - - 3 30",
+    "solution_moves": [
+      "e7e2",
+      "f1g1",
+      "e2e1",
+      "c3e1",
+      "e8e1"
+    ],
+    "solution_san": [
+      "Qe2+",
+      "Kg1",
+      "Qe1+",
+      "Qxe1",
+      "Rxe1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1248,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "0175u",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "long",
+      "mate",
+      "mateIn3"
+    ]
+  },
+  {
+    "fen": "5r1k/3p2bp/p4pp1/qp1Pr3/8/1Q4B1/PP2RPPP/4R1K1 b - - 0 23",
+    "solution_moves": [
+      "a5e1",
+      "e2e1",
+      "e5e1"
+    ],
+    "solution_san": [
+      "Qxe1+",
+      "Rxe1",
+      "Rxe1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1290,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "01GBu",
+    "lichess_themes": [
+      "backRankMate",
+      "mate",
+      "mateIn2",
+      "middlegame",
+      "short",
+      "xRayAttack"
+    ]
+  },
+  {
+    "fen": "7k/1pp2rpp/p6r/4pP2/2Q1Pq2/8/PP4PP/3R3K w - - 0 33",
+    "solution_moves": [
+      "d1d8",
+      "f7f8",
+      "d8f8"
+    ],
+    "solution_san": [
+      "Rd8+",
+      "Rf8",
+      "Rxf8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1298,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "01Wqv",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "mate",
+      "mateIn2",
+      "short"
+    ]
+  },
+  {
+    "fen": "2r4k/pb4pp/1p6/3pP3/3Pn3/2Pq2NQ/PP5P/5R1K w - - 0 24",
+    "solution_moves": [
+      "h3c8",
+      "b7c8",
+      "f1f8"
+    ],
+    "solution_san": [
+      "Qxc8+",
+      "Bxc8",
+      "Rf8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1379,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "01gBD",
+    "lichess_themes": [
+      "backRankMate",
+      "mate",
+      "mateIn2",
+      "middlegame",
+      "sacrifice",
+      "short"
+    ]
+  },
+  {
+    "fen": "5r1k/p1p2qpp/6b1/1P1QP3/8/4P1R1/PB4PP/3R2K1 b - - 0 26",
+    "solution_moves": [
+      "f7f2",
+      "g1h1",
+      "f2f1",
+      "d1f1",
+      "f8f1"
+    ],
+    "solution_san": [
+      "Qf2+",
+      "Kh1",
+      "Qf1+",
+      "Rxf1",
+      "Rxf1#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1328,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "023sA",
+    "lichess_themes": [
+      "backRankMate",
+      "fork",
+      "long",
+      "mate",
+      "mateIn3",
+      "middlegame",
+      "sacrifice"
+    ]
+  },
+  {
+    "fen": "2r2nk1/p5pp/bp2p3/3pP1q1/3P4/1P3QP1/P2N2B1/5RK1 w - - 2 24",
+    "solution_moves": [
+      "f3f7",
+      "g8h8",
+      "f7f8",
+      "c8f8",
+      "f1f8"
+    ],
+    "solution_san": [
+      "Qf7+",
+      "Kh8",
+      "Qxf8+",
+      "Rxf8",
+      "Rxf8#"
+    ],
+    "motif": "back_rank_mate",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1223,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "02Ub7",
+    "lichess_themes": [
+      "backRankMate",
+      "deflection",
+      "long",
+      "mate",
+      "mateIn3",
+      "middlegame"
+    ]
+  },
+  {
+    "fen": "k2rRn2/p1Q5/1p6/3q4/8/2N3B1/PPP2P1P/1K6 b - - 0 27",
+    "solution_moves": [
+      "d5h1",
+      "e8e1",
+      "h1e1",
+      "c3d1",
+      "d8d1"
+    ],
+    "solution_san": [
+      "Qh1+",
+      "Re1",
+      "Qxe1+",
+      "Nd1",
+      "Rxd1#"
     ],
     "motif": "back_rank_mate",
     "difficulty": "advanced",
-    "difficulty_rating": 1250,
-    "explanation": "dxc4 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
+    "difficulty_rating": 1945,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "05Ryc",
+    "lichess_themes": [
+      "backRankMate",
+      "long",
+      "mate",
+      "mateIn3",
+      "middlegame"
+    ]
   },
   {
-    "fen": "r1bqkbnr/pp1p1ppp/2n1p3/8/2Pp4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 5",
+    "fen": "2rr3k/1b4b1/p3Q3/8/1p2N3/8/PP1B1PPP/6K1 b - - 4 40",
     "solution_moves": [
-      "e3d4"
+      "c8c1",
+      "d2c1",
+      "d8d1"
     ],
     "solution_san": [
-      "exd4"
+      "Rc1+",
+      "Bxc1",
+      "Rd1#"
     ],
     "motif": "back_rank_mate",
     "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "exd4 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
+    "difficulty_rating": 1839,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "07H9P",
+    "lichess_themes": [
+      "backRankMate",
+      "mate",
+      "mateIn2",
+      "middlegame",
+      "sacrifice",
+      "short"
+    ]
   },
   {
-    "fen": "r2qk2r/p2bbppp/1p2pn2/1BPpn3/3P4/2N5/PP3PPP/R1BQ1RK1 w kq - 0 11",
+    "fen": "4R3/3Q3p/3p1Npk/3B4/7q/3P4/PPP2n2/2K5 b - - 0 35",
     "solution_moves": [
-      "d4e5",
-      "d7b5",
-      "c3b5"
+      "h4g5",
+      "c1b1",
+      "g5g1",
+      "e8e1",
+      "g1e1"
     ],
     "solution_san": [
-      "dxe5",
-      "Bxb5",
-      "Nxb5"
+      "Qg5+",
+      "Kb1",
+      "Qg1+",
+      "Re1",
+      "Qxe1#"
     ],
     "motif": "back_rank_mate",
     "difficulty": "advanced",
-    "difficulty_rating": 1250,
-    "explanation": "dxe5 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
+    "difficulty_rating": 2079,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "0LFwt",
+    "lichess_themes": [
+      "backRankMate",
+      "endgame",
+      "fork",
+      "long",
+      "mate",
+      "mateIn3"
+    ]
   },
   {
-    "fen": "r2qk2r/p3bppp/1p2pP2/1bPp4/8/2N5/PP3PPP/R1BQ1RK1 b kq - 0 12",
+    "fen": "rn2Qbk1/ppp2ppp/8/8/2P3b1/3P1qP1/P2B1P1P/R3R1K1 w - - 2 19",
     "solution_moves": [
-      "b5f1"
-    ],
-    "solution_san": [
-      "Bxf1"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Bxf1 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "r1bqkbnr/1pp2ppp/p2pp3/3PN3/4P3/2N5/PPP2PPP/R1BQKB1R b KQkq - 0 6",
-    "solution_moves": [
-      "d6e5"
-    ],
-    "solution_san": [
-      "dxe5"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "dxe5 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "r1bqkbnr/pppp1ppp/8/4p3/3NP3/8/PPP2PPP/RNBQKB1R b KQkq - 0 4",
-    "solution_moves": [
-      "e5d4"
-    ],
-    "solution_san": [
-      "exd4"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "exd4 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "r1b1k1nr/pppp1ppp/2n5/4P3/4P2q/2b5/PPPB1PPP/R2QKBNR w KQkq - 0 6",
-    "solution_moves": [
-      "d2c3"
-    ],
-    "solution_san": [
-      "Bxc3"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Bxc3 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "r1b1kr2/ppp3pp/2np4/8/2B1nN2/2B5/PPP2PPP/2KRR3 b q - 3 13",
-    "solution_moves": [
-      "f8f4"
-    ],
-    "solution_san": [
-      "Rxf4"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Rxf4 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "5r2/pppk2pp/2npb3/3B4/4PR2/2B5/PPP3PP/2KR4 b - - 0 18",
-    "solution_moves": [
-      "f8f4"
-    ],
-    "solution_san": [
-      "Rxf4"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 850,
-    "explanation": "Rxf4 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rnbqkb1r/pp2pppp/8/2PpP3/1pB5/P7/1B1P1PPP/RN1QK1NR b KQkq - 0 8",
-    "solution_moves": [
-      "d5c4",
-      "a3b4",
-      "a7a5"
-    ],
-    "solution_san": [
-      "dxc4",
-      "axb4",
-      "a5"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 1250,
-    "explanation": "dxc4 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rnbqkb1r/1p2p2p/4Ppp1/p1P5/1Pp5/8/1B1PNPPP/RN1QK2R w KQkq - 0 12",
-    "solution_moves": [
-      "d1a4",
-      "b8c6",
-      "b4b5"
-    ],
-    "solution_san": [
-      "Qa4+",
-      "Nc6",
-      "b5"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 1250,
-    "explanation": "Qa4+ delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "r1bqkb1r/1p2p2p/2n1Ppp1/p1P5/QPp5/8/1B1PNPPP/RN2K2R w KQkq - 2 13",
-    "solution_moves": [
-      "b4b5"
-    ],
-    "solution_san": [
-      "b5"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "b5 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rnbqk2r/pp2p1bp/2pp2pB/8/2PPp3/5N1P/PP1Q1PP1/RN2KB1R b KQkq - 0 8",
-    "solution_moves": [
-      "g7h6",
-      "d2h6",
-      "e4f3"
-    ],
-    "solution_san": [
-      "Bxh6",
-      "Qxh6",
-      "exf3"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 1250,
-    "explanation": "Bxh6 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rnbqk2r/pp2p2p/2pp2pb/8/2PPp3/5N1P/PP1Q1PP1/RN2KB1R w KQkq - 0 9",
-    "solution_moves": [
-      "d2h6",
-      "e4f3",
-      "b1d2"
-    ],
-    "solution_san": [
-      "Qxh6",
-      "exf3",
-      "Nd2"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 1250,
-    "explanation": "Qxh6 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "r1q1k2r/pp1nb1pb/2p2n1p/6N1/3P4/6N1/PPP2PPP/R1BQR1K1 w kq - 3 14",
-    "solution_moves": [
-      "g5h7"
-    ],
-    "solution_san": [
-      "Nxh7"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Nxh7 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "r1q1k1nr/pp1nb1pN/2p4p/8/3P4/6N1/PPP1QPPP/R1B1R1K1 b kq - 0 15",
-    "solution_moves": [
-      "h8h7",
-      "g3f5",
-      "c8d8",
-      "e2e6",
       "e8f8",
-      "f5e7",
-      "g8e7"
+      "g8f8",
+      "d2b4",
+      "c7c5",
+      "b4c5",
+      "f8g8",
+      "e1e8"
     ],
     "solution_san": [
-      "Rxh7",
-      "Nf5",
-      "Qd8",
-      "Qe6",
-      "Kf8",
-      "Nxe7",
-      "Nxe7"
+      "Qxf8+",
+      "Kxf8",
+      "Bb4+",
+      "c5",
+      "Bxc5+",
+      "Kg8",
+      "Re8#"
     ],
     "motif": "back_rank_mate",
     "difficulty": "advanced",
-    "difficulty_rating": 1800,
-    "explanation": "Rxh7 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
+    "difficulty_rating": 2032,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "0Mvwc",
+    "lichess_themes": [
+      "attraction",
+      "backRankMate",
+      "mate",
+      "mateIn4",
+      "middlegame",
+      "sacrifice",
+      "veryLong"
+    ]
   },
   {
-    "fen": "r1q1k1n1/pp1nb1pr/2p4p/8/3P4/6N1/PPP1QPPP/R1B1R1K1 w q - 0 16",
+    "fen": "1r3rk1/1R3ppp/p1p5/3nP3/8/P4Q1B/2q2PPP/5RK1 w - - 1 21",
     "solution_moves": [
-      "g3f5",
-      "c8d8",
-      "e2e6",
-      "e8f8",
-      "f5e7",
-      "g8e7",
-      "c1f4"
+      "f3f7",
+      "f8f7",
+      "b7b8",
+      "f7f8",
+      "h3e6",
+      "g8h8",
+      "b8f8"
     ],
     "solution_san": [
-      "Nf5",
-      "Qd8",
-      "Qe6",
-      "Kf8",
-      "Nxe7",
-      "Nxe7",
-      "Bf4"
+      "Qxf7+",
+      "Rxf7",
+      "Rxb8+",
+      "Rf8",
+      "Be6+",
+      "Kh8",
+      "Rxf8#"
     ],
     "motif": "back_rank_mate",
     "difficulty": "advanced",
-    "difficulty_rating": 1800,
-    "explanation": "Nf5 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rn1qkbnR/ppp1p3/6p1/3p1b2/3P4/3Q4/PPP1PP2/RNB1KBN1 b Qq - 0 7",
-    "solution_moves": [
-      "f5d3"
-    ],
-    "solution_san": [
-      "Bxd3"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Bxd3 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "r3kR2/pppq4/2n1p1p1/3p4/3P4/3P3B/PPP2P2/RNB1K1N1 b Qq - 0 11",
-    "solution_moves": [
-      "e8f8"
-    ],
-    "solution_san": [
-      "Kxf8"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 850,
-    "explanation": "Kxf8 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rnbqkbnr/ppp3pp/8/3pN3/4p3/1B6/PPPP1PPP/RNBQK2R b KQkq - 1 5",
-    "solution_moves": [
-      "d8g5"
-    ],
-    "solution_san": [
-      "Qg5"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Qg5 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rnb1kbnr/ppp3pp/8/3pN1q1/3Pp3/1B6/PPP2PPP/RNBQK2R b KQkq d3 0 6",
-    "solution_moves": [
-      "g5g2"
-    ],
-    "solution_san": [
-      "Qxg2"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Qxg2 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rn2kbnr/pp4pp/2p5/4N3/2BPp1b1/8/PP2KPq1/RNBQ3R w kq - 1 12",
-    "solution_moves": [
-      "e5g4",
-      "g2g4",
-      "e2d2"
-    ],
-    "solution_san": [
-      "Nxg4",
-      "Qxg4+",
-      "Kd2"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 1250,
-    "explanation": "Nxg4 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rnb2rk1/pppp1ppp/8/b3P3/8/P1Nq2N1/1PP2P1P/R1B1K2R w KQ - 0 11",
-    "solution_moves": [
-      "c2d3"
-    ],
-    "solution_san": [
-      "cxd3"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "cxd3 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rn1qkbnr/pp2pppp/8/1bp5/3PpB2/2N5/PPP2PPP/R2QK1NR w KQkq - 0 6",
-    "solution_moves": [
-      "c3b5",
-      "d8a5",
-      "b5c3"
-    ],
-    "solution_san": [
-      "Nxb5",
-      "Qa5+",
-      "Nc3"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 1250,
-    "explanation": "Nxb5 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rn2kbnr/pp2pppp/8/qNp5/3PpB2/8/PPP2PPP/R2QK1NR w KQkq - 1 7",
-    "solution_moves": [
-      "b5c3"
-    ],
-    "solution_san": [
-      "Nc3"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Nc3 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "3rkbnr/pp3Ppp/2q5/2p5/3npB2/2N5/PPP1NPPP/R2QK2R b KQk - 0 13",
-    "solution_moves": [
-      "e8f7"
-    ],
-    "solution_san": [
-      "Kxf7"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Kxf7 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "2kr1bnr/ppp3p1/2n1b3/3N3Q/3Pp3/8/PPP2PNP/R1B1KB1R b KQ - 0 12",
-    "solution_moves": [
-      "h8h5",
-      "d5f4",
-      "c6d4",
-      "f4e6",
-      "d4e6"
-    ],
-    "solution_san": [
-      "Rxh5",
-      "Ndf4",
-      "Nxd4",
-      "Nxe6",
-      "Nxe6"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 1550,
-    "explanation": "Rxh5 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
-  },
-  {
-    "fen": "rn1qkb1r/pp2ppp1/2p3b1/7p/3PNBPP/8/PPP5/R2QKBNR b KQkq - 0 9",
-    "solution_moves": [
-      "g6e4"
-    ],
-    "solution_san": [
-      "Bxe4"
-    ],
-    "motif": "back_rank_mate",
-    "difficulty": "advanced",
-    "difficulty_rating": 950,
-    "explanation": "Bxe4 delivers a back-rank mate! The king is trapped by its own pawns.",
-    "source": "generated"
+    "difficulty_rating": 2003,
+    "explanation": "Find the back-rank mate! The king is trapped by its own pieces.",
+    "source": "lichess",
+    "lichess_id": "0NL4m",
+    "lichess_themes": [
+      "backRankMate",
+      "deflection",
+      "mate",
+      "mateIn4",
+      "middlegame",
+      "sacrifice",
+      "veryLong"
+    ]
   }
 ]
