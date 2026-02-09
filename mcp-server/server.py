@@ -1087,6 +1087,23 @@ def generate_puzzles_from_game(game_id: str, cp_threshold: int = 100) -> dict:
     }
 
 
+@mcp.tool()
+def srs_to_puzzles(min_cp_loss: int = 100) -> dict:
+    """Export SRS mistake cards as validated puzzles for blunder board review.
+
+    Filters SRS cards where cp_loss >= min_cp_loss and converts them
+    to chess_rocket puzzle format with full validation.
+
+    Args:
+        min_cp_loss: Minimum centipawn loss to include (default 100).
+
+    Returns:
+        Dict with puzzles list, total_cards, exported_count, skipped_count.
+    """
+    srs = SRSManager()
+    return srs.export_as_puzzles(min_cp_loss=min_cp_loss)
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------

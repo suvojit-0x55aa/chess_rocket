@@ -1071,7 +1071,7 @@
         "python -m py_compile mcp-server/server.py passes"
       ],
       "priority": 46,
-      "passes": false,
+      "passes": true,
       "notes": "Closes the loop: game mistakes -> SRS cards -> validated puzzles -> review practice. The blunder board concept lets students revisit their own mistakes as puzzles. Depends on nothing."
     },
     {

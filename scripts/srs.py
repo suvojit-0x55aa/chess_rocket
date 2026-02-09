@@ -186,6 +186,82 @@ class SRSManager:
             "by_classification": by_classification,
         }
 
+    def export_as_puzzles(self, min_cp_loss: int = 100) -> dict:
+        """Export SRS mistake cards as validated puzzles.
+
+        Filters cards where cp_loss >= min_cp_loss, converts each to
+        chess_rocket puzzle format, and validates FEN + move legality.
+
+        Args:
+            min_cp_loss: Minimum centipawn loss to include (default 100).
+
+        Returns:
+            Dict with puzzles list, total_cards, exported_count, skipped_count.
+        """
+        import warnings
+
+        import chess as _chess
+
+        puzzles: list[dict] = []
+        skipped = 0
+
+        for card in self._cards:
+            if card.get("cp_loss", 0) < min_cp_loss:
+                continue
+
+            fen = card.get("fen", "")
+            best_move_san = card.get("best_move", "")
+
+            # Validate FEN
+            try:
+                board = _chess.Board(fen)
+            except (ValueError, TypeError):
+                warnings.warn(f"SRS card {card.get('id', '?')}: invalid FEN, skipping")
+                skipped += 1
+                continue
+
+            # Parse best_move SAN to UCI
+            try:
+                move = board.parse_san(best_move_san)
+            except (ValueError, TypeError):
+                warnings.warn(
+                    f"SRS card {card.get('id', '?')}: illegal move '{best_move_san}', skipping"
+                )
+                skipped += 1
+                continue
+
+            if move not in board.legal_moves:
+                warnings.warn(
+                    f"SRS card {card.get('id', '?')}: move not legal, skipping"
+                )
+                skipped += 1
+                continue
+
+            cp_loss = card.get("cp_loss", 0)
+            puzzle = {
+                "fen": fen,
+                "solution_moves": [move.uci()],
+                "solution_san": [best_move_san],
+                "motif": card.get("motif") or "tactics",
+                "difficulty": (
+                    "beginner" if cp_loss > 300
+                    else "intermediate" if cp_loss > 150
+                    else "advanced"
+                ),
+                "difficulty_rating": min(1800, 400 + cp_loss * 2),
+                "explanation": card.get("explanation", ""),
+                "source": "srs",
+                "card_id": card.get("id", ""),
+            }
+            puzzles.append(puzzle)
+
+        return {
+            "puzzles": puzzles,
+            "total_cards": len(self._cards),
+            "exported_count": len(puzzles),
+            "skipped_count": skipped,
+        }
+
     def _find_card(self, card_id: str) -> dict:
         """Find a card by ID.
 

@@ -215,3 +215,18 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Lichess importer functions (_pick_motif, _rating_to_difficulty, _validate_checkmate) are easily unit-testable
   - detect_motif won't match all puzzles (heuristic) — test for >0 detections, not 100%
 ---
+
+## 2026-02-09 - US-046
+- What was implemented: SRS card to puzzle pipeline
+- Files changed:
+  - scripts/srs.py (added export_as_puzzles() method to SRSManager)
+  - mcp-server/server.py (added srs_to_puzzles MCP tool)
+  - prd.json (US-046 passes: true)
+- export_as_puzzles(min_cp_loss=100) filters cards, validates FEN + move legality, converts to puzzle format
+- srs_to_puzzles MCP tool wraps export_as_puzzles for Claude tutor access
+- Both files compile cleanly, 215 tests pass, 0 failures
+- **Learnings for future iterations:**
+  - SRS cards store best_move as SAN — need board.parse_san() to convert to UCI for puzzle format
+  - Difficulty mapping reuses same thresholds as generate_puzzles_from_game (>300=beginner, >150=intermediate, else advanced)
+  - Skipping invalid cards with warnings (not exceptions) is important for robustness
+---
