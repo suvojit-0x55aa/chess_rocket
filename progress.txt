@@ -10,6 +10,8 @@ Started: Mon Feb  9 04:25:30 IST 2026
 - PGN move string format: "1.e4 e5 2.Nf3 Nc6" (no spaces between number and move)
 - server.py sys.path: BOTH _PROJECT_ROOT and _MCP_SERVER_DIR must be inserted BEFORE any local imports (response_schemas, openings_tools)
 - Stockfish UCI_Elo max is 3190 — tests using set_difficulty should stay <= 3190 to avoid EngineError
+- ChessEngine has __del__ for GC cleanup, but always call close() explicitly — don't rely on GC
+- pytest_sessionfinish in conftest.py kills remaining Stockfish children to prevent hanging
 
 ## 2026-02-09T05:00:00Z - US-034
 - Already implemented in previous iteration (evaluate_move stores evals, undo_move filters, save_session auto-computes accuracy)
@@ -111,4 +113,19 @@ Started: Mon Feb  9 04:25:30 IST 2026
   - test_post_game.py reads progress.json directly for detailed assertions — already compatible with minification
   - opening_quiz randomly picks openings; some are too short (1 move) for quiz — use pytest.skip for "too short" errors
   - Minified current_opening only has {name, eco} — no family, moves_matched, pgn
+---
+
+## 2026-02-09T07:30:00Z - US-034 (verified + test hang fix)
+- US-034 implementation already existed in server.py (evaluate_move stores evals, undo_move filters, save_session auto-computes, _recompute_accuracy helper)
+- Verified all acceptance criteria met, marked passes: true
+- Fixed pytest hanging after all 157 tests pass:
+  - Root cause: python-chess spawns Stockfish subprocesses with asyncio background threads; unclosed engines prevent process exit
+  - Added `__del__` method to ChessEngine as GC safety net
+  - Added `pytest_sessionfinish` hook in conftest.py to `pkill -P <pid>` remaining children
+- Files changed: scripts/engine.py, tests/conftest.py, prd.json
+- **Learnings for future iterations:**
+  - python-chess SimpleEngine.popen_uci() spawns subprocess + asyncio thread — must always close()
+  - ChessEngine.__del__ prevents leaked Stockfish processes on GC
+  - pytest_sessionfinish with pkill -P is a reliable safety net for subprocess cleanup
+  - All 34 stories now pass, 157 tests green
 ---
