@@ -621,6 +621,295 @@ def generate_stockfish_puzzles(
     return result
 
 
+_MANIFEST_PATH = _PUZZLES_DIR / "manifest.json"
+_GAMES_DIR = _PROJECT_ROOT / "data" / "games"
+_FROM_GAMES_FILE = _PUZZLES_DIR / "from-games.json"
+
+
+def _load_manifest() -> dict:
+    """Load the puzzle manifest tracking processed files."""
+    if _MANIFEST_PATH.exists():
+        try:
+            with open(_MANIFEST_PATH, encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, OSError):
+            pass
+    return {"processed_files": []}
+
+
+def _save_manifest(manifest: dict) -> None:
+    """Save the puzzle manifest atomically."""
+    _MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
+    tmp = _MANIFEST_PATH.with_suffix(".tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2, ensure_ascii=False)
+    os.replace(str(tmp), str(_MANIFEST_PATH))
+
+
+def get_unprocessed_games(manifest: dict, games_dir: Path | str = _GAMES_DIR) -> list[Path]:
+    """Return PGN files not yet processed according to the manifest."""
+    games_dir = Path(games_dir)
+    if not games_dir.exists():
+        return []
+    processed = set(manifest.get("processed_files", []))
+    pgn_files = sorted(games_dir.glob("*.pgn"))
+    return [p for p in pgn_files if p.name not in processed]
+
+
+def _load_from_games_puzzles() -> list[dict]:
+    """Load existing from-games.json puzzles."""
+    if _FROM_GAMES_FILE.exists():
+        try:
+            with open(_FROM_GAMES_FILE, encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, OSError):
+            pass
+    return []
+
+
+def _replay_pgn_for_puzzles(
+    engine: chess.engine.SimpleEngine,
+    pgn_path: Path,
+    seen_fens: set[str],
+    cp_threshold: int = 100,
+    depth: int = 20,
+) -> list[dict]:
+    """Replay a PGN file and extract puzzle positions where the player made mistakes.
+
+    Returns list of puzzle dicts for positions with cp_loss >= cp_threshold.
+    """
+    puzzles: list[dict] = []
+
+    try:
+        with open(pgn_path, encoding="utf-8") as f:
+            game = chess.pgn.read_game(f)
+    except (OSError, Exception):
+        _log(f"  WARNING: Could not read {pgn_path.name}")
+        return puzzles
+
+    if game is None:
+        return puzzles
+
+    # Determine player color from headers
+    white_header = game.headers.get("White", "")
+    black_header = game.headers.get("Black", "")
+    if "Player" in white_header:
+        player_is_white = True
+    elif "Player" in black_header:
+        player_is_white = False
+    else:
+        # Default: assume player is white
+        player_is_white = True
+
+    board = game.board()
+    moves = list(game.mainline_moves())
+    move_number = 0
+
+    for move in moves:
+        move_number += 1
+        is_white_turn = board.turn == chess.WHITE
+
+        # Only analyze player moves
+        if is_white_turn == player_is_white:
+            norm = _normalize_fen(board.fen())
+            if norm not in seen_fens and not board.is_game_over():
+                try:
+                    info = engine.analyse(board, chess.engine.Limit(depth=depth), multipv=2)
+                except chess.engine.EngineTerminatedError:
+                    break
+
+                if info and len(info) >= 1:
+                    best_move = info[0].get("pv", [None])[0]
+                    best_score = info[0]["score"].relative.score(mate_score=10000)
+
+                    if best_move is not None and best_score is not None and best_move != move:
+                        # Calculate cp_loss: evaluate the actual move played
+                        try:
+                            board_after_actual = board.copy()
+                            board_after_actual.push(move)
+                            info_after = engine.analyse(
+                                board_after_actual, chess.engine.Limit(depth=depth), multipv=1,
+                            )
+                        except chess.engine.EngineTerminatedError:
+                            break
+
+                        if info_after:
+                            actual_score = info_after[0]["score"].relative.score(mate_score=10000)
+                            if actual_score is not None:
+                                # cp_loss from the player's perspective
+                                cp_loss = best_score - (-actual_score)
+
+                                if cp_loss >= cp_threshold:
+                                    motif = detect_motif(board, best_move)
+
+                                    # Check for checkmate
+                                    board_check = board.copy()
+                                    board_check.push(best_move)
+                                    if board_check.is_checkmate() and motif is None:
+                                        motif = "checkmate"
+
+                                    best_san = board.san(best_move)
+                                    player_san = board.san(move)
+
+                                    uci_solution, san_solution = _build_solution_line(
+                                        engine, board, best_move, max_half_moves=4,
+                                    )
+
+                                    classification = _classify_cp_loss(cp_loss)
+
+                                    puzzle = {
+                                        "fen": board.fen(),
+                                        "solution_moves": uci_solution,
+                                        "solution_san": san_solution,
+                                        "motif": motif or "tactics",
+                                        "difficulty": _difficulty_from_position(
+                                            board, cp_loss, len(uci_solution), motif,
+                                        ),
+                                        "difficulty_rating": _difficulty_rating(
+                                            board, cp_loss, len(uci_solution), motif,
+                                        ),
+                                        "explanation": (
+                                            f"In your game, you played {player_san} "
+                                            f"(cp_loss: {cp_loss}). The best move was {best_san}."
+                                        ),
+                                        "source": "game",
+                                        "source_file": pgn_path.name,
+                                        "move_number": move_number,
+                                    }
+                                    puzzles.append(puzzle)
+                                    seen_fens.add(norm)
+
+        board.push(move)
+
+    return puzzles
+
+
+def _classify_cp_loss(cp_loss: int) -> str:
+    """Classify a move based on centipawn loss."""
+    if cp_loss <= 0:
+        return "best"
+    if cp_loss <= 30:
+        return "great"
+    if cp_loss <= 80:
+        return "good"
+    if cp_loss <= 150:
+        return "inaccuracy"
+    if cp_loss <= 300:
+        return "mistake"
+    return "blunder"
+
+
+def generate_game_puzzles(
+    games_dir: str | Path = _GAMES_DIR,
+    depth: int = 20,
+    cp_threshold: int = 100,
+    already_processed: set[str] | None = None,
+) -> list[dict]:
+    """Mine puzzles from the player's completed games.
+
+    Args:
+        games_dir: Directory containing PGN files.
+        depth: Stockfish analysis depth.
+        cp_threshold: Minimum centipawn loss to create a puzzle.
+        already_processed: Set of filenames already processed (for incremental).
+
+    Returns:
+        List of puzzle dicts extracted from games.
+    """
+    games_dir = Path(games_dir)
+    if not games_dir.exists():
+        _log(f"No games directory found at {games_dir}")
+        return []
+
+    pgn_files = sorted(games_dir.glob("*.pgn"))
+    if already_processed:
+        pgn_files = [p for p in pgn_files if p.name not in already_processed]
+
+    if not pgn_files:
+        _log("No new PGN files to process")
+        return []
+
+    # Load existing puzzles for deduplication
+    existing = _load_from_games_puzzles()
+    seen_fens: set[str] = {_normalize_fen(p["fen"]) for p in existing}
+
+    sf_path = _find_stockfish()
+    engine = chess.engine.SimpleEngine.popen_uci(sf_path)
+
+    all_puzzles: list[dict] = []
+
+    try:
+        for pgn_path in pgn_files:
+            _log(f"  Mining {pgn_path.name}...")
+            new_puzzles = _replay_pgn_for_puzzles(
+                engine, pgn_path, seen_fens,
+                cp_threshold=cp_threshold, depth=depth,
+            )
+            all_puzzles.extend(new_puzzles)
+            _log(f"    Found {len(new_puzzles)} puzzle(s)")
+    finally:
+        engine.quit()
+
+    return all_puzzles
+
+
+def run_games_pipeline(
+    incremental: bool = True,
+    depth: int = 20,
+    cp_threshold: int = 100,
+) -> None:
+    """Run the player game mining puzzle generation pipeline."""
+    _log("Pipeline 2: Mining puzzles from player games...")
+
+    manifest = _load_manifest()
+
+    if incremental:
+        unprocessed = get_unprocessed_games(manifest)
+        if not unprocessed:
+            _log("  No new games to process (all up to date)")
+            return
+        already_processed = set(manifest.get("processed_files", []))
+        _log(f"  Found {len(unprocessed)} new game(s) to process")
+    else:
+        already_processed = None
+        _log(f"  Processing all games (non-incremental)")
+
+    new_puzzles = generate_game_puzzles(
+        depth=depth,
+        cp_threshold=cp_threshold,
+        already_processed=already_processed,
+    )
+
+    # Load existing, merge, deduplicate
+    existing = _load_from_games_puzzles()
+    existing_fens = {_normalize_fen(p["fen"]) for p in existing}
+
+    added = 0
+    for puzzle in new_puzzles:
+        norm = _normalize_fen(puzzle["fen"])
+        if norm not in existing_fens:
+            existing.append(puzzle)
+            existing_fens.add(norm)
+            added += 1
+
+    _write_puzzle_file(_FROM_GAMES_FILE, existing)
+    _log(f"  Added {added} new puzzle(s) to from-games.json (total: {len(existing)})")
+
+    # Update manifest with newly processed files
+    pgn_files = sorted(Path(_GAMES_DIR).glob("*.pgn"))
+    if incremental:
+        processed_names = set(manifest.get("processed_files", []))
+        for p in pgn_files:
+            if p.name not in processed_names:
+                processed_names.add(p.name)
+        manifest["processed_files"] = sorted(processed_names)
+    else:
+        manifest["processed_files"] = sorted(p.name for p in pgn_files)
+
+    _save_manifest(manifest)
+    _log("  Manifest updated")
+
+
 def _write_puzzle_file(filepath: Path, puzzles: list[dict]) -> None:
     """Write puzzles to JSON file atomically."""
     filepath.parent.mkdir(parents=True, exist_ok=True)
@@ -683,7 +972,7 @@ def main() -> None:
         run_stockfish_pipeline(target=args.target, seed=args.seed, depth=args.depth)
 
     if args.pipeline in ("games", "all"):
-        _log("Pipeline 'games' will be implemented in US-037")
+        run_games_pipeline(incremental=args.incremental)
 
     if args.pipeline in ("openings", "all"):
         _log("Pipeline 'openings' will be implemented in US-038")

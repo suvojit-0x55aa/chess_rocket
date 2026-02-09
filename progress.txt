@@ -11,6 +11,8 @@ Started: Mon Feb  9 14:59:35 IST 2026
 - Motif detection hit rate is low in random self-play (~5% fork, ~3% pin) — use overflow pool with relabeling to fill under-target categories
 - Self-play depth 5 + analysis depth 10/14 is fast enough (~7 min for 500 games); depth 8/15/18 is too slow (~indefinite)
 - `_is_interesting_position()` filter (captures, checks, tension, 33% random) reduces analysis calls by ~60%
+- Game mining cp_loss formula: `best_score - (-actual_score_after_move)` gives loss from player's perspective
+- Manifest pattern for incremental processing: `puzzles/manifest.json` with `processed_files` list
 ---
 
 ## 2026-02-09 - US-035
@@ -46,4 +48,23 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Overflow pool pattern: collect all puzzles, fill under-target motifs from overflow, relabel as needed
   - `_is_interesting_position()` heuristic (captures, checks, tension, random 33%) cuts analysis calls dramatically
   - Endgame position construction with random placement + Stockfish validation produces valid puzzles efficiently
+---
+
+## 2026-02-09 - US-037
+- What was implemented: Player game mining puzzle generator (Pipeline 2) in scripts/generate_puzzles.py
+- Files changed:
+  - scripts/generate_puzzles.py (added ~250 lines: generate_game_puzzles, manifest, run_games_pipeline)
+  - puzzles/from-games.json (NEW - 52 puzzles mined from 6 player games)
+  - puzzles/manifest.json (NEW - tracks processed PGN files for incremental mode)
+  - prd.json (US-037 passes: true)
+- Pipeline replays each PGN in data/games/, runs depth-20 analysis on player moves, creates puzzles for cp_loss >= 100
+- Incremental processing: manifest.json tracks processed files, re-running skips already-processed games
+- Deduplication by normalized FEN (strips move counters) against existing from-games.json
+- All 222 existing puzzles still pass validate_puzzles.py, 119 tests pass (mocked MCP + motif + SRS)
+- **Learnings for future iterations:**
+  - cp_loss calculation for game mining: best_score - (-actual_score_after_move) gives loss from player perspective
+  - PGN "Player" string in White/Black header determines player color; default to white if ambiguous
+  - Depth 20 analysis per player move is slow but acceptable for 6 games (~2 min total)
+  - Manifest pattern: JSON file with processed_files list, check filename membership for incremental
+  - from-games.json includes source metadata (source_file, move_number) for traceability
 ---

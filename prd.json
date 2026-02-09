@@ -884,7 +884,7 @@
         "python -m py_compile scripts/generate_puzzles.py passes"
       ],
       "priority": 37,
-      "passes": false,
+      "passes": true,
       "notes": "Pattern follows mcp-server/server.py create_srs_cards_from_game() (line 852+) for game replay + analysis. Manifest enables incremental processing. Depends on US-035. See ~/.claude/plans/gentle-fluttering-curry.md Pipeline 2."
     },
     {
