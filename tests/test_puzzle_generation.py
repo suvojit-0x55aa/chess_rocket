@@ -103,6 +103,18 @@ class TestMotifIntegration:
                 move = chess.Move.from_uci(puzzle["solution_moves"][0])
                 detect_motif(board, move)
 
+    def test_lichess_sourced_puzzles_have_source_field(self):
+        """Lichess-sourced puzzles should have source='lichess' and lichess_id."""
+        for filename in ("back-rank.json", "checkmate-patterns.json"):
+            puzzles = _load_puzzles(filename)
+            for i, puzzle in enumerate(puzzles):
+                assert puzzle.get("source") == "lichess", (
+                    f"{filename}[{i}] missing source='lichess'"
+                )
+                assert "lichess_id" in puzzle, (
+                    f"{filename}[{i}] missing lichess_id"
+                )
+
     def test_all_puzzle_files_have_valid_fens(self):
         """Every puzzle across all files should have a parseable FEN."""
         for filename in PUZZLE_FILES:

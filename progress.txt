@@ -230,3 +230,21 @@ Started: Mon Feb  9 14:59:35 IST 2026
   - Difficulty mapping reuses same thresholds as generate_puzzles_from_game (>300=beginner, >150=intermediate, else advanced)
   - Skipping invalid cards with warnings (not exceptions) is important for robustness
 ---
+
+## 2026-02-09 - US-047
+- What was implemented: Final puzzle validation — verified all acceptance criteria
+- Files changed:
+  - tests/test_puzzle_generation.py (added test_lichess_sourced_puzzles_have_source_field, now 29 tests)
+  - prd.json (US-047 passes: true)
+- Verified: fast validation exits 0, all 284 puzzles valid
+- Verified: all 30 checkmate puzzles result in board.is_checkmate()
+- Verified: all 30 back-rank puzzles have mate on rank 1 or 8
+- Verified: opening puzzles pass with exemption
+- Verified: Lichess-sourced puzzles have source='lichess' and lichess_id
+- Verified: CLAUDE.md puzzle table has accurate counts and sources
+- 215 tests pass, 1 skipped, 0 failures
+- **Learnings for future iterations:**
+  - US-047 is mostly a verification story — most work was done in US-040 through US-046
+  - The only code change needed was adding Lichess source='lichess' assertions to test file
+  - The 1 skipped test is test_quiz_updates_openings_studied (pre-existing flaky test)
+---
