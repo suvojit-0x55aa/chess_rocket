@@ -51,14 +51,17 @@ def _difficulty_from_halfmoves(n):
         return "advanced"
 
 
-def generate_opening_moves_puzzles(conn):
-    """Generate ~30 'next book move' puzzles across all ECO volumes.
+def generate_opening_moves_puzzles(conn, per_volume=7):
+    """Generate 'next book move' puzzles across all ECO volumes.
 
     For each puzzle: position is after N-1 moves, solution is move N.
+
+    Args:
+        conn: SQLite connection to openings database.
+        per_volume: Target puzzles per ECO volume (default 7, total = per_volume * 5).
     """
     puzzles = []
 
-    # Target ~6 puzzles per ECO volume
     for eco_volume in "ABCDE":
         rows = conn.execute(
             "SELECT * FROM openings WHERE eco_volume = ? AND num_moves >= 2 "
@@ -70,7 +73,7 @@ def generate_opening_moves_puzzles(conn):
         seen_fens = set()
 
         for row in rows:
-            if count >= 7:
+            if count >= per_volume:
                 break
 
             opening = dict(row)
@@ -245,10 +248,15 @@ def _find_stockfish():
     return None
 
 
-def generate_auto_traps(conn):
-    """Generate ~10 auto-detected opening traps using Stockfish.
+def generate_auto_traps(conn, target=12, depth=15):
+    """Generate auto-detected opening traps using Stockfish.
 
     Finds positions where a 'natural' bad move leads to >= 150cp punishment.
+
+    Args:
+        conn: SQLite connection to openings database.
+        target: Target number of auto-generated traps (default 12).
+        depth: Stockfish analysis depth (default 15).
     """
     sf_path = _find_stockfish()
     if not sf_path:
@@ -261,13 +269,16 @@ def generate_auto_traps(conn):
 
     try:
         # Get openings with 3-8 half-moves (good trap territory)
+        # Scale limit with target for better coverage
+        fetch_limit = max(200, target * 20)
         rows = conn.execute(
             "SELECT * FROM openings WHERE num_moves BETWEEN 3 AND 8 "
-            "ORDER BY RANDOM() LIMIT 200"
+            "ORDER BY RANDOM() LIMIT ?",
+            (fetch_limit,),
         ).fetchall()
 
         for row in rows:
-            if len(traps) >= 12:
+            if len(traps) >= target:
                 break
 
             opening = dict(row)
@@ -288,7 +299,7 @@ def generate_auto_traps(conn):
                 continue
 
             # Find the best move
-            best_result = engine.analyse(board, chess.engine.Limit(depth=15))
+            best_result = engine.analyse(board, chess.engine.Limit(depth=depth))
             best_score = best_result.get("score")
             if best_score is None:
                 continue
@@ -311,7 +322,7 @@ def generate_auto_traps(conn):
                     board.pop()
                     continue
 
-                after_result = engine.analyse(board, chess.engine.Limit(depth=15))
+                after_result = engine.analyse(board, chess.engine.Limit(depth=depth))
                 after_score = after_result.get("score")
                 board.pop()
 
@@ -355,8 +366,14 @@ def generate_auto_traps(conn):
     return traps
 
 
-def generate_opening_traps_puzzles(conn):
-    """Generate ~20 opening trap puzzles (curated + auto-generated)."""
+def generate_opening_traps_puzzles(conn, auto_target=12, depth=15):
+    """Generate opening trap puzzles (curated + auto-generated).
+
+    Args:
+        conn: SQLite connection to openings database.
+        auto_target: Target number of auto-generated traps (default 12).
+        depth: Stockfish analysis depth for auto-trap detection (default 15).
+    """
     # Start with curated traps - validate each one
     valid_curated = []
     for trap in _CURATED_TRAPS:
@@ -372,7 +389,7 @@ def generate_opening_traps_puzzles(conn):
             print(f"WARNING: Curated trap invalid: {e}, skipping")
 
     # Generate auto traps
-    auto_traps = generate_auto_traps(conn)
+    auto_traps = generate_auto_traps(conn, target=auto_target, depth=depth)
 
     return valid_curated + auto_traps
 

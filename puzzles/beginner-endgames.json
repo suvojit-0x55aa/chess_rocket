@@ -1,134 +1,374 @@
 [
   {
-    "fen": "6k1/4P3/4K3/8/8/8/8/8 w - - 0 1",
+    "fen": "6k1/5R2/8/8/8/5K2/4p3/8 w - - 0 1",
     "solution_moves": [
-      "e7e8q"
+      "f7e7"
     ],
     "solution_san": [
-      "e8=Q+"
+      "Re7"
     ],
     "motif": "endgame",
     "difficulty": "beginner",
-    "explanation": "Promote the pawn to a queen. The pawn reaches the 8th rank and becomes a queen."
+    "difficulty_rating": 623,
+    "explanation": "In this KRvKP endgame, Re7 is the best move to convert the advantage.",
+    "source": "generated"
   },
   {
-    "fen": "8/8/4k3/8/3PK3/8/8/8 w - - 0 1",
+    "fen": "8/2k5/8/8/8/8/2r4K/3Q4 w - - 0 1",
     "solution_moves": [
-      "d4d5"
+      "d1c2"
     ],
     "solution_san": [
-      "d5+"
+      "Qxc2+"
     ],
     "motif": "endgame",
     "difficulty": "beginner",
-    "explanation": "Advance the passed pawn. With the king on e4 protecting it, the pawn marches toward promotion."
+    "difficulty_rating": 729,
+    "explanation": "In this KQvKR endgame, Qxc2+ is the best move to convert the advantage.",
+    "source": "generated"
   },
   {
-    "fen": "8/8/4k3/8/4K3/8/8/3Q4 w - - 0 1",
+    "fen": "2k5/Q7/1r6/8/8/5K2/8/8 w - - 0 1",
     "solution_moves": [
-      "d1d6"
+      "a7b6",
+      "c8d7",
+      "f3f4",
+      "d7e7",
+      "f4e5"
     ],
     "solution_san": [
-      "Qd6+"
+      "Qxb6",
+      "Kd7",
+      "Kf4",
+      "Ke7",
+      "Ke5"
     ],
     "motif": "endgame",
     "difficulty": "beginner",
-    "explanation": "Queen moves to d6, giving check and driving the king toward the edge of the board."
+    "difficulty_rating": 496,
+    "explanation": "In this KQvKR endgame, Qxb6 is the best move to convert the advantage.",
+    "source": "generated"
   },
   {
-    "fen": "8/8/8/8/4k3/8/6K1/2R5 w - - 0 1",
+    "fen": "8/5P1k/8/8/8/8/8/5K2 w - - 0 1",
     "solution_moves": [
-      "c1e1"
+      "f7f8q",
+      "h7g6",
+      "f1f2"
     ],
     "solution_san": [
-      "Re1+"
+      "f8=Q",
+      "Kg6",
+      "Kf2"
+    ],
+    "motif": "promotion",
+    "difficulty": "beginner",
+    "difficulty_rating": 474,
+    "explanation": "In this KPvK endgame, f8=Q is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "7k/8/8/8/1K4Q1/2r5/8/8 w - - 0 1",
+    "solution_moves": [
+      "b4c3",
+      "h8h7",
+      "g4g5",
+      "h7h8",
+      "c3c4"
+    ],
+    "solution_san": [
+      "Kxc3",
+      "Kh7",
+      "Qg5",
+      "Kh8",
+      "Kc4"
     ],
     "motif": "endgame",
     "difficulty": "beginner",
-    "explanation": "Rook moves to e1, cutting off the king from the e-file. This restricts the king's movement."
+    "difficulty_rating": 518,
+    "explanation": "In this KQvKR endgame, Kxc3 is the best move to convert the advantage.",
+    "source": "generated"
   },
   {
-    "fen": "7k/8/8/P7/7p/8/8/6K1 w - - 0 1",
-    "solution_moves": [
-      "a5a6"
-    ],
-    "solution_san": [
-      "a6"
-    ],
-    "motif": "endgame",
-    "difficulty": "beginner",
-    "explanation": "Push the a-pawn! In a pawn race, advancing your passed pawn is critical."
-  },
-  {
-    "fen": "4k3/8/8/3p4/3P4/8/8/4K3 w - - 0 1",
-    "solution_moves": [
-      "e1e2"
-    ],
-    "solution_san": [
-      "Ke2"
-    ],
-    "motif": "endgame",
-    "difficulty": "beginner",
-    "explanation": "Activate your king! In the endgame, the king becomes a powerful piece. Move toward the center."
-  },
-  {
-    "fen": "1r6/3P4/2K5/8/8/8/8/4k3 w - - 0 1",
+    "fen": "5k2/3P4/8/8/4K3/8/8/8 w - - 0 1",
     "solution_moves": [
       "d7d8q"
     ],
     "solution_san": [
-      "d8=Q"
+      "d8=Q+"
     ],
-    "motif": "endgame",
-    "difficulty": "intermediate",
-    "explanation": "Promote the pawn to a queen! Despite the rook on b8, the pawn safely queens on d8."
+    "motif": "promotion",
+    "difficulty": "beginner",
+    "difficulty_rating": 454,
+    "explanation": "In this KPvK endgame, d8=Q+ is the best move to convert the advantage.",
+    "source": "generated"
   },
   {
-    "fen": "7k/8/6K1/5Q2/8/8/8/8 w - - 0 1",
+    "fen": "8/8/8/7k/8/8/4K3/5Q2 w - - 0 1",
     "solution_moves": [
-      "f5f8"
+      "f1g2"
     ],
     "solution_san": [
-      "Qf8#"
-    ],
-    "motif": "endgame",
-    "difficulty": "intermediate",
-    "explanation": "Queen to f8 is checkmate! Be careful not to play Qf7 which would be stalemate."
-  },
-  {
-    "fen": "8/8/4k3/3p4/2PP4/4K3/8/8 w - - 0 1",
-    "solution_moves": [
-      "c4d5"
-    ],
-    "solution_san": [
-      "cxd5+"
-    ],
-    "motif": "endgame",
-    "difficulty": "intermediate",
-    "explanation": "Capture on d5 to create a passed pawn. After cxd5+, the remaining pawn can advance to promote."
-  },
-  {
-    "fen": "r7/6k1/8/P7/8/8/6K1/R7 w - - 0 1",
-    "solution_moves": [
-      "a5a6"
-    ],
-    "solution_san": [
-      "a6"
+      "Qg2"
     ],
     "motif": "endgame",
     "difficulty": "beginner",
-    "explanation": "Advance the passed pawn! The rook on a1 supports it from behind - the ideal rook endgame setup."
+    "difficulty_rating": 625,
+    "explanation": "In this KQvK endgame, Qg2 is the best move to convert the advantage.",
+    "source": "generated"
   },
   {
-    "fen": "8/8/3k4/8/2P1P3/3K4/8/8 w - - 0 1",
+    "fen": "8/8/5P2/3k4/8/8/8/3K4 w - - 0 1",
     "solution_moves": [
-      "e4e5"
+      "f6f7"
     ],
     "solution_san": [
-      "e5+"
+      "f7"
     ],
     "motif": "endgame",
     "difficulty": "beginner",
-    "explanation": "Advance the e-pawn with check! The two connected passed pawns supported by the king will promote."
+    "difficulty_rating": 693,
+    "explanation": "In this KPvK endgame, f7 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "k7/8/8/2Q5/8/8/8/2K5 w - - 0 1",
+    "solution_moves": [
+      "c5b4",
+      "a8a7",
+      "c1b2"
+    ],
+    "solution_san": [
+      "Qb4",
+      "Ka7",
+      "Kb2"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 738,
+    "explanation": "In this KQvK endgame, Qb4 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "Q7/5k2/8/2r5/6K1/8/8/8 w - - 0 1",
+    "solution_moves": [
+      "a8a7"
+    ],
+    "solution_san": [
+      "Qa7+"
+    ],
+    "motif": "fork",
+    "difficulty": "beginner",
+    "difficulty_rating": 510,
+    "explanation": "In this KQvKR endgame, Qa7+ is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/8/3P4/k7/8/8/K7/8 w - - 0 1",
+    "solution_moves": [
+      "d6d7"
+    ],
+    "solution_san": [
+      "d7"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 548,
+    "explanation": "In this KPvK endgame, d7 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/2rQ4/8/8/3K4/8/2k5/8 w - - 0 1",
+    "solution_moves": [
+      "d7c7",
+      "c2b3",
+      "c7c6"
+    ],
+    "solution_san": [
+      "Qxc7+",
+      "Kb3",
+      "Qc6"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 558,
+    "explanation": "In this KQvKR endgame, Qxc7+ is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/8/1P2k3/8/8/8/4K3/8 w - - 0 1",
+    "solution_moves": [
+      "b6b7"
+    ],
+    "solution_san": [
+      "b7"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 558,
+    "explanation": "In this KPvK endgame, b7 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/8/2P5/4k3/8/8/8/5K2 w - - 0 1",
+    "solution_moves": [
+      "c6c7"
+    ],
+    "solution_san": [
+      "c7"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 641,
+    "explanation": "In this KPvK endgame, c7 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/8/k7/8/8/K7/8/5R2 w - - 0 1",
+    "solution_moves": [
+      "f1b1"
+    ],
+    "solution_san": [
+      "Rb1"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 558,
+    "explanation": "In this KRvK endgame, Rb1 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/8/4P2k/8/8/8/8/5K2 w - - 0 1",
+    "solution_moves": [
+      "e6e7"
+    ],
+    "solution_san": [
+      "e7"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 623,
+    "explanation": "In this KPvK endgame, e7 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "k7/8/8/8/8/2Q5/5K2/8 w - - 0 1",
+    "solution_moves": [
+      "c3b3",
+      "a8a7",
+      "b3b5",
+      "a7a8",
+      "b5d7"
+    ],
+    "solution_san": [
+      "Qb3",
+      "Ka7",
+      "Qb5",
+      "Ka8",
+      "Qd7"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 417,
+    "explanation": "In this KQvK endgame, Qb3 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "k7/8/7R/8/8/8/K1p5/8 w - - 0 1",
+    "solution_moves": [
+      "h6c6"
+    ],
+    "solution_san": [
+      "Rc6"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 671,
+    "explanation": "In this KRvKP endgame, Rc6 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/8/8/8/8/k6K/4r2Q/8 w - - 0 1",
+    "solution_moves": [
+      "h2e2"
+    ],
+    "solution_san": [
+      "Qxe2"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 601,
+    "explanation": "In this KQvKR endgame, Qxe2 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "5k2/8/3P4/8/K7/8/8/8 w - - 0 1",
+    "solution_moves": [
+      "a4b5"
+    ],
+    "solution_san": [
+      "Kb5"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 487,
+    "explanation": "In this KPvK endgame, Kb5 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/4P3/8/8/5K2/8/7k/8 w - - 0 1",
+    "solution_moves": [
+      "e7e8q"
+    ],
+    "solution_san": [
+      "e8=Q"
+    ],
+    "motif": "promotion",
+    "difficulty": "beginner",
+    "difficulty_rating": 693,
+    "explanation": "In this KPvK endgame, e8=Q is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/2P5/8/8/6K1/8/8/5k2 w - - 0 1",
+    "solution_moves": [
+      "g4f3"
+    ],
+    "solution_san": [
+      "Kf3"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 547,
+    "explanation": "In this KPvK endgame, Kf3 is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "8/8/8/8/5Q2/6r1/8/K3k3 w - - 0 1",
+    "solution_moves": [
+      "f4g3"
+    ],
+    "solution_san": [
+      "Qxg3+"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 613,
+    "explanation": "In this KQvKR endgame, Qxg3+ is the best move to convert the advantage.",
+    "source": "generated"
+  },
+  {
+    "fen": "5R2/8/1k6/8/8/8/1K6/8 w - - 0 1",
+    "solution_moves": [
+      "f8c8"
+    ],
+    "solution_san": [
+      "Rc8"
+    ],
+    "motif": "endgame",
+    "difficulty": "beginner",
+    "difficulty_rating": 527,
+    "explanation": "In this KRvK endgame, Rc8 is the best move to convert the advantage.",
+    "source": "generated"
   }
 ]

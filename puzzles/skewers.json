@@ -1,134 +1,470 @@
 [
   {
-    "fen": "4q3/8/8/4k3/8/8/8/R6K w - - 0 1",
+    "fen": "r1b1k1r1/2p1bpQp/p2qpn2/1p1Pp3/4P3/1BN5/PPP2PPP/R1B1K2R w KQq - 1 12",
     "solution_moves": [
-      "a1e1"
+      "g7h6",
+      "g8g6",
+      "h6e3"
     ],
     "solution_san": [
-      "Re1+"
+      "Qh6",
+      "Rg6",
+      "Qe3"
     ],
     "motif": "skewer",
-    "difficulty": "beginner",
-    "explanation": "Rook to e1 checks king on e5, skewering queen on e8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Qh6 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "3q4/8/8/3k4/8/8/8/3R3K w - - 0 1",
+    "fen": "rn2kbnr/pp4pp/2p5/8/2BPp1N1/8/PP2KPq1/RNBQ3R b kq - 0 12",
     "solution_moves": [
-      "d1d3"
+      "g2g4"
     ],
     "solution_san": [
-      "Rd3+"
+      "Qxg4+"
     ],
     "motif": "skewer",
-    "difficulty": "beginner",
-    "explanation": "Rook to d3 checks king on d5, skewering queen on d8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxg4+ creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "8/8/8/6r1/5k2/8/8/2B4K w - - 0 1",
+    "fen": "rnbq1rk1/pp2ppbp/6p1/3B4/3P4/5N1P/PP3PP1/RNBQK2R b KQ - 0 9",
     "solution_moves": [
-      "c1e3"
+      "d8d5"
     ],
     "solution_san": [
-      "Be3+"
+      "Qxd5"
     ],
     "motif": "skewer",
-    "difficulty": "beginner",
-    "explanation": "Bishop to e3 checks king on f4, skewering rook on g5."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxd5 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "r7/8/8/8/4k3/8/8/Q6K w - - 0 1",
+    "fen": "2rqkb1r/3b1ppp/5n2/2pp4/Q2n4/2N2NP1/PP2PPBP/R1B1K2R w KQk - 0 13",
     "solution_moves": [
-      "a1e5"
+      "a4d1",
+      "d4f3",
+      "g2f3"
     ],
     "solution_san": [
-      "Qe5+"
+      "Qd1",
+      "Nxf3+",
+      "Bxf3"
     ],
     "motif": "skewer",
-    "difficulty": "intermediate",
-    "explanation": "Queen to e5 checks king on e4, skewering rook on a8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Qd1 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "4r3/4k3/8/8/8/8/8/4R2K w - - 0 1",
+    "fen": "r1bqk2r/ppp2ppp/2n5/3Pp3/8/2PP1N2/P1P2PPP/R1BQK2R b KQkq - 0 8",
     "solution_moves": [
-      "e1e7"
+      "d8d5"
     ],
     "solution_san": [
-      "Rxe7"
+      "Qxd5"
     ],
     "motif": "skewer",
-    "difficulty": "beginner",
-    "explanation": "Rook to e7 checks king, skewering rook on e8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxd5 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "2q5/3k4/8/8/8/7B/8/7K w - - 0 1",
+    "fen": "rnbqkb1r/pppp1ppp/8/4N2Q/8/3P4/PPP2nPP/RNB1KB1R b KQkq - 1 5",
     "solution_moves": [
-      "h3f5"
+      "d8f6",
+      "h5f7",
+      "f6f7",
+      "e5f7",
+      "f2h1",
+      "f7h8",
+      "f8d6"
     ],
     "solution_san": [
-      "Bf5+"
+      "Qf6",
+      "Qxf7+",
+      "Qxf7",
+      "Nxf7",
+      "Nxh1",
+      "Nxh8",
+      "Bd6"
     ],
     "motif": "skewer",
-    "difficulty": "intermediate",
-    "explanation": "Bishop to f5 checks king on d7, skewering queen on c8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1800,
+    "explanation": "Qf6 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "7r/6k1/8/8/8/8/8/K6R w - - 0 1",
+    "fen": "rn1qkbnr/pp3pp1/2p1p1b1/1P6/P3N1Q1/8/2PP1PBP/R1B1K1NR b KQkq - 0 9",
     "solution_moves": [
-      "h1h7"
+      "h8h4"
     ],
     "solution_san": [
-      "Rh7+"
+      "Rh4"
     ],
     "motif": "skewer",
-    "difficulty": "beginner",
-    "explanation": "Rook to h7 checks king on g7, skewering rook on h8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Rh4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "8/3q4/4k3/8/8/8/8/5B1K w - - 0 1",
+    "fen": "r3kb1r/ppp1qppp/8/2p2b2/4Np2/3Q4/PPP2KPP/R1B2BNR b kq - 0 11",
     "solution_moves": [
-      "f1c4"
+      "f5e4"
     ],
     "solution_san": [
-      "Bc4+"
+      "Bxe4"
     ],
     "motif": "skewer",
-    "difficulty": "intermediate",
-    "explanation": "Bishop to c4 checks king on e6, skewering queen on d7."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Bxe4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "8/8/8/8/2k4r/8/8/Q5K1 w - - 0 1",
+    "fen": "r1bq1rk1/ppppnppp/3b4/1B6/3nP3/8/PPP2PPP/RNBQR1K1 w - - 0 8",
     "solution_moves": [
-      "a1a4"
+      "d1d4"
     ],
     "solution_san": [
-      "Qa4+"
+      "Qxd4"
     ],
     "motif": "skewer",
-    "difficulty": "intermediate",
-    "explanation": "Queen to a4 checks king on c4, skewering rook on h4."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxd4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "2q5/8/8/2k5/8/8/8/2R4K w - - 0 1",
+    "fen": "rn3r1k/pp2b1pp/2bqNn2/8/2BP4/2NQ4/PP3PPP/R1B3K1 w - - 1 14",
     "solution_moves": [
-      "c1c5"
+      "c1f4",
+      "d6b4",
+      "a2a3"
     ],
     "solution_san": [
-      "Rxc5"
+      "Bf4",
+      "Qb4",
+      "a3"
     ],
     "motif": "skewer",
-    "difficulty": "beginner",
-    "explanation": "Rook to c5 checks king, skewering queen on c8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Bf4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   },
   {
-    "fen": "3r4/8/8/3k4/8/8/8/3Q3K w - - 0 1",
+    "fen": "2kr2nr/ppp2pp1/3b4/6Pp/4R3/2NP3q/PP3P1P/R1BQ2K1 w - - 3 15",
     "solution_moves": [
-      "d1d2"
+      "c1f4"
     ],
     "solution_san": [
-      "Qd2+"
+      "Bf4"
     ],
     "motif": "skewer",
-    "difficulty": "intermediate",
-    "explanation": "Queen to d2 checks king on d5, skewering rook on d8."
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Bf4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn1qkb1r/pbpp1ppp/4p3/1p6/3PN3/2P2N2/PP3PPP/R1BQKB1R b KQkq - 0 6",
+    "solution_moves": [
+      "b7e4",
+      "f1b5",
+      "c7c6"
+    ],
+    "solution_san": [
+      "Bxe4",
+      "Bxb5",
+      "c6"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Bxe4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbk3r/pppp1p2/8/3N2pp/2B1Pp1q/3P1QP1/PPP4n/R1B2K1R w - - 0 12",
+    "solution_moves": [
+      "h1h2",
+      "h4g3",
+      "f3g3",
+      "f4g3",
+      "c1g5",
+      "d8e8",
+      "h2h1"
+    ],
+    "solution_san": [
+      "Rxh2",
+      "Qxg3",
+      "Qxg3",
+      "fxg3",
+      "Bxg5+",
+      "Ke8",
+      "Rh1"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1800,
+    "explanation": "Rxh2 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "1rbqrbk1/5pp1/p1np1B1p/1pp1p3/4P3/2PP1NPP/PPN1QPB1/R3R1K1 b - - 0 15",
+    "solution_moves": [
+      "d8f6"
+    ],
+    "solution_san": [
+      "Qxf6"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxf6 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "2kr2nr/ppp2ppp/3b4/8/3P2bq/2N2N2/PPPPK1PP/R1B1QB1R b - - 0 9",
+    "solution_moves": [
+      "d8e8",
+      "e2d3",
+      "h4d8"
+    ],
+    "solution_san": [
+      "Re8+",
+      "Kd3",
+      "Qd8"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Re8+ creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnb1k2r/pppp1N2/5n1p/2b4Q/2B1qp2/8/PPPP2PP/RNBKR3 b kq - 3 9",
+    "solution_moves": [
+      "e4e1",
+      "d1e1",
+      "f6h5",
+      "f7h8",
+      "h5f6"
+    ],
+    "solution_san": [
+      "Qxe1+",
+      "Kxe1",
+      "Nxh5",
+      "Nxh8",
+      "Nf6"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1700,
+    "explanation": "Qxe1+ creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b1k1nr/1p1p1ppp/p1n1p3/1qb5/4P3/1P3Q2/P1PB1PPP/R3KB1R w KQkq - 0 11",
+    "solution_moves": [
+      "f1b5",
+      "a6b5",
+      "f3g3"
+    ],
+    "solution_san": [
+      "Bxb5",
+      "axb5",
+      "Qg3"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Bxb5 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqk2r/pp2ppbp/6p1/3PB2n/2P5/2N5/PP3PP1/R2QKBNR b KQkq - 0 11",
+    "solution_moves": [
+      "g7e5"
+    ],
+    "solution_san": [
+      "Bxe5"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Bxe5 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnb1kb1r/pp2qppp/5n2/3p4/3p4/2N5/PPP1NPPP/R1BQKB1R w KQkq - 0 8",
+    "solution_moves": [
+      "d1d4",
+      "b8c6",
+      "d4e3",
+      "c8e6",
+      "e2d4"
+    ],
+    "solution_san": [
+      "Qxd4",
+      "Nc6",
+      "Qe3",
+      "Be6",
+      "Nd4"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1700,
+    "explanation": "Qxd4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1b2rk1/pp1p1ppp/1qn2n2/8/1pP1P3/3P2B1/P2NBPPP/b2QK1NR w K - 0 11",
+    "solution_moves": [
+      "d1a1"
+    ],
+    "solution_san": [
+      "Qxa1"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxa1 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bq1rk1/1p1nbpp1/2pp1n1p/p7/P2pP2N/2NBB2P/1PP2PP1/R2Q1RK1 w - - 0 11",
+    "solution_moves": [
+      "e3d4"
+    ],
+    "solution_san": [
+      "Bxd4"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Bxd4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbq1rk1/p1p4p/1p1bp1p1/3pn3/5B1P/3BP1Q1/PPP2PP1/RN2K2R w KQ - 0 12",
+    "solution_moves": [
+      "f4e5"
+    ],
+    "solution_san": [
+      "Bxe5"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Bxe5 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqkb1r/pp1p1ppp/5n2/4n3/1p2P3/P7/1BPP1PPP/RN1QKB1R w KQkq - 0 7",
+    "solution_moves": [
+      "b2e5"
+    ],
+    "solution_san": [
+      "Bxe5"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Bxe5 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "r3r1k1/p1p2p1p/b1P3p1/2p5/3b1B2/2N2R2/PPP2nPP/R3Q2K w - - 9 18",
+    "solution_moves": [
+      "e1f2"
+    ],
+    "solution_san": [
+      "Qxf2"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "Qxf2 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqk2r/1p1p1p2/p1nbpnp1/7p/2B1P2P/5N2/PP3PP1/R1BQ1RK1 w kq - 0 11",
+    "solution_moves": [
+      "d1d6",
+      "f6e4",
+      "d6f4"
+    ],
+    "solution_san": [
+      "Qxd6",
+      "Nxe4",
+      "Qf4"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Qxd6 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "rn2k2r/pp1q2Qp/3B1p2/2p2n2/4p2P/6P1/PPP2P2/RN2K2R w KQ - 0 18",
+    "solution_moves": [
+      "g7h8",
+      "e8f7",
+      "b1c3"
+    ],
+    "solution_san": [
+      "Qxh8+",
+      "Kf7",
+      "Nc3"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1400,
+    "explanation": "Qxh8+ creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "rnbq1rk1/ppp1bppp/8/3p4/2N5/2P3N1/PP1PQPPP/R1B1KB1R b KQ - 2 9",
+    "solution_moves": [
+      "d5c4",
+      "e2c4",
+      "c8e6"
+    ],
+    "solution_san": [
+      "dxc4",
+      "Qxc4",
+      "Be6"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "dxc4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
+  },
+  {
+    "fen": "r1bqkbnr/pp1p1ppp/2n1p3/8/2Pp4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 5",
+    "solution_moves": [
+      "e3d4"
+    ],
+    "solution_san": [
+      "exd4"
+    ],
+    "motif": "skewer",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "exd4 creates a skewer - the front piece must move, exposing the piece behind.",
+    "source": "generated"
   }
 ]

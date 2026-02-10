@@ -9,6 +9,7 @@ dependencies = [
     "textual",
     "watchdog",
     "mcp[cli]",
+    "zstandard",
 ]
 
 [project.optional-dependencies]

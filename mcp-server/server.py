@@ -949,6 +949,161 @@ def create_srs_cards_from_game(game_id: str, cp_threshold: int = 80) -> dict:
     }
 
 
+@mcp.tool()
+def generate_puzzles_from_game(game_id: str, cp_threshold: int = 100) -> dict:
+    """Generate puzzles from a completed game and append to puzzles/from-games.json.
+
+    Replays the game, evaluates each player move at full strength,
+    and creates puzzle positions for moves with cp_loss >= cp_threshold.
+
+    Args:
+        game_id: UUID of the completed game.
+        cp_threshold: Minimum centipawn loss to create a puzzle (default 100).
+
+    Returns:
+        Dict with game_id, puzzles_found, puzzles_added, total_game_puzzles,
+        puzzle_file.
+    """
+    game = _get_game(game_id)
+    if game is None:
+        return {"error": f"Game not found: {game_id}"}
+
+    board: chess.Board = game["board"]
+
+    if not board.is_game_over():
+        return {"error": "Game is not over yet. Finish the game first."}
+
+    if not board.move_stack:
+        return {
+            "game_id": game_id,
+            "puzzles_found": 0,
+            "puzzles_added": 0,
+            "total_game_puzzles": 0,
+            "puzzle_file": "puzzles/from-games.json",
+        }
+
+    from scripts.motif_detector import detect_motif
+
+    puzzles_dir = _PROJECT_ROOT / "puzzles"
+    puzzles_dir.mkdir(parents=True, exist_ok=True)
+    from_games_path = puzzles_dir / "from-games.json"
+
+    # Load existing puzzles for deduplication
+    existing_puzzles: list[dict] = []
+    if from_games_path.exists():
+        try:
+            with open(from_games_path, encoding="utf-8") as f:
+                existing_puzzles = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            existing_puzzles = []
+
+    existing_fens: set[str] = set()
+    for p in existing_puzzles:
+        fen_parts = p.get("fen", "").split()
+        existing_fens.add(" ".join(fen_parts[:4]))
+
+    # Create analysis engine at full strength
+    analysis_engine = ChessEngine()
+    analysis_engine.set_difficulty(3000)
+
+    player_color = game["player_color"]
+    player_is_white = player_color == "white"
+    replay_board = chess.Board(game["starting_fen"])
+
+    new_puzzles: list[dict] = []
+    move_number = 0
+
+    try:
+        for move in board.move_stack:
+            move_number += 1
+            is_white_turn = replay_board.turn == chess.WHITE
+
+            if is_white_turn == player_is_white and not replay_board.is_game_over():
+                evaluation = analysis_engine.evaluate_move(replay_board, move)
+
+                if evaluation.cp_loss >= cp_threshold:
+                    fen = replay_board.fen()
+                    norm = " ".join(fen.split()[:4])
+
+                    if norm not in existing_fens:
+                        best_move_obj = chess.Move.from_uci(
+                            replay_board.parse_san(evaluation.best_move_san).uci()
+                        )
+                        motif = detect_motif(replay_board, best_move_obj)
+
+                        # Check for checkmate
+                        board_check = replay_board.copy()
+                        board_check.push(best_move_obj)
+                        if board_check.is_checkmate() and motif is None:
+                            motif = "checkmate"
+
+                        puzzle = {
+                            "fen": fen,
+                            "solution_moves": [best_move_obj.uci()],
+                            "solution_san": [evaluation.best_move_san],
+                            "motif": motif or "tactics",
+                            "difficulty": (
+                                "beginner" if evaluation.cp_loss > 300
+                                else "intermediate" if evaluation.cp_loss > 150
+                                else "advanced"
+                            ),
+                            "explanation": (
+                                f"In your game, you played {evaluation.move_san} "
+                                f"(cp_loss: {evaluation.cp_loss}). The best move was "
+                                f"{evaluation.best_move_san}."
+                            ),
+                            "source": "game",
+                            "move_number": move_number,
+                        }
+                        new_puzzles.append(puzzle)
+                        existing_fens.add(norm)
+
+            replay_board.push(move)
+    finally:
+        analysis_engine.close()
+
+    # Append new puzzles and write atomically
+    all_puzzles = existing_puzzles + new_puzzles
+    import tempfile
+
+    tmp_fd, tmp_path = tempfile.mkstemp(
+        dir=str(puzzles_dir), suffix=".tmp",
+    )
+    try:
+        with os.fdopen(tmp_fd, "w", encoding="utf-8") as f:
+            json.dump(all_puzzles, f, indent=2, ensure_ascii=False)
+        os.replace(tmp_path, str(from_games_path))
+    except Exception:
+        if os.path.exists(tmp_path):
+            os.unlink(tmp_path)
+        raise
+
+    return {
+        "game_id": game_id,
+        "puzzles_found": len(new_puzzles),
+        "puzzles_added": len(new_puzzles),
+        "total_game_puzzles": len(all_puzzles),
+        "puzzle_file": "puzzles/from-games.json",
+    }
+
+
+@mcp.tool()
+def srs_to_puzzles(min_cp_loss: int = 100) -> dict:
+    """Export SRS mistake cards as validated puzzles for blunder board review.
+
+    Filters SRS cards where cp_loss >= min_cp_loss and converts them
+    to chess_rocket puzzle format with full validation.
+
+    Args:
+        min_cp_loss: Minimum centipawn loss to include (default 100).
+
+    Returns:
+        Dict with puzzles list, total_cards, exported_count, skipped_count.
+    """
+    srs = SRSManager()
+    return srs.export_as_puzzles(min_cp_loss=min_cp_loss)
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------

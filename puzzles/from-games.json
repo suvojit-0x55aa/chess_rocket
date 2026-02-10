@@ -1,0 +1,798 @@
+[
+  {
+    "fen": "rnbqkb1r/pp3ppp/2p1p3/3p1n2/3P4/3Q1PPB/PPP1P2P/RNB2KNR b kq - 1 6",
+    "solution_moves": [
+      "f5d6"
+    ],
+    "solution_san": [
+      "Nd6"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played Nxg3+ (cp_loss: 428). The best move was Nd6.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 12
+  },
+  {
+    "fen": "rnbqkb1r/pp3ppp/2p1p3/3p4/3P4/3Q1PnB/PPP1P1KP/RNB3NR b kq - 1 7",
+    "solution_moves": [
+      "g3h1"
+    ],
+    "solution_san": [
+      "Nxh1"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Bd6 (cp_loss: 695). The best move was Nxh1.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 14
+  },
+  {
+    "fen": "rnbqk2r/pp3ppp/2pbp1Q1/3p4/3P4/5PnB/PPP1P1KP/RNB3NR b kq - 3 8",
+    "solution_moves": [
+      "f7g6",
+      "h2g3",
+      "c6c5"
+    ],
+    "solution_san": [
+      "fxg6",
+      "hxg3",
+      "c5"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 1150,
+    "explanation": "In your game, you played Ke7 (cp_loss: 950). The best move was fxg6.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 16
+  },
+  {
+    "fen": "rnbq3r/pp2kppp/2pbp1Q1/3p4/3P4/P4PnB/1PP1P1KP/RNB3NR b - - 0 9",
+    "solution_moves": [
+      "h7g6",
+      "h2g3",
+      "c6c5"
+    ],
+    "solution_san": [
+      "hxg6",
+      "hxg3",
+      "c5"
+    ],
+    "motif": "discovered_attack",
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "In your game, you played Nf1 (cp_loss: 893). The best move was hxg6.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 18
+  },
+  {
+    "fen": "rnbq3r/pp2kppp/2pbp1Q1/3p4/P2P4/5P1B/1PP1P1KP/RNB2nNR b - - 0 10",
+    "solution_moves": [
+      "h7g6"
+    ],
+    "solution_san": [
+      "hxg6"
+    ],
+    "motif": "discovered_attack",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "In your game, you played Bg3 (cp_loss: 1277). The best move was hxg6.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 20
+  },
+  {
+    "fen": "rnbq3r/pp2kppp/2p1p1Q1/3p4/P1PP4/5PbB/1P2P1KP/RNB2nNR b - - 0 11",
+    "solution_moves": [
+      "h7g6",
+      "h2g3",
+      "f1g3",
+      "g2g3",
+      "b8a6"
+    ],
+    "solution_san": [
+      "hxg6",
+      "hxg3",
+      "Nxg3",
+      "Kxg3",
+      "Na6"
+    ],
+    "motif": "discovered_attack",
+    "difficulty": "advanced",
+    "difficulty_rating": 1600,
+    "explanation": "In your game, you played Qd6 (cp_loss: 995). The best move was hxg6.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 22
+  },
+  {
+    "fen": "rnb2k1r/pp3ppp/2pqpBQ1/3p4/P1PP4/5PbB/1P2P1KP/RN3nNR b - - 4 13",
+    "solution_moves": [
+      "f1e3"
+    ],
+    "solution_san": [
+      "Ne3#"
+    ],
+    "motif": "checkmate",
+    "difficulty": "advanced",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played h6 (cp_loss: 10658). The best move was Ne3#.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 26
+  },
+  {
+    "fen": "rnb2k1r/pp3pp1/2pqpBQp/3p1B2/P1PP4/5Pb1/1P2P1KP/RN3nNR b - - 1 14",
+    "solution_moves": [
+      "f1e3",
+      "g2h3",
+      "f7g6"
+    ],
+    "solution_san": [
+      "Ne3+",
+      "Kh3",
+      "fxg6"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "In your game, you played fxg6 (cp_loss: 175). The best move was Ne3+.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 28
+  },
+  {
+    "fen": "rnb2k1r/pp4p1/2pqpBpp/3p1B2/P1PPP3/5Pb1/1P4KP/RN3nNR b - - 0 15",
+    "solution_moves": [
+      "f1e3",
+      "g2h3",
+      "e6f5",
+      "h2g3",
+      "f5f4"
+    ],
+    "solution_san": [
+      "Ne3+",
+      "Kh3",
+      "exf5",
+      "hxg3",
+      "f4+"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1500,
+    "explanation": "In your game, you played Qf4 (cp_loss: 9347). The best move was Ne3+.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 30
+  },
+  {
+    "fen": "rnb2k1r/pp4p1/2p1pBpp/3p1B2/P1PPP3/5Pq1/1P6/RN3KNR b - - 0 17",
+    "solution_moves": [
+      "g7f6"
+    ],
+    "solution_san": [
+      "gxf6"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Qg2+ (cp_loss: 790). The best move was gxf6.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 34
+  },
+  {
+    "fen": "rnb2k1r/pp4p1/2p1pBpp/3p1B2/P1PPP3/5P2/1P4K1/RN4NR b - - 0 18",
+    "solution_moves": [
+      "g7f6"
+    ],
+    "solution_san": [
+      "gxf6"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played Ke8 (cp_loss: 431). The best move was gxf6.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 36
+  },
+  {
+    "fen": "rnb1k2r/pp4B1/2p3pp/3p4/P1PPPp2/5P2/1P3K2/RN4NR b - - 1 21",
+    "solution_moves": [
+      "h8h7",
+      "g7h6",
+      "b8a6"
+    ],
+    "solution_san": [
+      "Rh7",
+      "Bxh6",
+      "Na6"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "In your game, you played h5 (cp_loss: 152). The best move was Rh7.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 42
+  },
+  {
+    "fen": "rnb1k3/pp4B1/2p3p1/3p4/PPPPPp2/5P2/7r/RN3KN1 b - - 2 25",
+    "solution_moves": [
+      "d5e4"
+    ],
+    "solution_san": [
+      "dxe4"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Rf2+ (cp_loss: 810). The best move was dxe4.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 50
+  },
+  {
+    "fen": "r1b1k3/pp4B1/2p3p1/3p4/P1PPPp2/3n1P2/4K3/RN4N1 b - - 3 29",
+    "solution_moves": [
+      "d5c4"
+    ],
+    "solution_san": [
+      "dxc4"
+    ],
+    "motif": "tactics",
+    "difficulty": "intermediate",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Bh3 (cp_loss: 375). The best move was dxc4.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 58
+  },
+  {
+    "fen": "r4k2/pp6/2p3p1/3pP3/P1PP1p2/5P2/Rn1K4/1N3bN1 b - - 1 33",
+    "solution_moves": [
+      "b2c4"
+    ],
+    "solution_san": [
+      "Nxc4+"
+    ],
+    "motif": "tactics",
+    "difficulty": "beginner",
+    "difficulty_rating": 750,
+    "explanation": "In your game, you played Nd1 (cp_loss: 566). The best move was Nxc4+.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 66
+  },
+  {
+    "fen": "r4k2/pp6/2p3p1/3pP3/P1PP1p2/5P2/1R1K4/1N1n1bN1 b - - 3 34",
+    "solution_moves": [
+      "d1b2"
+    ],
+    "solution_san": [
+      "Nxb2"
+    ],
+    "motif": "tactics",
+    "difficulty": "beginner",
+    "difficulty_rating": 750,
+    "explanation": "In your game, you played dxc4 (cp_loss: 926). The best move was Nxb2.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 68
+  },
+  {
+    "fen": "r4k2/pp6/2p3p1/4P3/P1pP1p2/5P1N/1R1K4/1N1n1b2 b - - 1 35",
+    "solution_moves": [
+      "d1b2"
+    ],
+    "solution_san": [
+      "Nxb2"
+    ],
+    "motif": "tactics",
+    "difficulty": "intermediate",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Re8 (cp_loss: 421). The best move was Nxb2.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 70
+  },
+  {
+    "fen": "4rk2/pp6/2p3p1/4P3/P1pP1p2/2N2P1N/1R1K4/3n1b2 b - - 3 36",
+    "solution_moves": [
+      "d1b2"
+    ],
+    "solution_san": [
+      "Nxb2"
+    ],
+    "motif": "tactics",
+    "difficulty": "intermediate",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Nxc3 (cp_loss: 221). The best move was Nxb2.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 72
+  },
+  {
+    "fen": "4rk2/pp6/2p3p1/4P3/P1pP1p2/2n2P2/1R1K4/5bN1 b - - 1 37",
+    "solution_moves": [
+      "c3d5"
+    ],
+    "solution_san": [
+      "Nd5"
+    ],
+    "motif": "tactics",
+    "difficulty": "intermediate",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Ne4+ (cp_loss: 155). The best move was Nd5.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 74
+  },
+  {
+    "fen": "4rk2/pp6/2p3p1/4P3/P2Pnp2/2p2P2/5R2/2K2bN1 b - - 1 39",
+    "solution_moves": [
+      "e4f2"
+    ],
+    "solution_san": [
+      "Nxf2"
+    ],
+    "motif": "tactics",
+    "difficulty": "beginner",
+    "difficulty_rating": 750,
+    "explanation": "In your game, you played c2 (cp_loss: 667). The best move was Nxf2.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 78
+  },
+  {
+    "fen": "4rk2/pp6/2p3p1/4P3/P2Pnp2/5P2/5R2/2K2bN1 b - - 0 41",
+    "solution_moves": [
+      "e4f2"
+    ],
+    "solution_san": [
+      "Nxf2"
+    ],
+    "motif": "tactics",
+    "difficulty": "beginner",
+    "difficulty_rating": 750,
+    "explanation": "In your game, you played Rd8 (cp_loss: 989). The best move was Nxf2.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 82
+  },
+  {
+    "fen": "5k2/pp6/2p3p1/4P3/P2rPR2/8/8/2K2bN1 b - - 0 43",
+    "solution_moves": [
+      "f8e7",
+      "f4f1",
+      "d4e4"
+    ],
+    "solution_san": [
+      "Ke7",
+      "Rxf1",
+      "Rxe4"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 1150,
+    "explanation": "In your game, you played Kg8 (cp_loss: 101). The best move was Ke7.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 86
+  },
+  {
+    "fen": "6k1/pp6/2p3p1/4P3/P2rPR2/7N/8/2K2b2 b - - 2 44",
+    "solution_moves": [
+      "f1h3"
+    ],
+    "solution_san": [
+      "Bxh3"
+    ],
+    "motif": "tactics",
+    "difficulty": "beginner",
+    "difficulty_rating": 750,
+    "explanation": "In your game, you played Rd1+ (cp_loss: 787). The best move was Bxh3.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 88
+  },
+  {
+    "fen": "6k1/pp6/2p3p1/4P3/P3PR2/7N/8/3K1b2 b - - 0 45",
+    "solution_moves": [
+      "f1h3"
+    ],
+    "solution_san": [
+      "Bxh3"
+    ],
+    "motif": "tactics",
+    "difficulty": "intermediate",
+    "difficulty_rating": 750,
+    "explanation": "In your game, you played Bg2 (cp_loss: 344). The best move was Bxh3.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 90
+  },
+  {
+    "fen": "6k1/pp6/2p3p1/4P3/P3PR2/7N/6b1/2K5 b - - 2 46",
+    "solution_moves": [
+      "g2h3"
+    ],
+    "solution_san": [
+      "Bxh3"
+    ],
+    "motif": "tactics",
+    "difficulty": "beginner",
+    "difficulty_rating": 650,
+    "explanation": "In your game, you played b6 (cp_loss: 574). The best move was Bxh3.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 92
+  },
+  {
+    "fen": "6k1/p7/1pp5/4P3/P3Pp2/7N/6b1/3K4 b - - 1 49",
+    "solution_moves": [
+      "g2h3"
+    ],
+    "solution_san": [
+      "Bxh3"
+    ],
+    "motif": "tactics",
+    "difficulty": "intermediate",
+    "difficulty_rating": 750,
+    "explanation": "In your game, you played f3 (cp_loss: 470). The best move was Bxh3.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 98
+  },
+  {
+    "fen": "6k1/p7/1pp5/4P3/P3P3/5p1N/2K3b1/8 b - - 1 50",
+    "solution_moves": [
+      "g2h3"
+    ],
+    "solution_san": [
+      "Bxh3"
+    ],
+    "motif": "tactics",
+    "difficulty": "beginner",
+    "difficulty_rating": 650,
+    "explanation": "In your game, you played f2 (cp_loss: 1195). The best move was Bxh3.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 100
+  },
+  {
+    "fen": "6k1/p7/2p5/1p5b/8/8/2q5/K7 b - - 3 67",
+    "solution_moves": [
+      "c2c1",
+      "a1a2",
+      "h5f7"
+    ],
+    "solution_san": [
+      "Qc1+",
+      "Ka2",
+      "Bf7#"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played c5 (cp_loss: 9998). The best move was Qc1+.",
+    "source": "game",
+    "source_file": "game_20260206_191302_add3519c.pgn",
+    "move_number": 134
+  },
+  {
+    "fen": "rnbq1b1r/1pp1kpp1/3p1n2/p3p2p/3PPP2/2N5/PPP1Q1PP/R1B1KBNR w KQ - 0 7",
+    "solution_moves": [
+      "f4e5"
+    ],
+    "solution_san": [
+      "fxe5"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played Nd5+ (cp_loss: 191). The best move was fxe5.",
+    "source": "game",
+    "source_file": "game_20260207_061121_0ac502ec.pgn",
+    "move_number": 13
+  },
+  {
+    "fen": "rn1q1b1r/1pp2pp1/3p1k2/p2P3p/3PQPb1/8/PPPB2PP/R3KBNR w KQ - 3 11",
+    "solution_moves": [
+      "f1d3"
+    ],
+    "solution_san": [
+      "Bd3"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Qf3 (cp_loss: 516). The best move was Bd3.",
+    "source": "game",
+    "source_file": "game_20260207_061121_0ac502ec.pgn",
+    "move_number": 21
+  },
+  {
+    "fen": "rn4qr/1p2bpk1/3p2p1/p1pP1P2/3P2Q1/3B4/PPPB2PP/R3K2R w KQ c6 0 19",
+    "solution_moves": [
+      "f5g6"
+    ],
+    "solution_san": [
+      "fxg6"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played dxc5 (cp_loss: 123). The best move was fxg6.",
+    "source": "game",
+    "source_file": "game_20260207_061121_0ac502ec.pgn",
+    "move_number": 37
+  },
+  {
+    "fen": "r3kbnr/1p2pppp/p1pq1n2/7b/3PpN2/2NQ2P1/PPP2P1P/R1B2RK1 w kq - 0 11",
+    "solution_moves": [
+      "c3e4",
+      "f6e4",
+      "f4h5"
+    ],
+    "solution_san": [
+      "Nxe4",
+      "Nxe4",
+      "Nxh5"
+    ],
+    "motif": "fork",
+    "difficulty": "advanced",
+    "difficulty_rating": 1300,
+    "explanation": "In your game, you played Qxe4 (cp_loss: 238). The best move was Nxe4.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 7
+  },
+  {
+    "fen": "3rkbnr/1p2pp1p/p1p2np1/2P1R3/1P3N2/2N2bP1/P1P2P1P/R1B3K1 w k - 1 17",
+    "solution_moves": [
+      "e5e3"
+    ],
+    "solution_san": [
+      "Re3"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1100,
+    "explanation": "In your game, you played Bd2 (cp_loss: 191). The best move was Re3.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 19
+  },
+  {
+    "fen": "4kbnr/1p2pp1p/p1p2np1/2P1R3/1P3N2/2NP2P1/P2B1P1P/R5Kb w k - 1 19",
+    "solution_moves": [
+      "g1h1"
+    ],
+    "solution_san": [
+      "Kxh1"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played b5 (cp_loss: 105). The best move was Kxh1.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 23
+  },
+  {
+    "fen": "4kbnr/3npp1p/p1p3p1/2P1R3/5N2/2NP1bP1/P2B1P1P/1R4K1 w k - 2 22",
+    "solution_moves": [
+      "e5e3"
+    ],
+    "solution_san": [
+      "Re3"
+    ],
+    "motif": "pin",
+    "difficulty": "advanced",
+    "difficulty_rating": 1000,
+    "explanation": "In your game, you played Rxe7+ (cp_loss: 750). The best move was Re3.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 29
+  },
+  {
+    "fen": "3k2nr/3nbp1p/p1p3p1/2P5/3P1N2/2N2bP1/P2B1P1P/1R4K1 w - - 1 24",
+    "solution_moves": [
+      "f4d3",
+      "e7f6",
+      "d3e1"
+    ],
+    "solution_san": [
+      "Nd3",
+      "Bf6",
+      "Ne1"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 1250,
+    "explanation": "In your game, you played d5 (cp_loss: 115). The best move was Nd3.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 33
+  },
+  {
+    "fen": "3k2nr/3n1p1p/p1p3p1/2bP4/5N2/2N2bP1/P2B1P1P/1R4K1 w - - 0 25",
+    "solution_moves": [
+      "c3a4"
+    ],
+    "solution_san": [
+      "Na4"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played Rb8+ (cp_loss: 310). The best move was Na4.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 35
+  },
+  {
+    "fen": "1R4nr/2kn1p1p/p1p3p1/2bP4/5N2/2N2bP1/P2B1P1P/6K1 w - - 2 26",
+    "solution_moves": [
+      "b8e8"
+    ],
+    "solution_san": [
+      "Re8"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played d6+ (cp_loss: 411). The best move was Re8.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 37
+  },
+  {
+    "fen": "3R2nr/1k1n1p1p/p1pb2p1/8/5N2/2N3P1/P2B1PbP/6K1 w - - 4 29",
+    "solution_moves": [
+      "d8d7"
+    ],
+    "solution_san": [
+      "Rxd7+"
+    ],
+    "motif": "fork",
+    "difficulty": "intermediate",
+    "difficulty_rating": 900,
+    "explanation": "In your game, you played Nxg2 (cp_loss: 491). The best move was Rxd7+.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 43
+  },
+  {
+    "fen": "4R1nr/2k2p1p/p1pb1np1/8/8/2N3P1/P2B1PNP/6K1 w - - 3 31",
+    "solution_moves": [
+      "e8a8",
+      "c7b7",
+      "a8d8"
+    ],
+    "solution_san": [
+      "Ra8",
+      "Kb7",
+      "Rd8"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 1150,
+    "explanation": "In your game, you played Re4 (cp_loss: 468). The best move was Ra8.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 47
+  },
+  {
+    "fen": "5r2/2k2p1p/p1p2np1/8/5b1R/2N3P1/P4PNP/6K1 w - - 0 35",
+    "solution_moves": [
+      "h4f4"
+    ],
+    "solution_san": [
+      "Rxf4"
+    ],
+    "motif": "skewer",
+    "difficulty": "intermediate",
+    "difficulty_rating": 1000,
+    "explanation": "In your game, you played Nxf4 (cp_loss: 230). The best move was Rxf4.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 55
+  },
+  {
+    "fen": "1k3r2/5p1p/p1p3p1/3N4/5N1R/6P1/P4P1P/6K1 w - - 1 37",
+    "solution_moves": [
+      "d5f6"
+    ],
+    "solution_san": [
+      "Nf6"
+    ],
+    "motif": "tactics",
+    "difficulty": "intermediate",
+    "difficulty_rating": 850,
+    "explanation": "In your game, you played Nxg6 (cp_loss: 195). The best move was Nf6.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 59
+  },
+  {
+    "fen": "4r3/k4p1p/p1p3N1/3N4/1R6/6P1/P4P1P/6K1 w - - 3 39",
+    "solution_moves": [
+      "g6e7",
+      "c6d5",
+      "e7d5"
+    ],
+    "solution_san": [
+      "Nge7",
+      "cxd5",
+      "Nxd5"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 1150,
+    "explanation": "In your game, you played Kg2 (cp_loss: 108). The best move was Nge7.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 63
+  },
+  {
+    "fen": "8/8/8/8/2k5/5NP1/P4PKP/8 w - - 2 58",
+    "solution_moves": [
+      "h2h4",
+      "c4d5",
+      "f3e1"
+    ],
+    "solution_san": [
+      "h4",
+      "Kd5",
+      "Ne1"
+    ],
+    "motif": "tactics",
+    "difficulty": "advanced",
+    "difficulty_rating": 950,
+    "explanation": "In your game, you played h3 (cp_loss: 8630). The best move was h4.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 101
+  },
+  {
+    "fen": "8/8/8/8/1Q6/5NPP/5PK1/2k5 w - - 19 74",
+    "solution_moves": [
+      "b4c3"
+    ],
+    "solution_san": [
+      "Qc3+"
+    ],
+    "motif": "tactics",
+    "difficulty": "beginner",
+    "difficulty_rating": 650,
+    "explanation": "In your game, you played Qb3 (cp_loss: 9996). The best move was Qc3+.",
+    "source": "game",
+    "source_file": "game_20260208_214405_5ec47a6c.pgn",
+    "move_number": 133
+  },
+  {
+    "fen": "8/8/8/8/1Q6/5NPP/5PK1/3k4 w - - 23 76",
+    "solution_moves": [
+      "b4d2"
+    ],
+    "solution_san": [
+      "Qd2#"
+    ],
+    "motif": "checkmate",
+    "difficulty": "beginner",
+    "difficulty_rating": 650,
+    "explanation": "In your game, you played Qb2 (cp_loss: 9999). The best move was Qd2#.",
+    "source": "game",
+    "source_file": "game_20260208_214709_5ec47a6c.pgn",
+    "move_number": 137
+  }
+]

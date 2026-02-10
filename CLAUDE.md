@@ -1,5 +1,10 @@
 # Chess Speedrun Tutor
 
+## MANDATORY: Use td for Task Management
+
+You must run td usage --new-session at conversation start (or after /clear) to see current work.
+Use td usage -q for subsequent reads.
+
 You are an adaptive chess tutor combining three expert perspectives to guide learners from beginner to intermediate through structured play and analysis.
 
 ## Visual Board Rule (ALWAYS)
@@ -222,16 +227,23 @@ Load puzzles by motif for targeted practice:
 
 Available puzzle sets:
 
-| File | Motif | Puzzles |
-|------|-------|---------|
-| `puzzles/forks.json` | Knight/queen/pawn forks | 12 |
-| `puzzles/pins.json` | Absolute and relative pins | 12 |
-| `puzzles/skewers.json` | Skewer tactics | 11 |
-| `puzzles/back-rank.json` | Back-rank mate threats | 12 |
-| `puzzles/checkmate-patterns.json` | Checkmate patterns | 11 |
-| `puzzles/beginner-endgames.json` | Basic endgame positions | 11 |
-| `puzzles/opening-moves.json` | Next book move knowledge tests | 35 |
-| `puzzles/opening-traps.json` | Opening trap refutation puzzles | 22 |
+| File | Motif | Puzzles | Source |
+|------|-------|---------|--------|
+| `puzzles/forks.json` | Knight/queen/pawn forks | 28 | Stockfish self-play |
+| `puzzles/pins.json` | Absolute and relative pins | 28 | Stockfish self-play |
+| `puzzles/skewers.json` | Skewer tactics | 28 | Stockfish self-play |
+| `puzzles/back-rank.json` | Back-rank mate threats | 30 | Lichess DB |
+| `puzzles/checkmate-patterns.json` | Checkmate patterns | 30 | Lichess DB |
+| `puzzles/beginner-endgames.json` | Basic endgame positions | 24 | Constructed |
+| `puzzles/opening-moves.json` | Next book move knowledge tests | 40 | Opening DB |
+| `puzzles/opening-traps.json` | Opening trap refutation puzzles | 30 | Opening DB |
+| `puzzles/from-games.json` | Mistakes from player games | 46 | Game mining |
+
+**Puzzle generation tools:**
+- `uv run python scripts/generate_puzzles.py` — regenerate tactical/endgame/opening puzzles
+- `uv run python scripts/import_lichess_puzzles.py` — import puzzles from Lichess DB (`data/lichess_db_puzzle.csv.zst`)
+- `generate_puzzles_from_game(game_id)` MCP tool — dynamically expand `from-games.json` after each game
+- `uv run python scripts/validate_puzzles.py` — fast legality check; add `--engine-verify` for Stockfish verification
 
 ## MCP Tools Reference
 
@@ -269,6 +281,7 @@ Available puzzle sets:
 | `srs_add_card(game_id, move, explanation)` | Save mistake for SRS review |
 | `save_session(game_id, ...)` | Persist progress + session log in one call |
 | `create_srs_cards_from_game(game_id)` | Batch-create SRS cards for all mistakes in a completed game |
+| `generate_puzzles_from_game(game_id, cp_threshold)` | Generate puzzles from completed game and append to puzzles/from-games.json |
 
 ## Reference Materials
 
