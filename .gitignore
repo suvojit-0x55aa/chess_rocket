@@ -1,5 +1,8 @@
 # Ralph working files
 .last-branch
+.ralph-active
+.ralph-passes-count
+.ralph-story-complete
 
 # Archive (optional to commit)
 # archive/

@@ -60,6 +60,12 @@ fi
 
 # ─── Paths ───────────────────────────────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+cleanup_ralph_markers() {
+  rm -f "$SCRIPT_DIR/.ralph-active" "$SCRIPT_DIR/.ralph-passes-count" "$SCRIPT_DIR/.ralph-story-complete" 2>/dev/null
+}
+trap 'cleanup_ralph_markers' EXIT
+
 PRD_FILE="$SCRIPT_DIR/prd.json"
 PROGRESS_FILE="$SCRIPT_DIR/progress.txt"
 ARCHIVE_DIR="$SCRIPT_DIR/archive"
@@ -397,8 +403,32 @@ while [ "$ITERATION" -le "$MAX_ITERATIONS" ]; do
   fi
   echo "Remaining stories: $REMAINING"
 
+  # Ralph marker files for hook coordination
+  touch "$SCRIPT_DIR/.ralph-active"
+  jq '[.userStories[] | select(.passes == true)] | length' "$PRD_FILE" > "$SCRIPT_DIR/.ralph-passes-count"
+  rm -f "$SCRIPT_DIR/.ralph-story-complete"
+
   # Run Claude Code with the CLAUDE.md instructions
   OUTPUT=$(claude --dangerously-skip-permissions --print < "$SCRIPT_DIR/CLAUDE.dev.md" 2>&1 | tee /dev/stderr) || true
+
+  # Check if session ended due to story completion hook
+  if [ -f "$SCRIPT_DIR/.ralph-story-complete" ]; then
+    echo ""
+    echo "[Ralph] Story completion detected! Auto-committing bookkeeping..."
+    cd "$SCRIPT_DIR"
+    git add prd.json progress.txt 2>/dev/null
+    git diff --cached --quiet 2>/dev/null || \
+      git commit -m "chore: ralph bookkeeping - story marked complete" 2>/dev/null || true
+    rm -f "$SCRIPT_DIR/.ralph-story-complete" "$SCRIPT_DIR/.ralph-active" "$SCRIPT_DIR/.ralph-passes-count"
+    RATE_LIMIT_RETRIES=0
+    ITERATION=$((ITERATION + 1))
+    echo "[Ralph] Iteration $((ITERATION - 1)) complete (early termination). Continuing..."
+    sleep 2
+    continue
+  fi
+
+  # Normal cleanup
+  rm -f "$SCRIPT_DIR/.ralph-active" "$SCRIPT_DIR/.ralph-passes-count"
 
   # Check for completion signal
   if echo "$OUTPUT" | grep -q "<promise>COMPLETE</promise>"; then
