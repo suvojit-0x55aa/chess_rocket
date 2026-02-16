@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chess Rocket Dashboard</title>
+<link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --surface2: #0f3460;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --accent: #e94560;
+    --green: #4caf50;
+    --light-green: #8bc34a;
+    --blue: #2196f3;
+    --yellow: #ffc107;
+    --orange: #ff9800;
+    --red: #f44336;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    background: var(--surface);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
+  }
+  header h1 { font-size: 1.3rem; font-weight: 600; }
+  header h1 span { color: var(--accent); }
+  .header-stats { display: flex; gap: 16px; font-size: 0.9rem; color: var(--text-dim); }
+  .main {
+    display: grid;
+    grid-template-columns: minmax(320px, 480px) 1fr;
+    gap: 16px;
+    padding: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .board-col { display: flex; flex-direction: column; gap: 12px; }
+  .board-wrapper { width: 100%; aspect-ratio: 1; }
+  #board { width: 100% !important; height: auto !important; }
+  .board-info {
+    display: flex; justify-content: space-between;
+    font-size: 0.85rem; color: var(--text-dim);
+  }
+  .panels { display: flex; flex-direction: column; gap: 12px; }
+  .panel {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--surface2);
+  }
+  .panel h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  /* Opening panel */
+  .opening-name { font-size: 1.1rem; font-weight: 600; }
+  .opening-eco { color: var(--accent); font-weight: 500; margin-left: 8px; }
+  .out-of-book { color: var(--text-dim); font-style: italic; }
+  /* Material panel */
+  .material-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .material-label { font-size: 0.85rem; }
+  .material-value { font-weight: 600; font-size: 1.1rem; }
+  .material-diff { font-size: 0.9rem; font-weight: 600; }
+  .material-diff.positive { color: var(--green); }
+  .material-diff.negative { color: var(--red); }
+  .material-diff.even { color: var(--text-dim); }
+  .captured { font-size: 1.2rem; letter-spacing: 2px; min-height: 1.5em; }
+  /* Eval bar */
+  .eval-container { display: flex; align-items: center; gap: 12px; }
+  .eval-bar-outer {
+    flex: 1; height: 20px; background: #333;
+    border-radius: 10px; overflow: hidden; position: relative;
+  }
+  .eval-bar-inner {
+    height: 100%; background: linear-gradient(90deg, #fff 0%, #ccc 100%);
+    transition: width 0.4s ease; border-radius: 10px;
+  }
+  .eval-score { font-weight: 700; font-size: 1rem; min-width: 60px; text-align: right; }
+  /* Status panel */
+  .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; font-size: 0.9rem; }
+  .status-label { color: var(--text-dim); }
+  .status-value { font-weight: 500; }
+  .check-indicator { color: var(--yellow); font-weight: 600; }
+  .checkmate-indicator { color: var(--red); font-weight: 700; }
+  /* Move history */
+  .move-history {
+    max-height: 200px; overflow-y: auto;
+    font-family: 'SF Mono', 'Consolas', monospace; font-size: 0.85rem;
+  }
+  .move-row { display: flex; align-items: baseline; padding: 2px 0; }
+  .move-num { color: var(--text-dim); min-width: 32px; text-align: right; margin-right: 8px; }
+  .move-cell { min-width: 80px; display: inline-flex; align-items: baseline; gap: 4px; }
+  .move-san { cursor: default; }
+  .badge { font-size: 0.7rem; font-weight: 700; border-radius: 3px; padding: 0 3px; }
+  .badge-best { color: var(--green); }
+  .badge-great { color: var(--light-green); }
+  .badge-good { color: var(--blue); }
+  .badge-inaccuracy { color: var(--yellow); }
+  .badge-mistake { color: var(--orange); }
+  .badge-blunder { color: var(--red); }
+  /* Game over banner */
+  .game-over-banner {
+    background: var(--surface2);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    display: none;
+  }
+  .game-over-banner.visible { display: block; }
+  .game-over-result { font-size: 1.3rem; font-weight: 700; }
+  .game-over-details { font-size: 0.9rem; color: var(--text-dim); margin-top: 4px; }
+  /* Waiting state */
+  .waiting {
+    text-align: center; padding: 60px 20px;
+    color: var(--text-dim); font-size: 1.1rem;
+  }
+  .waiting .pulse { animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span>Chess Rocket</span> Dashboard</h1>
+  <div class="header-stats">
+    <span id="session-info">Session #--</span>
+    <span id="streak-info">Streak: --</span>
+  </div>
+</header>
+
+<div class="main" id="main-content">
+  <div class="waiting" id="waiting">
+    <p class="pulse">Waiting for game...</p>
+    <p style="margin-top:12px;font-size:0.85rem">Start a game via Claude Code to see the board.</p>
+  </div>
+</div>
+
+<!-- Game layout (hidden until game data arrives) -->
+<template id="game-template">
+  <div class="board-col">
+    <div class="board-wrapper"><div id="board"></div></div>
+    <div class="board-info">
+      <span id="player-info">Playing as: White</span>
+      <span id="engine-info">Engine: 800 Elo</span>
+    </div>
+  </div>
+  <div class="panels">
+    <div class="panel" style="border-left-color: var(--accent);">
+      <h2>Opening</h2>
+      <div id="opening-display"><span class="out-of-book">Starting position</span></div>
+    </div>
+    <div class="panel" style="border-left-color: var(--blue);">
+      <h2>Material Balance</h2>
+      <div class="material-row">
+        <span class="material-label">White</span>
+        <span class="material-value" id="mat-white">39</span>
+      </div>
+      <div class="material-row">
+        <span class="material-label">Black</span>
+        <span class="material-value" id="mat-black">39</span>
+      </div>
+      <div class="material-row">
+        <span class="material-label">Advantage</span>
+        <span class="material-diff even" id="mat-diff">Even</span>
+      </div>
+      <div style="margin-top:6px;">
+        <div class="captured" id="captured-white" title="Pieces captured by White"></div>
+        <div class="captured" id="captured-black" title="Pieces captured by Black"></div>
+      </div>
+    </div>
+    <div class="panel" style="border-left-color: var(--green);">
+      <h2>Evaluation</h2>
+      <div class="eval-container">
+        <div class="eval-bar-outer">
+          <div class="eval-bar-inner" id="eval-bar" style="width:50%"></div>
+        </div>
+        <span class="eval-score" id="eval-score">0.0</span>
+      </div>
+    </div>
+    <div class="panel" style="border-left-color: var(--yellow);">
+      <h2>Game Status</h2>
+      <div class="status-grid">
+        <span class="status-label">Move</span>
+        <span class="status-value" id="move-number">1</span>
+        <span class="status-label">Turn</span>
+        <span class="status-value" id="turn-display">White</span>
+        <span class="status-label">Accuracy (W)</span>
+        <span class="status-value" id="acc-white">--</span>
+        <span class="status-label">Accuracy (B)</span>
+        <span class="status-value" id="acc-black">--</span>
+        <span class="status-label">Status</span>
+        <span class="status-value" id="check-status">--</span>
+      </div>
+    </div>
+    <div class="panel" style="border-left-color: var(--orange);">
+      <h2>Move History</h2>
+      <div class="move-history" id="move-history"></div>
+    </div>
+    <div class="game-over-banner" id="game-over">
+      <div class="game-over-result" id="game-over-result"></div>
+      <div class="game-over-details" id="game-over-details"></div>
+    </div>
+  </div>
+</template>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  const PIECE_UNICODE = {
+    P: '\u2659', N: '\u2658', B: '\u2657', R: '\u2656', Q: '\u2655',
+    p: '\u265f', n: '\u265e', b: '\u265d', r: '\u265c', q: '\u265b'
+  };
+
+  const BADGE_MAP = {
+    best:       { text: '\u2713', cls: 'badge-best' },
+    great:      { text: '\u2713', cls: 'badge-great' },
+    good:       { text: '\u2022', cls: 'badge-good' },
+    inaccuracy: { text: '?!', cls: 'badge-inaccuracy' },
+    mistake:    { text: '?',  cls: 'badge-mistake' },
+    blunder:    { text: '??', cls: 'badge-blunder' },
+  };
+
+  let board = null;
+  let lastFen = null;
+  let gameActive = false;
+
+  function initBoard(orientation) {
+    const main = document.getElementById('main-content');
+    const tmpl = document.getElementById('game-template');
+    main.innerHTML = '';
+    main.appendChild(tmpl.content.cloneNode(true));
+    board = Chessboard('board', {
+      position: 'start',
+      orientation: orientation || 'white',
+      draggable: false,
+      pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png',
+    });
+    window.addEventListener('resize', () => board.resize());
+    gameActive = true;
+  }
+
+  function capturedToUnicode(pieces, color) {
+    if (!pieces || !pieces.length) return '';
+    return pieces.map(p => {
+      const key = color === 'white' ? p.toLowerCase() : p.toUpperCase();
+      // White captures black pieces (lowercase), black captures white pieces (uppercase)
+      // "captured by white" means those are black pieces
+      const displayKey = color === 'white' ? p.toLowerCase() : p;
+      return PIECE_UNICODE[displayKey] || p;
+    }).join(' ');
+  }
+
+  function updatePanels(state) {
+    // Header
+    document.getElementById('session-info').textContent = 'Session #' + (state.session_number || 1);
+    const streak = state.streak || 0;
+    document.getElementById('streak-info').textContent = 'Streak: ' + streak + (streak >= 3 ? ' \uD83D\uDD25' : '');
+
+    // Board info
+    document.getElementById('player-info').textContent = 'Playing as: ' + capitalize(state.player_color || 'white');
+    document.getElementById('engine-info').textContent = 'Engine: ' + (state.target_elo || 800) + ' Elo';
+
+    // Opening
+    const openingEl = document.getElementById('opening-display');
+    const op = state.current_opening;
+    if (op && op.name) {
+      openingEl.innerHTML = '<span class="opening-name">' + esc(op.name) + '</span>' +
+        (op.eco ? '<span class="opening-eco">' + esc(op.eco) + '</span>' : '');
+    } else {
+      const moveCount = (state.move_list || []).length;
+      openingEl.innerHTML = '<span class="out-of-book">' + (moveCount > 0 ? 'Out of book' : 'Starting position') + '</span>';
+    }
+
+    // Material
+    const mat = state.material || { white: 0, black: 0 };
+    document.getElementById('mat-white').textContent = mat.white;
+    document.getElementById('mat-black').textContent = mat.black;
+    const diff = mat.white - mat.black;
+    const diffEl = document.getElementById('mat-diff');
+    if (diff > 0) {
+      diffEl.textContent = '+' + diff + ' White';
+      diffEl.className = 'material-diff positive';
+    } else if (diff < 0) {
+      diffEl.textContent = diff + ' Black';
+      diffEl.className = 'material-diff negative';
+    } else {
+      diffEl.textContent = 'Even';
+      diffEl.className = 'material-diff even';
+    }
+
+    // Captured pieces
+    const cap = state.captured_pieces || { white: [], black: [] };
+    document.getElementById('captured-white').innerHTML =
+      cap.white.length ? '\u25B3 ' + capturedToUnicode(cap.white, 'white') : '';
+    document.getElementById('captured-black').innerHTML =
+      cap.black.length ? '\u25BD ' + capturedToUnicode(cap.black, 'black') : '';
+
+    // Eval bar
+    const evalScore = state.eval_score;
+    const evalEl = document.getElementById('eval-score');
+    const barEl = document.getElementById('eval-bar');
+    if (evalScore != null) {
+      const clamped = Math.max(-10, Math.min(10, evalScore));
+      const pct = Math.round(((clamped + 10) / 20) * 100);
+      barEl.style.width = pct + '%';
+      evalEl.textContent = (evalScore > 0 ? '+' : '') + evalScore.toFixed(1);
+    } else {
+      barEl.style.width = '50%';
+      evalEl.textContent = '--';
+    }
+
+    // Game status
+    const fen = state.fen || '';
+    const parts = fen.split(' ');
+    const turnColor = parts[1] === 'b' ? 'Black' : 'White';
+    const fullmove = parts[5] || '1';
+    document.getElementById('move-number').textContent = fullmove;
+    document.getElementById('turn-display').textContent = turnColor + ' to play';
+
+    const acc = state.accuracy || { white: 0, black: 0 };
+    document.getElementById('acc-white').textContent =
+      acc.white ? acc.white.toFixed(1) + '%' : '--';
+    document.getElementById('acc-black').textContent =
+      acc.black ? acc.black.toFixed(1) + '%' : '--';
+
+    const statusEl = document.getElementById('check-status');
+    if (state.is_checkmate) {
+      statusEl.innerHTML = '<span class="checkmate-indicator">Checkmate!</span>';
+    } else if (state.is_stalemate) {
+      statusEl.innerHTML = '<span class="check-indicator">Stalemate</span>';
+    } else if (state.is_check) {
+      statusEl.innerHTML = '<span class="check-indicator">Check!</span>';
+    } else {
+      statusEl.textContent = 'In progress';
+    }
+
+    // Move history with annotations
+    const moveList = state.move_list || [];
+    const annotations = state.move_annotations || [];
+    const annotMap = {};
+    annotations.forEach(a => { annotMap[a.ply] = a; });
+
+    const historyEl = document.getElementById('move-history');
+    let html = '';
+    for (let i = 0; i < moveList.length; i += 2) {
+      const moveNum = Math.floor(i / 2) + 1;
+      const whiteMove = moveList[i];
+      const blackMove = i + 1 < moveList.length ? moveList[i + 1] : '';
+
+      html += '<div class="move-row">';
+      html += '<span class="move-num">' + moveNum + '.</span>';
+      html += renderMoveCell(whiteMove, annotMap[i]);
+      if (blackMove) {
+        html += renderMoveCell(blackMove, annotMap[i + 1]);
+      }
+      html += '</div>';
+    }
+    historyEl.innerHTML = html;
+    historyEl.scrollTop = historyEl.scrollHeight;
+
+    // Game over banner
+    const banner = document.getElementById('game-over');
+    if (state.is_game_over && state.result) {
+      banner.classList.add('visible');
+      let resultText = state.result;
+      if (state.result === '1-0') resultText = '1-0 \u2014 White wins';
+      else if (state.result === '0-1') resultText = '0-1 \u2014 Black wins';
+      else if (state.result === '1/2-1/2') resultText = '\u00BD-\u00BD \u2014 Draw';
+      document.getElementById('game-over-result').textContent = resultText;
+      const totalMoves = Math.ceil(moveList.length / 2);
+      const playerColor = state.player_color || 'white';
+      const playerAcc = acc[playerColor] || 0;
+      document.getElementById('game-over-details').textContent =
+        'Accuracy: ' + playerAcc.toFixed(1) + '% \u00B7 ' + totalMoves + ' moves';
+    } else {
+      banner.classList.remove('visible');
+    }
+  }
+
+  function renderMoveCell(san, annot) {
+    let badgeHtml = '';
+    if (annot && annot.classification) {
+      const b = BADGE_MAP[annot.classification];
+      if (b) {
+        badgeHtml = '<span class="badge ' + b.cls + '">' + b.text + '</span>';
+      }
+    }
+    return '<span class="move-cell"><span class="move-san">' + esc(san) + '</span>' + badgeHtml + '</span>';
+  }
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  // Polling loop
+  async function poll() {
+    try {
+      const resp = await fetch('/api/game');
+      if (!resp.ok) return;
+      const state = await resp.json();
+      if (!state || !state.fen) return;
+
+      if (!gameActive) {
+        initBoard(state.player_color || 'white');
+      }
+
+      if (state.fen !== lastFen) {
+        board.position(state.fen, true);
+        lastFen = state.fen;
+      }
+
+      // Check orientation
+      const expectedOrientation = state.player_color === 'black' ? 'black' : 'white';
+      if (board.orientation() !== expectedOrientation) {
+        board.orientation(expectedOrientation);
+      }
+
+      updatePanels(state);
+    } catch (e) {
+      // Server might be down, just retry
+    }
+  }
+
+  setInterval(poll, 500);
+  poll();
+})();
+</script>
+</body>
+</html>

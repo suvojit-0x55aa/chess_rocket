@@ -54,8 +54,8 @@ ELSE:
 
 ### Play
 - Start game: `new_game(target_elo, player_color)`
-- TUI auto-displays board (run `uv run python scripts/tui.py` in a separate terminal)
-- After each move, the current opening is automatically identified and shown in the TUI sidebar
+- Dashboard auto-displays board (run `uv run python scripts/dashboard_server.py` and open `http://localhost:8088`)
+- After each move, the current opening is automatically identified and shown in the dashboard sidebar
 - After each player move, evaluate with `evaluate_move()` before responding
 
 ### Analyze
@@ -192,7 +192,7 @@ Quality scale: 0-2 = failed (reset to 4hr), 3-5 = passed (advance interval).
 Use the opening tools to teach openings interactively:
 
 ### Identify During Play
-- `identify_opening(game_id)` — automatically called during games; shows the current opening name and ECO code in the TUI
+- `identify_opening(game_id)` — automatically called during games; shows the current opening name and ECO code in the dashboard
 - When the player leaves book (moves diverge from known openings), `current_opening` clears to None
 
 ### Search and Explore
@@ -301,7 +301,7 @@ Available puzzle sets:
 |------|---------|
 | `data/progress.json` | Player Elo, sessions, streak |
 | `data/srs_cards.json` | Spaced repetition cards |
-| `data/current_game.json` | Live game state (MCP → TUI) |
+| `data/current_game.json` | Live game state (MCP → Dashboard) |
 | `data/sessions/` | Session logs |
 | `data/games/` | Saved PGN files |
 | `data/lesson_plans/` | Generated lesson plans |

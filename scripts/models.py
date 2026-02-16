@@ -30,6 +30,12 @@ class GameState:
     streak: int = 0
     lesson_name: str = ""
     current_opening: dict | None = None
+    material: dict = field(default_factory=lambda: {"white": 0, "black": 0})
+    captured_pieces: dict = field(default_factory=lambda: {"white": [], "black": []})
+    is_check: bool = False
+    is_checkmate: bool = False
+    is_stalemate: bool = False
+    move_annotations: list[dict] = field(default_factory=list)
 
 
 @dataclass

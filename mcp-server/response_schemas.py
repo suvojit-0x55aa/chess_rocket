@@ -1,7 +1,7 @@
 """Response schemas and minification for MCP tool responses.
 
 Minifies MCP tool return values to reduce LLM context token waste.
-data/current_game.json (TUI sync) is NOT affected — only MCP return values.
+data/current_game.json (dashboard sync) is NOT affected — only MCP return values.
 
 PGN string format for move_list uses standard chess notation
 (1.e4 e5 2.Nf3 ...) which is natural for the LLM agent to read.

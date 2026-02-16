@@ -2,7 +2,7 @@
 
 Exposes Stockfish chess tools to Claude Code via FastMCP.
 Games are stored in memory keyed by UUID. Board state is synced
-to data/current_game.json after every move for TUI consumption.
+to data/current_game.json after every move for dashboard consumption.
 """
 
 from __future__ import annotations
@@ -49,6 +49,70 @@ _DATA_DIR = _PROJECT_ROOT / "data"
 _openings_db = OpeningsDB()
 
 register_openings_tools(mcp, _games, _DATA_DIR, _PROJECT_ROOT)
+
+
+_PIECE_VALUES = {
+    chess.PAWN: 1, chess.KNIGHT: 3, chess.BISHOP: 3,
+    chess.ROOK: 5, chess.QUEEN: 9,
+}
+
+_PIECE_SYMBOLS = {
+    chess.PAWN: "P", chess.KNIGHT: "N", chess.BISHOP: "B",
+    chess.ROOK: "R", chess.QUEEN: "Q",
+}
+
+_STARTING_PIECES = {
+    "white": ["P"] * 8 + ["N"] * 2 + ["B"] * 2 + ["R"] * 2 + ["Q"],
+    "black": ["P"] * 8 + ["N"] * 2 + ["B"] * 2 + ["R"] * 2 + ["Q"],
+}
+
+
+def _count_material(board: chess.Board) -> dict:
+    """Count material value for each side (excludes kings)."""
+    material = {"white": 0, "black": 0}
+    for sq in chess.SQUARES:
+        piece = board.piece_at(sq)
+        if piece and piece.piece_type != chess.KING:
+            color = "white" if piece.color == chess.WHITE else "black"
+            material[color] += _PIECE_VALUES.get(piece.piece_type, 0)
+    return material
+
+
+def _get_captured_pieces(board: chess.Board) -> dict:
+    """Determine captured pieces by diffing current board vs starting set."""
+    current = {"white": [], "black": []}
+    for sq in chess.SQUARES:
+        piece = board.piece_at(sq)
+        if piece and piece.piece_type != chess.KING:
+            color = "white" if piece.color == chess.WHITE else "black"
+            symbol = _PIECE_SYMBOLS.get(piece.piece_type, "?")
+            current[color].append(symbol)
+
+    captured = {"white": [], "black": []}
+    for color in ("white", "black"):
+        remaining = list(current[color])
+        for p in _STARTING_PIECES[color]:
+            if p in remaining:
+                remaining.remove(p)
+            else:
+                # This piece was captured — attribute to opposing side
+                opponent = "black" if color == "white" else "white"
+                captured[opponent].append(p)
+    return captured
+
+
+def _build_move_annotations(game: dict) -> list[dict]:
+    """Build move annotation list from stored move_evals."""
+    annotations = []
+    for ev in game.get("move_evals", []):
+        annotations.append({
+            "move": ev.get("move_san", ""),
+            "classification": ev.get("classification", ""),
+            "cp_loss": ev.get("cp_loss", 0),
+            "ply": ev.get("ply", 0),
+            "color": ev.get("color", "white"),
+        })
+    return annotations
 
 
 def _build_game_state(game_id: str, game: dict) -> dict:
@@ -114,6 +178,12 @@ def _build_game_state(game_id: str, game: dict) -> dict:
         streak=game.get("streak", 0),
         lesson_name=game.get("lesson_name", ""),
         current_opening=current_opening,
+        material=_count_material(board),
+        captured_pieces=_get_captured_pieces(board),
+        is_check=board.is_check(),
+        is_checkmate=board.is_checkmate(),
+        is_stalemate=board.is_stalemate(),
+        move_annotations=_build_move_annotations(game),
     )
     return asdict(state)
 
