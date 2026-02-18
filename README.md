@@ -10,6 +10,16 @@ An adaptive chess tutoring system powered by Claude Code that transforms into a 
 
 ---
 
+## TL;DR — Let Claude Code Set It Up For You
+
+Copy-paste this into Claude Code and it will clone, install, and verify everything works:
+
+```
+Clone https://github.com/suvojit-0x55aa/chess_rocket, install all dependencies (uv, Stockfish, Python packages), configure the MCP server, and run a quick smoke test to confirm the chess engine and MCP tools are working.
+```
+
+---
+
 ## Overview
 
 Chess Rocket works as a complete learning ecosystem:
