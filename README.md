@@ -24,6 +24,49 @@ The system implements a **3-perspective tutor**: GM Teacher (strategy), Learning
 
 ---
 
+## How It Works
+
+### Teaching Methodology
+
+Claude acts as a **3-perspective tutor**:
+
+| Role | Function |
+|------|----------|
+| **GM Teacher** | Position evaluation, pattern recognition, opening principles |
+| **Learning Psychologist** | Zone of Proximal Development, spaced rep scheduling, deliberate practice |
+| **Behavioral Specialist** | Session pacing, streak tracking, difficulty calibration |
+
+### Core Loop: Play -> Analyze -> Teach -> Replay -> Plan
+
+1. **Play**: You move. Claude evaluates with `evaluate_move()` before responding with engine move.
+2. **Analyze**: Claude compares your choice to engine's top moves using `analyze_position()`.
+3. **Teach**: Response depth depends on move quality (see thresholds below).
+4. **Replay**: After game, Claude walks through 2-3 teaching positions.
+5. **Plan**: Session summary + lesson plan + next session goals.
+
+### Move Evaluation Thresholds
+
+| CP Loss | Classification | Teaching Response |
+|---------|---------------|-------------------|
+| 0 | Best move | Brief acknowledgment ("Excellent!") |
+| 1-30 | Great move | Positive reinforcement |
+| 31-80 | Good move | Note the slightly better alternative |
+| 81-150 | Inaccuracy | Brief teaching: why alternative is better |
+| 151-300 | Mistake | Full explanation + principle connection |
+| 300+ | Blunder | Immediate intervention + undo offer + add to SRS |
+
+### Language Adaptation
+
+Claude adjusts explanation depth to your level:
+
+| Level | Elo Range | Approach |
+|-------|-----------|----------|
+| **Beginner** | 0-600 | Simple terms, visual explanations, piece safety focus |
+| **Intermediate Beginner** | 600-1000 | Terminology intro, principle-based, tactical patterns |
+| **Intermediate** | 1000-1500 | Full technical language, positional play, strategy |
+
+---
+
 ## Architecture
 
 ![Architecture](assets/architecture.png)
@@ -295,49 +338,6 @@ uv run python scripts/export.py games
 # Run full test suite
 uv run python -m pytest tests/ -v
 ```
-
----
-
-## How It Works
-
-### Teaching Methodology
-
-Claude acts as a **3-perspective tutor**:
-
-| Role | Function |
-|------|----------|
-| **GM Teacher** | Position evaluation, pattern recognition, opening principles |
-| **Learning Psychologist** | Zone of Proximal Development, spaced rep scheduling, deliberate practice |
-| **Behavioral Specialist** | Session pacing, streak tracking, difficulty calibration |
-
-### Core Loop: Play -> Analyze -> Teach -> Replay -> Plan
-
-1. **Play**: You move. Claude evaluates with `evaluate_move()` before responding with engine move.
-2. **Analyze**: Claude compares your choice to engine's top moves using `analyze_position()`.
-3. **Teach**: Response depth depends on move quality (see thresholds below).
-4. **Replay**: After game, Claude walks through 2-3 teaching positions.
-5. **Plan**: Session summary + lesson plan + next session goals.
-
-### Move Evaluation Thresholds
-
-| CP Loss | Classification | Teaching Response |
-|---------|---------------|-------------------|
-| 0 | Best move | Brief acknowledgment ("Excellent!") |
-| 1-30 | Great move | Positive reinforcement |
-| 31-80 | Good move | Note the slightly better alternative |
-| 81-150 | Inaccuracy | Brief teaching: why alternative is better |
-| 151-300 | Mistake | Full explanation + principle connection |
-| 300+ | Blunder | Immediate intervention + undo offer + add to SRS |
-
-### Language Adaptation
-
-Claude adjusts explanation depth to your level:
-
-| Level | Elo Range | Approach |
-|-------|-----------|----------|
-| **Beginner** | 0-600 | Simple terms, visual explanations, piece safety focus |
-| **Intermediate Beginner** | 600-1000 | Terminology intro, principle-based, tactical patterns |
-| **Intermediate** | 1000-1500 | Full technical language, positional play, strategy |
 
 ---
 
