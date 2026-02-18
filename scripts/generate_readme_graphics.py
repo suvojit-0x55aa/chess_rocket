@@ -56,6 +56,25 @@ PROMPTS = {
         "Modern flat design, clean icons, professional look. Wide format ~1200x300 pixels. "
         "Chess-themed subtle decorative elements in the background."
     ),
+    "how-it-works": (
+        "Create a visual infographic explaining a chess tutoring feedback loop for a GitHub README. "
+        "Show a circular flow diagram with 5 labeled stages connected by arrows forming a clockwise loop. "
+        "IMPORTANT: 'PLAY' must be at the top center (12 o'clock position) as the entry point. "
+        "The clockwise order starting from top center is: "
+        "1) 'PLAY' at top center (12 o'clock) - a chess board icon with a player making a move "
+        "2) 'ANALYZE' at right (2 o'clock) - a magnifying glass over a chess position, label says 'Every move evaluated by Stockfish' "
+        "3) 'TEACH' at lower right (4 o'clock) - a graduation cap / teacher icon, with 3 small sub-labels: "
+        "   'Good move -> brief praise', 'Inaccuracy -> quick tip', 'Blunder -> full lesson + undo' "
+        "4) 'REPLAY' at lower left (8 o'clock) - a rewind icon, label says 'Review 2-3 key positions post-game' "
+        "5) 'PLAN' at left (10 o'clock) - a clipboard/checklist icon, label says 'Set goals for next session' "
+        "In the center of the loop, show the text 'Chess Rocket' with a small rocket icon. "
+        "Below the loop, show a side branch from TEACH going to a brain icon labeled 'SRS Cards' "
+        "with a timeline arrow showing '4hr -> 1d -> 3d -> 1wk -> 1mo' feeding back into PLAY. "
+        "At the bottom, show a small difficulty meter labeled 'Difficulty auto-adjusts to your level'. "
+        "Dark background (deep navy matching the project's other graphics), "
+        "white text, electric blue arrows and borders, orange accents for the mistake/blunder path. "
+        "Clean modern flat design, no 3D. Readable labels. ~1000x600 pixels."
+    ),
 }
 
 

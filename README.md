@@ -26,6 +26,8 @@ The system implements a **3-perspective tutor**: GM Teacher (strategy), Learning
 
 ## How It Works
 
+![How It Works](assets/how-it-works.png)
+
 ### Teaching Methodology
 
 Claude acts as a **3-perspective tutor**:
