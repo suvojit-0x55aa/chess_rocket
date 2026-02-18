@@ -58,6 +58,14 @@ suggest_opening = _server.mcp._tool_manager._tools.get("suggest_opening")
 opening_quiz = _server.mcp._tool_manager._tools.get("opening_quiz")
 
 
+# Check if openings DB is available for MCP tool tests
+_db_path = _DATA_DIR / "openings.db"
+_db_available = _db_path.exists()
+_skip_no_db = pytest.mark.skipif(
+    not _db_available,
+    reason="Openings DB not built. Run: uv run python scripts/build_openings_db.py",
+)
+
 # ── Fixtures ────────────────────────────────────────────────────────
 
 
@@ -308,6 +316,7 @@ class TestMCPIdentifyOpening:
         assert "not found" in result["error"].lower() or "Game not found" in result["error"]
 
 
+@_skip_no_db
 class TestMCPSearchOpenings:
     """Test the search_openings MCP tool."""
 
@@ -327,6 +336,7 @@ class TestMCPSearchOpenings:
         assert result["total"] > 0
 
 
+@_skip_no_db
 class TestMCPGetOpeningDetails:
     """Test the get_opening_details MCP tool."""
 
@@ -344,6 +354,7 @@ class TestMCPGetOpeningDetails:
         assert result["variations"] == []
 
 
+@_skip_no_db
 class TestMCPSuggestOpening:
     """Test the suggest_opening MCP tool."""
 
@@ -370,6 +381,7 @@ class TestMCPSuggestOpening:
         assert "suggestions" in result
 
 
+@_skip_no_db
 class TestMCPOpeningQuiz:
     """Test the opening_quiz MCP tool."""
 

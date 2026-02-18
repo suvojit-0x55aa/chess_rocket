@@ -1,12 +1,3 @@
-# Ralph working files
-.last-branch
-.ralph-active
-.ralph-passes-count
-.ralph-story-complete
-
-# Archive (optional to commit)
-# archive/
-
 # Python
 __pycache__/
 *.py[cod]
@@ -47,3 +38,7 @@ Thumbs.db
 .env
 .env.local
 .todos/
+
+# Build artifacts
+.sidecar/
+archive/

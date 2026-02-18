@@ -1,8 +1,8 @@
 # Chess Rocket
 
-An adaptive chess tutoring system powered by Claude Code that transforms you into a personalized chess coach. Combines Stockfish engine analysis with educational psychology to guide learners from beginner (0 Elo) to intermediate (1500 Elo) through structured play, analysis, and spaced repetition.
+An adaptive chess tutoring system powered by Claude Code that transforms into a personalized chess coach. Combines Stockfish engine analysis with educational psychology to guide learners from beginner (0 Elo) to intermediate (1500 Elo) through structured play, analysis, and spaced repetition.
 
-**Status:** Python 3.10+ | Stockfish Engine | FastMCP | SQLite | Rich TUI
+**Status:** Python 3.10+ | Stockfish Engine | FastMCP | SQLite | Web Dashboard
 
 ---
 
@@ -13,7 +13,7 @@ Chess Rocket works as a complete learning ecosystem:
 1. **Claude Code** connects via MCP (Model Context Protocol) to a chess server
 2. **MCP Server** manages 17+ tools for games, analysis, openings, and progress tracking
 3. **Stockfish** engine provides position evaluation and engine play
-4. **Rich TUI** displays the live board, moves, evaluation, and opening info in a separate terminal
+4. **Web Dashboard** displays the live board, moves, evaluation, and opening info in your browser
 5. **Spaced Repetition (SM-2)** automatically schedules mistake review for long-term retention
 
 The system implements a **3-perspective tutor**: GM Teacher (strategy), Learning Psychologist (pacing), and Behavioral Specialist (motivation).
@@ -24,18 +24,18 @@ The system implements a **3-perspective tutor**: GM Teacher (strategy), Learning
 
 ```
 Claude Code (Tutor Agent)
-        │
-        ├──MCP Protocol──► MCP Server (FastMCP)
-        │                    │
-        │                    ├── GameEngine (Stockfish wrapper)
-        │                    ├── OpeningsDB (3,627 openings)
-        │                    ├── SRSManager (SM-2 spaced rep)
-        │                    └── Tools (17+ tools)
-        │                    │
-        │                    └─► data/current_game.json (atomic writes)
-        │
-        └── Terminal 2: TUI (Rich/Textual, 4Hz poll)
-             Display: Board | Moves | Eval | Opening | Accuracy
+        |
+        +--MCP Protocol--> MCP Server (FastMCP)
+        |                    |
+        |                    +-- GameEngine (Stockfish wrapper)
+        |                    +-- OpeningsDB (3,627 openings)
+        |                    +-- SRSManager (SM-2 spaced rep)
+        |                    +-- Tools (17+ tools)
+        |                    |
+        |                    +--> data/current_game.json (atomic writes)
+        |
+        +-- Browser: Web Dashboard (http://localhost:8088)
+             Display: Board | Moves | Eval | Opening | Material
 ```
 
 ---
@@ -47,11 +47,10 @@ Claude Code (Tutor Agent)
 | Language | Python 3.10+ |
 | Chess Engine | Stockfish (UCI protocol) |
 | MCP Framework | FastMCP |
-| TUI | Rich + Textual |
+| Dashboard | HTML/JS + Python HTTP server |
 | Database | SQLite (openings) + JSON (game state) |
 | Package Manager | uv |
 | Testing | pytest |
-| File Watching | watchdog |
 
 ---
 
@@ -66,7 +65,7 @@ Claude Code (Tutor Agent)
 ### Adaptive Difficulty
 - **100-1320 Elo:** Custom linear blend formula with depth-limited Stockfish + random moves
 - **1320-3500 Elo:** Direct Stockfish UCI_Elo control
-- **Auto-adjustment:** Difficulty scales ±50-100 Elo based on recent accuracy
+- **Auto-adjustment:** Difficulty scales based on recent accuracy
 
 ### Opening Recognition & Study
 - **3,627 chess openings** from Lichess database
@@ -78,31 +77,36 @@ Claude Code (Tutor Agent)
 
 ### Spaced Repetition (SM-2 Algorithm)
 - Automatic mistake card creation
-- Review intervals: 4hr → 1d → 3d → 1wk → 2wk → 1mo
+- Review intervals: 4hr -> 1d -> 3d -> 1wk -> 2wk -> 1mo
 - Quality-based progression (0-5 scale)
 - Failed reviews reset to 4hr
 - Ease factor adjustment per card
 
-### Curated Learning Content
-- **7 Educational References**: Curriculum, pedagogy, learning science, Elo milestones, tactical patterns, common mistakes, opening guide
-- **132 Tactical Puzzles** across 8 themes:
-  - Forks (12), Pins (12), Skewers (11)
-  - Back-rank threats (12), Checkmate patterns (11)
-  - Basic endgames (11), Opening moves (35)
-  - Opening traps (22)
-- **3-Phase Curriculum**: Foundation (0-600) → Tactical (600-1000) → Intermediate (1000-1500)
+### 284 Curated Puzzles (9 Sets)
 
-### Live Terminal UI
-- Unicode chess board display
+| File | Motif | Count | Source |
+|------|-------|-------|--------|
+| `forks.json` | Knight/queen/pawn forks | 28 | Stockfish self-play |
+| `pins.json` | Absolute and relative pins | 28 | Stockfish self-play |
+| `skewers.json` | Skewer tactics | 28 | Stockfish self-play |
+| `back-rank.json` | Back-rank mate threats | 30 | Lichess DB |
+| `checkmate-patterns.json` | Checkmate patterns | 30 | Lichess DB |
+| `beginner-endgames.json` | Basic endgame positions | 24 | Constructed |
+| `opening-moves.json` | Next book move tests | 40 | Opening DB |
+| `opening-traps.json` | Opening trap refutations | 30 | Opening DB |
+| `from-games.json` | Mistakes from player games | 46 | Game mining |
+
+### Web Dashboard
+- Interactive chess board with piece images
 - Move list with move numbers
 - Evaluation bar (position assessment)
 - Current opening name + ECO code
-- Game accuracy tracker
-- Real-time board updates (4Hz polling)
-- Sample mode for testing without live game
+- Material balance tracker
+- Real-time board updates via polling
 
 ### Post-Game Analysis
 - Batch SRS card creation for all mistakes (>80cp loss)
+- Puzzle generation from your own games
 - Teaching position selection
 - Accuracy summary + move classification
 - Session logging and progress updates
@@ -114,56 +118,41 @@ Claude Code (Tutor Agent)
 
 ```
 chess_rocket/
-├── mcp-server/
-│   ├── server.py              # 17+ MCP tools (game, analysis, openings, utility)
-│   └── openings_tools.py      # Opening recognition (5 tools)
-├── scripts/
-│   ├── engine.py              # Stockfish wrapper with adaptive difficulty
-│   ├── srs.py                 # SM-2 spaced repetition system
-│   ├── tui.py                 # Rich-based terminal UI (board display)
-│   ├── openings.py            # Opening recognition (trie + SQLite lookup)
-│   ├── models.py              # Shared data models (GameState, MoveEvaluation)
-│   ├── export.py              # Progress/game markdown reports
-│   ├── install.sh             # Setup script
-│   ├── build_openings_db.py   # Download & build 3,627 openings
-│   ├── generate_opening_puzzles.py
-│   └── validate_puzzles.py    # FEN validation
-├── references/                # Educational content (7 files)
-│   ├── curriculum.md          # 3-phase curriculum framework
-│   ├── chess-pedagogy.md      # GM coaching methodology
-│   ├── learning-science.md    # Cognitive science foundations
-│   ├── elo-milestones.md      # Skills expected by Elo range
-│   ├── tactical-patterns.md   # Tactical motifs with examples
-│   ├── common-mistakes.md     # Beginner error patterns
-│   └── opening-guide.md       # Level-appropriate openings
-├── puzzles/                   # 132 curated puzzles (8 files)
-│   ├── forks.json (12 puzzles)
-│   ├── pins.json (12)
-│   ├── skewers.json (11)
-│   ├── back-rank.json (12)
-│   ├── checkmate-patterns.json (11)
-│   ├── beginner-endgames.json (11)
-│   ├── opening-moves.json (35)
-│   └── opening-traps.json (22)
-├── tests/
-│   ├── test_engine.py         # Stockfish wrapper tests
-│   ├── test_srs.py            # SM-2 algorithm tests
-│   ├── test_openings.py       # Opening recognition tests
-│   └── test_post_game.py      # Post-game analysis tests
-├── data/                      # Runtime data (generated, gitignored)
-│   ├── current_game.json      # Live game state (MCP ↔ TUI sync)
-│   ├── progress.json          # Player Elo, sessions, streak
-│   ├── srs_cards.json         # SRS review card history
-│   ├── openings.db            # SQLite: 3,627 openings
-│   ├── openings_trie.json     # JSON trie for fast ECO lookup
-│   ├── sessions/              # Session logs (JSON)
-│   ├── games/                 # Saved PGN files
-│   └── lesson_plans/          # Generated lesson plans
-├── CLAUDE.md                  # Tutor agent instructions
-├── SKILL.md                   # Claude Code skill documentation
-├── pyproject.toml             # Python project config (uv)
-├── .mcp.json                  # MCP server config
-└── README.md                  # This file
++-- mcp-server/
+|   +-- server.py              # 17+ MCP tools (game, analysis, openings, utility)
+|   +-- openings_tools.py      # Opening recognition (5 tools)
++-- scripts/
+|   +-- engine.py              # Stockfish wrapper with adaptive difficulty
+|   +-- srs.py                 # SM-2 spaced repetition system
+|   +-- dashboard_server.py    # Web dashboard HTTP server
+|   +-- dashboard.html         # Web dashboard frontend
+|   +-- openings.py            # Opening recognition (trie + SQLite lookup)
+|   +-- models.py              # Shared data models (GameState, MoveEvaluation)
+|   +-- export.py              # Progress/game markdown reports
+|   +-- install.sh             # Setup script
+|   +-- build_openings_db.py   # Download & build 3,627 openings
+|   +-- generate_puzzles.py    # Tactical puzzle generation pipelines
+|   +-- generate_opening_puzzles.py  # Opening puzzle generator
+|   +-- import_lichess_puzzles.py    # Lichess puzzle importer
+|   +-- validate_puzzles.py    # FEN validation + Stockfish verification
+|   +-- motif_detector.py      # Tactical motif detection
++-- references/                # Educational content (7 files)
+|   +-- curriculum.md          # 3-phase curriculum framework
+|   +-- chess-pedagogy.md      # GM coaching methodology
+|   +-- learning-science.md    # Cognitive science foundations
+|   +-- elo-milestones.md      # Skills expected by Elo range
+|   +-- tactical-patterns.md   # Tactical motifs with examples
+|   +-- common-mistakes.md     # Beginner error patterns
+|   +-- opening-guide.md       # Level-appropriate openings
++-- puzzles/                   # 284 curated puzzles (9 files)
++-- tests/                     # Test suites
++-- data/                      # Runtime data (generated, gitignored)
++-- CLAUDE.md                  # Tutor agent instructions
++-- SKILL.md                   # Claude Code skill documentation
++-- LICENSE                    # GPL v3
++-- pyproject.toml             # Python project config (uv)
++-- .mcp.json                  # MCP server config (edit path before use)
++-- README.md
 ```
 
 ---
@@ -192,20 +181,87 @@ The install script:
 5. Downloads and builds the 3,627-opening database
 6. Validates all puzzle FENs
 
+### MCP Configuration
+
+Chess Rocket connects to Claude Code via MCP. After cloning:
+
+1. Edit `.mcp.json` — replace the placeholder path with your absolute project path:
+   ```json
+   {
+     "mcpServers": {
+       "chess-speedrun": {
+         "command": "uv",
+         "args": ["run", "python", "mcp-server/server.py"],
+         "cwd": "/your/absolute/path/to/chess_rocket"
+       }
+     }
+   }
+   ```
+2. Restart Claude Code — the chess-speedrun MCP server will auto-connect
+3. Verify: Ask Claude "What MCP tools do you have?" — you should see 17+ chess tools
+
 ### Quick Start
 
-**Terminal 1 — Start the TUI:**
+**Terminal 1 — Start the Web Dashboard:**
 ```bash
-uv run python scripts/tui.py
+uv run python scripts/dashboard_server.py
+# Open http://localhost:8088 in your browser
 ```
 
-**Terminal 2 — Start Claude Code & Connect:**
+**Terminal 2 — Start Claude Code & Play:**
 ```bash
 # Claude connects to the MCP server automatically
 # Say: "Let's play chess" or "Start a game"
 ```
 
-The board appears in Terminal 1, updates in real-time as you play.
+The board appears in your browser and updates in real-time as you play.
+
+---
+
+## Data Setup
+
+All runtime data lives in `data/` (gitignored). The install script sets everything up automatically.
+
+### What `install.sh` creates:
+- `data/progress.json` — Initial player profile (400 Elo starting point)
+- `data/srs_cards.json` — Empty SRS card deck
+- `data/openings.db` — SQLite database of 3,627 chess openings (downloaded from Lichess GitHub)
+- `data/openings_trie.json` — JSON trie for fast opening lookup
+- `data/sessions/`, `data/games/`, `data/lesson_plans/` — Empty directories for runtime data
+
+### Manual data setup (if not using install.sh):
+```bash
+# Create directories
+mkdir -p data/sessions data/games data/lesson_plans
+
+# Initialize player profile
+echo '{"current_elo": 400, "sessions_completed": 0, "streak": 0, "total_games": 0, "wins": 0, "losses": 0, "draws": 0}' > data/progress.json
+
+# Initialize empty SRS deck
+echo '[]' > data/srs_cards.json
+
+# Build openings database (downloads ~370KB of TSV from Lichess GitHub)
+uv run python scripts/build_openings_db.py
+```
+
+### Optional: Regenerate puzzles
+The repo ships with 284 curated puzzles in `puzzles/`. To regenerate:
+```bash
+# Regenerate tactical puzzles via Stockfish self-play (requires Stockfish, ~5 min)
+uv run python scripts/generate_puzzles.py --pipeline stockfish
+
+# Regenerate opening puzzles from the openings database
+uv run python scripts/generate_puzzles.py --pipeline openings
+
+# Validate all puzzle FENs
+uv run python scripts/validate_puzzles.py
+```
+
+### Optional: Import Lichess puzzles
+For additional puzzles from the Lichess database:
+1. Download `lichess_db_puzzle.csv.zst` (~273MB) from https://database.lichess.org/#puzzles
+2. Place it in `data/lichess_db_puzzle.csv.zst`
+3. Run: `uv run python scripts/import_lichess_puzzles.py --themes backRankMate,fork,pin --max-per-theme 30`
 
 ---
 
@@ -224,8 +280,9 @@ Claude manages the full session:
 ### Standalone Commands
 
 ```bash
-# View live board with sample game data
-uv run python scripts/tui.py --sample
+# Launch web dashboard with sample game data
+uv run python scripts/dashboard_server.py
+# Then open http://localhost:8088
 
 # Engine analysis of a position
 uv run python scripts/engine.py analyze "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
@@ -263,7 +320,7 @@ Claude acts as a **3-perspective tutor**:
 | **Learning Psychologist** | Zone of Proximal Development, spaced rep scheduling, deliberate practice |
 | **Behavioral Specialist** | Session pacing, streak tracking, difficulty calibration |
 
-### Core Loop: Play → Analyze → Teach → Replay → Plan
+### Core Loop: Play -> Analyze -> Teach -> Replay -> Plan
 
 1. **Play**: You move. Claude evaluates with `evaluate_move()` before responding with engine move.
 2. **Analyze**: Claude compares your choice to engine's top moves using `analyze_position()`.
@@ -297,32 +354,19 @@ Claude adjusts explanation depth to your level:
 ## MCP Tools Reference
 
 ### Game Management (8 tools)
-`new_game` • `get_board` • `make_move` • `engine_move` • `undo_move` • `set_position` • `get_legal_moves` • `get_game_pgn`
+`new_game` | `get_board` | `make_move` | `engine_move` | `undo_move` | `set_position` | `get_legal_moves` | `get_game_pgn`
 
 ### Analysis (3 tools)
-`analyze_position` • `evaluate_move` • `set_difficulty`
+`analyze_position` | `evaluate_move` | `set_difficulty`
 
 ### Openings (5 tools)
-`identify_opening` • `search_openings` • `get_opening_details` • `suggest_opening` • `opening_quiz`
+`identify_opening` | `search_openings` | `get_opening_details` | `suggest_opening` | `opening_quiz`
 
-### Progress & Learning (2+ tools)
-`srs_add_card` • `create_srs_cards_from_game` • `save_session`
+### Progress & Learning (4 tools)
+`srs_add_card` | `create_srs_cards_from_game` | `generate_puzzles_from_game` | `save_session`
 
----
-
-## Data Files & Formats
-
-| File | Purpose |
-|------|---------|
-| `data/progress.json` | Player Elo estimate, session count, win/loss/draw stats, streak |
-| `data/srs_cards.json` | SRS review history (timestamps, intervals, ease factors) |
-| `data/current_game.json` | Live game state synced between MCP server and TUI |
-| `data/openings.db` | SQLite: ECO codes, move sequences, opening names (3,627 total) |
-| `data/openings_trie.json` | JSON trie for fast ECO code lookup during games |
-| `data/sessions/*.json` | Session logs (moves, accuracy, lesson focus, improvements) |
-| `data/games/*.pgn` | Saved games in PGN format |
-
-All data is JSON or SQLite for easy inspection and backup.
+### Puzzle Export (1 tool)
+`srs_to_puzzles`
 
 ---
 
@@ -331,16 +375,11 @@ All data is JSON or SQLite for easy inspection and backup.
 The engine automatically adjusts to match your skill:
 
 ```
-If recent accuracy > 90%:
-  → Increase difficulty by 100 Elo (too easy)
-If recent accuracy 80-90%:
-  → Increase by 50 Elo (performing well)
-If recent accuracy 65-80%:
-  → Keep same difficulty (zone of proximal development)
-If recent accuracy 50-65%:
-  → Decrease by 50 Elo (struggling)
-If recent accuracy < 50%:
-  → Decrease by 100 Elo (too hard)
+If recent accuracy > 90%:  +100 Elo (too easy)
+If recent accuracy 80-90%: +50 Elo (performing well)
+If recent accuracy 65-80%: No change (zone of proximal development)
+If recent accuracy 50-65%: -50 Elo (struggling)
+If recent accuracy < 50%:  -100 Elo (too hard)
 ```
 
 Sub-1320 Elo uses a custom formula: random move injection + depth limiting (Stockfish's minimum UCI_Elo is 1320).
@@ -366,7 +405,7 @@ Openings stored in SQLite + JSON trie for fast lookup.
 Powered by the **SM-2 algorithm** (industry standard):
 
 - **First review**: 4 hours after mistake
-- **Successful reviews advance**: 4hr → 1d → 3d → 1wk → 2wk → 1mo
+- **Successful reviews advance**: 4hr -> 1d -> 3d -> 1wk -> 2wk -> 1mo
 - **Failed reviews reset**: Back to 4hr if quality < 3
 - **Quality scale**: 0-2 (failed), 3-5 (passed)
 - **Ease factor**: Adjusted per card based on quality history
@@ -379,8 +418,6 @@ Claude automatically creates SRS cards for:
 ---
 
 ## Testing
-
-Comprehensive test coverage:
 
 ```bash
 # Run all tests
@@ -398,6 +435,10 @@ uv run python -m pytest tests/ --cov=scripts --cov-report=html
 - `test_srs.py` — SM-2 algorithm, card scheduling
 - `test_openings.py` — Opening identification, search, ECO lookup
 - `test_post_game.py` — Game analysis, SRS card creation
+- `test_mcp_tools.py` — MCP tool integration tests
+- `test_mcp_flows.py` — Multi-tool workflow tests
+- `test_puzzle_generation.py` — Puzzle pipeline tests
+- `test_motif_detector.py` — Tactical motif detection
 
 ---
 
@@ -405,16 +446,15 @@ uv run python -m pytest tests/ --cov=scripts --cov-report=html
 
 ### Architecture Decisions
 
-- **Shared Models**: `scripts/models.py` defines `GameState` and `MoveEvaluation` dataclasses used by MCP server and TUI
+- **Shared Models**: `scripts/models.py` defines `GameState` and `MoveEvaluation` dataclasses used by MCP server and dashboard
 - **Atomic Writes**: All JSON updates use temp file + `os.replace()` to prevent corruption
-- **4Hz TUI Polling**: Current game state read from `data/current_game.json` every 250ms
 - **Programmatic FEN Validation**: All puzzle FENs validated via `python-chess` before save
 - **Sub-1320 Elo**: Linear blend formula for random move injection (Stockfish minimum is 1320)
 
 ### Adding New Features
 
-1. **New MCP Tool**: Add to `mcp-server/server.py` with `@server.call_tool()` decorator
-2. **New Puzzle Set**: Add JSON file to `puzzles/` with format: `[{"fen": "...", "solution": [...], "theme": "..."}]`
+1. **New MCP Tool**: Add to `mcp-server/server.py` with `@mcp.tool()` decorator
+2. **New Puzzle Set**: Add JSON file to `puzzles/` with format: `[{"fen": "...", "solution_moves": [...], "theme": "..."}]`
 3. **New Reference**: Add markdown file to `references/` and link from `CLAUDE.md`
 4. **Opening Support**: Pre-built 3,627 openings; search/quiz/suggest all work automatically
 
@@ -424,24 +464,32 @@ uv run python -m pytest tests/ --cov=scripts --cov-report=html
 
 - **CLAUDE.md** — Full tutor agent instructions (session flow, teaching methodology, tool reference)
 - **SKILL.md** — Claude Code skill documentation (for other agents)
-- **chess-speedrun-prd.md** — Product requirements document
 - **references/** — 7 educational materials for the tutor to reference
 
 ---
 
 ## License
 
-This is a personal project. Add appropriate license (MIT, Apache, etc.) as needed.
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
 
 ---
 
 ## Contributing
 
-Contributions welcome! Areas of interest:
+Contributions welcome! To contribute:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/my-feature`)
+3. Make your changes
+4. Run tests: `uv run python -m pytest tests/ -v`
+5. Commit with a descriptive message
+6. Open a Pull Request
+
+Areas of interest:
 - Additional puzzle sets or tactical themes
 - New reference materials or teaching techniques
-- Performance optimizations for opening lookups
-- TUI enhancements
+- Performance optimizations
+- Dashboard enhancements
 - Language localization
 
 ---
@@ -453,5 +501,4 @@ For issues or questions:
 2. Review `references/` for teaching methodology
 3. Run `./scripts/install.sh` to verify setup
 4. Run test suite: `uv run python -m pytest tests/ -v`
-
-Enjoy learning chess with your personal tutor!
+5. Open an issue on GitHub
