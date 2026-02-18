@@ -1,8 +1,12 @@
 # Chess Rocket
 
+![Chess Rocket Banner](assets/hero-banner.png)
+
 An adaptive chess tutoring system powered by Claude Code that transforms into a personalized chess coach. Combines Stockfish engine analysis with educational psychology to guide learners from beginner (0 Elo) to intermediate (1500 Elo) through structured play, analysis, and spaced repetition.
 
 **Status:** Python 3.10+ | Stockfish Engine | FastMCP | SQLite | Web Dashboard
+
+![Features](assets/features.png)
 
 ---
 
@@ -22,21 +26,7 @@ The system implements a **3-perspective tutor**: GM Teacher (strategy), Learning
 
 ## Architecture
 
-```
-Claude Code (Tutor Agent)
-        |
-        +--MCP Protocol--> MCP Server (FastMCP)
-        |                    |
-        |                    +-- GameEngine (Stockfish wrapper)
-        |                    +-- OpeningsDB (3,627 openings)
-        |                    +-- SRSManager (SM-2 spaced rep)
-        |                    +-- Tools (17+ tools)
-        |                    |
-        |                    +--> data/current_game.json (atomic writes)
-        |
-        +-- Browser: Web Dashboard (http://localhost:8088)
-             Display: Board | Moves | Eval | Opening | Material
-```
+![Architecture](assets/architecture.png)
 
 ---
 
