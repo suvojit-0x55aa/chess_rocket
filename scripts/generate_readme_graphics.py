@@ -12,8 +12,8 @@ from google import genai
 
 
 def load_api_key():
-    """Load NANOBANANA_API_KEY from aikyam .env file."""
-    env_path = Path.home() / "REDACTED"
+    """Load NANOBANANA_API_KEY from local .env file."""
+    env_path = Path(__file__).resolve().parent.parent / ".env"
     if not env_path.exists():
         print(f"Error: .env not found at {env_path}")
         sys.exit(1)
